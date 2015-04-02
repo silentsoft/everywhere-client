@@ -44,6 +44,15 @@ public class AppController {
 		
 		DragResizer.makeResizable(main);
 	}
+	
+	public Pane getBody() {
+		return body;
+	}
+	
+	public void setBody(Pane body) {
+		this.body = body;
+		int t = 10;
+	}
 
 	/**
 	 * makes a stage draggable using a given node.
