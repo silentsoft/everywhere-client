@@ -1,9 +1,13 @@
 package org.silentsoft.everywhere.client.application;
 	
+import org.silentsoft.everywhere.client.view.login.LoginViewer;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -15,6 +19,10 @@ public class App extends Application {
 	private Parent app;
 	
 	private AppController appController;
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
 	
 	public static Stage getStage() {
 		return stage;
@@ -30,6 +38,8 @@ public class App extends Application {
 			appController = fxmlLoader.getController();
 			appController.initialize();
 			
+			setLoginViewToBody();
+			
 			Scene scene = new Scene(app, 910, 530, Color.TRANSPARENT);
 			
 			stage.initStyle(StageStyle.TRANSPARENT);
@@ -40,7 +50,9 @@ public class App extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
+	public void setLoginViewToBody() {
+		Pane body = (Pane)app.lookup("#body");
+		body.getChildren().clear();
+		body.getChildren().add(new LoginViewer().getLoginViewer());
 	}
 }

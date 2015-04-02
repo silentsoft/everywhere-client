@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane prefHeight="485.0" prefWidth="910.0" style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.login.LoginViewerController">
+   <children>
+      <TextField fx:id="txtSingleId" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" />
+      <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="243.0" onAction="#onActionClick" prefHeight="23.0" prefWidth="160.0" />
+      <Button layoutX="375.0" layoutY="307.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="160.0" text="I'm Feeling Lucky !" />
+      <Label layoutX="327.0" layoutY="94.0" text="Member Login" textFill="#7c7c7c">
+         <font>
+            <Font name="Verdana" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
