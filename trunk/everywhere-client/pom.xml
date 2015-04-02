@@ -3,21 +3,31 @@
   <groupId>org.silentsoft</groupId>
   <artifactId>everywhere-client</artifactId>
   <version>1.0.0</version>
+  
+  <properties>
+		<everywhere.context.version>1.0.0</everywhere.context.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<buildtime>${maven.build.timestamp}</buildtime>
+		<project.deploymentdir>${basedir}/target/Everywhere-client</project.deploymentdir>
+	</properties>
+  
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
+	<resources>
+		<resource>
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.fxml</include>
+				<include>**/*.css</include>
+			</includes>
+		</resource>
+		<resource>
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>**/*.png</include>
+				<include>**/*.jpg</include>
+			</includes>
+		</resource>
+	</resources>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -25,8 +35,86 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+          <encoding>EUC-KR</encoding>
         </configuration>
       </plugin>
-    </plugins>
-  </build>
+   			<!-- copy all dependencies to deployment lib -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.deploymentdir}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- maven-ant-run -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<configuration>
+							<target>
+								<ant antfile="${basedir}/build.xml">
+									<property
+										name="version"
+										value="${project.version}" />
+									<property
+										name="buildtime"
+										value="${buildtime}" />
+									<target name="localtest" />
+								</ant>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<!-- <execution> <id>doc</id> <phase>compile</phase> <configuration> 
+						<target> <ant antfile="${basedir}/build.xml"> <target name="doc" /> </ant> 
+						</target> </configuration> <goals> <goal>run</goal> </goals> </execution> -->
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.silentsoft</groupId>
+			<artifactId>everywhere-context</artifactId>
+			<version>${everywhere.context.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+	</dependencies>
 </project>
