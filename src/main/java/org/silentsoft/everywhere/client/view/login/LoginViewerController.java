@@ -11,6 +11,7 @@ import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -26,7 +27,12 @@ public class LoginViewerController {
 	private PasswordField txtPassword;
 	
 	public void initialize() {
-		txtSingleId.requestFocus();
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				txtSingleId.requestFocus();
+			}
+		});
 	}
 	
 	@FXML
