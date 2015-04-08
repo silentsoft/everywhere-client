@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane prefHeight="485.0" prefWidth="910.0" style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.register.RegisterViewerController">
+   <children>
+      <Label focusTraversable="false" layoutX="301.0" layoutY="94.0" text="Member Register" textFill="#7c7c7c">
+         <font>
+            <Font name="Verdana" size="36.0" />
+         </font>
+      </Label>
+      <Label focusTraversable="false" layoutX="349.0" layoutY="184.0" text="ID">
+		 <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSingleId" layoutX="424.0" layoutY="180.0" />
+      <Label focusTraversable="false" layoutX="349.0" layoutY="219.0" text="Password">
+		 <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtPassword" layoutX="424.0" layoutY="215.0" />
+      <Label focusTraversable="false" layoutX="349.0" layoutY="254.0" text="Confirm">
+		 <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtConfirm" layoutX="424.0" layoutY="250.0" />
+      <Label focusTraversable="false" layoutX="349.0" layoutY="289.0" text="E-Mail">
+		 <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="424.0" layoutY="285.0" />
+      <Button fx:id="btnDone" defaultButton="true" layoutX="424.0" layoutY="352.0" mnemonicParsing="false" onAction="#btnDone_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+		 <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="349.0" layoutY="352.0" mnemonicParsing="false" onAction="#btnCancel_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+		 <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

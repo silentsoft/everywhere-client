@@ -18,12 +18,14 @@
          </font>
       </Label>
       <TextField fx:id="txtSingleId" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" promptText="ID" />
-      <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="237.0" onAction="#onActionClick" prefHeight="23.0" prefWidth="160.0" promptText="Password" />
-      <Button defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#onActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#fffafa">
+      <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="237.0" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" promptText="Password" />
+      <!-- textFill="#fffafa" -->
+      <Button defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#8a8a8a">
          <font>
             <Font name="Verdana Bold" size="11.0" />
-         </font></Button>
-      <Label layoutX="375.0" layoutY="310.0" text="Register" textFill="#4b8df8" underline="true">
+         </font>
+      </Button>
+      <Label layoutX="375.0" layoutY="310.0" onMouseClicked="#register_OnMouseClick" text="Register" textFill="#4b8df8" underline="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

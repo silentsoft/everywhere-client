@@ -5,7 +5,9 @@ import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
+import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.component.messagebox.MessageBox;
+import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.slf4j.Logger;
@@ -36,12 +38,8 @@ public class LoginViewerController {
 	}
 	
 	@FXML
-	private void onActionClick() {
-		if (txtSingleId.getText().length() <= BizConst.SIZE_EMPTY) {
-			return;
-		}
-		
-		if (txtPassword.getText().length() <= BizConst.SIZE_EMPTY) {
+	private void login_OnActionClick() {
+		if (isNotValidate()) {
 			return;
 		}
 		
@@ -60,11 +58,10 @@ public class LoginViewerController {
 			
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
-			if (param == null) {
-				result.append("Login Failed !");
-			} else if (ObjectUtil.isEmptyVO(param)) {
-				result.append("Login Failed.. Try again !");
+			if (param == null || ObjectUtil.isEmpty(param)) {
+				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Register Failed.. Try again !!!");
 			} else {
+				result.append("Login Succeed ! \r\n\r\n");
 				result.append("MES ID: " + param.getUserId() + "\r\n");
 				result.append("User Name: " + param.getUserNm() + "\r\n");
 				result.append("Eng User Name: " + param.getEngUserNm() + "\r\n");
@@ -74,12 +71,35 @@ public class LoginViewerController {
 				result.append("Dept Name: " + param.getDeptNm() + "\r\n");
 				result.append("Eng Dept Name: " + param.getEngDeptNm() + "\r\n");
 				result.append("Mobile Tel: " + param.getMobileTel());
+				
+				MessageBox.showAbout(App.getStage(), "Everywhere", result.toString());
 			}
 		} catch (EverywhereException e) {
-			result.append("Login Failed.. Try again !!!");
 			LOGGER.error("I got catch an error !", new Object[]{e});
+			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "response failure from server :(");
+		}
+	}
+	
+	@FXML
+	private void register_OnMouseClick() {
+		EventHandler.callEvent(LoginViewerController.class, BizConst.EVENT_VIEW_REGISTER);
+	}
+	
+	private boolean isValidate() {
+		if (txtSingleId.getText().length() <= BizConst.SIZE_EMPTY) {
+			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "ID is empty !");
+			return false;
 		}
 		
-		MessageBox.showAbout(App.getStage(), "Everywhere", result.toString());
+		if (txtPassword.getText().length() <= BizConst.SIZE_EMPTY) {
+			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password is empty !");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean isNotValidate() {
+		return !isValidate();
 	}
 }
