@@ -59,7 +59,7 @@ public class LoginViewerController {
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
-				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Register Failed.. Try again !!!");
+				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Login Failed.. Try again !!!");
 			} else {
 				result.append("Login Succeed ! \r\n\r\n");
 				result.append("MES ID: " + param.getUserId() + "\r\n");
