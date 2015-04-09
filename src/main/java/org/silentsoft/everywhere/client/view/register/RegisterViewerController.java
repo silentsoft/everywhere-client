@@ -12,6 +12,7 @@ import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.context.BizConst;
+import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
@@ -31,6 +32,9 @@ public class RegisterViewerController {
 	
 	@FXML
 	PasswordField txtConfirm;
+	
+	@FXML
+	TextField txtName;
 	
 	@FXML
 	TextField txtEmail;
@@ -65,8 +69,10 @@ public class RegisterViewerController {
 			}
 			
 			TbmSmUserDVO param = new TbmSmUserDVO();
+			param.setUserId(txtSingleId.getText());
 			param.setSingleId(txtSingleId.getText());
 			param.setUserPwd(SecurityUtil.encodePassword(txtPassword.getText()));
+			param.setUserNm(txtName.getText());
 			param.setEmailAddr(txtEmail.getText());
 			
 			param = RESTfulAPI.doPost("/fx/register/authentication", param, TbmSmUserDVO.class);
@@ -74,7 +80,8 @@ public class RegisterViewerController {
 			if (param == null || ObjectUtil.isEmpty(param)) {
 				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Register Failed.. Try again !!!");
 			} else {
-				MessageBox.showConfirm(App.getStage(), "Succeed to register member !");
+				MessageBox.showAbout(App.getStage(), "Welcome", "Succeed to register member !");
+				saveUserInfoToSharedMemory(param.getUserId());
 				btnCancel_OnActionClick();
 			}
 		} catch (EverywhereException e) {
@@ -86,6 +93,10 @@ public class RegisterViewerController {
 	@FXML
 	private void btnCancel_OnActionClick() {
 		EventHandler.callEvent(RegisterViewerController.class, BizConst.EVENT_VIEW_LOGIN);
+	}
+	
+	private void saveUserInfoToSharedMemory(String userId) {
+		SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, userId);
 	}
 	
 	private boolean isValidate() {
@@ -109,6 +120,11 @@ public class RegisterViewerController {
 			return false;
 		} else if (txtPassword.getText().equals(txtSingleId.getText())) {
 			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password cannot be same with ID !");
+			return false;
+		}
+		
+		if (txtName.getText().length() <= BizConst.SIZE_EMPTY) {
+			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Name is empty !");
 			return false;
 		}
 		
