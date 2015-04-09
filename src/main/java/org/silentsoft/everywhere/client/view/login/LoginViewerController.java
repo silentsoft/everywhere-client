@@ -3,6 +3,7 @@ package org.silentsoft.everywhere.client.view.login;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
+import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
 import org.silentsoft.core.CommonConst;
@@ -32,7 +33,13 @@ public class LoginViewerController {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				txtSingleId.requestFocus();
+				String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
+				if (ObjectUtil.isEmpty(userId)) {
+					txtSingleId.requestFocus();
+				} else {
+					txtSingleId.setText(userId);
+					txtPassword.requestFocus();
+				}
 			}
 		});
 	}
@@ -72,7 +79,7 @@ public class LoginViewerController {
 				result.append("Eng Dept Name: " + param.getEngDeptNm() + "\r\n");
 				result.append("Mobile Tel: " + param.getMobileTel());
 				
-				MessageBox.showAbout(App.getStage(), "Everywhere", result.toString());
+				MessageBox.showAbout(App.getStage(), String.format("Welcome, %s", param.getUserNm()), result.toString());
 			}
 		} catch (EverywhereException e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
