@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <Pane prefHeight="485.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.main.MainViewerController">
-	<children>
-		
-	</children>
+   <children>
+      <SplitPane dividerPositions="0.18012422360248448" orientation="VERTICAL" prefHeight="485.0" prefWidth="160.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label fx:id="lblSingleId" layoutX="14.0" layoutY="14.0" text="User Name" textFill="#646464">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnManage" layoutX="88.0" layoutY="10.0" mnemonicParsing="false" text="Manage" />
+                  <Label layoutX="14.0" layoutY="45.0" text="latest" />
+                  <Label fx:id="lblLatest" layoutX="14.0" layoutY="64.0" text="2015-05-12 PM 20:30:15">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <ListView prefHeight="393.0" prefWidth="158.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <Pane layoutX="160.0" layoutY="1.0" prefHeight="84.0" prefWidth="750.0" />
+      <ListView layoutX="160.0" layoutY="86.0" prefHeight="399.0" prefWidth="750.0" />
+   </children>
 </Pane>
-
