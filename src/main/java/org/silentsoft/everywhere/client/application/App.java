@@ -1,11 +1,5 @@
 package org.silentsoft.everywhere.client.application;
 	
-import org.silentsoft.core.event.EventHandler;
-import org.silentsoft.core.event.EventListener;
-import org.silentsoft.everywhere.client.view.login.LoginViewer;
-import org.silentsoft.everywhere.client.view.register.RegisterViewer;
-import org.silentsoft.everywhere.context.BizConst;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import org.silentsoft.core.event.EventHandler;
+import org.silentsoft.core.event.EventListener;
+import org.silentsoft.everywhere.client.view.login.LoginViewer;
+import org.silentsoft.everywhere.client.view.main.MainViewer;
+import org.silentsoft.everywhere.client.view.register.RegisterViewer;
+import org.silentsoft.everywhere.context.BizConst;
 
 public class App extends Application implements EventListener {
 	
@@ -70,7 +71,22 @@ public class App extends Application implements EventListener {
 		case BizConst.EVENT_VIEW_LOGIN:
 			setLoginViewToBody();
 			break;
+		case BizConst.EVENT_VIEW_MAIN:
+			setMainViewToBody();
+			break;
 		}
+	}
+	
+	private void setRegisterViewToBody() {
+		changeBodyToNode(new RegisterViewer().getRegisterViewer());
+	}
+	
+	private void setLoginViewToBody() {
+		changeBodyToNode(new LoginViewer().getLoginViewer());
+	}
+	
+	private void setMainViewToBody() {
+		changeBodyToNode(new MainViewer().getMainViewer());
 	}
 	
 	private void changeBodyToNode(Node node) {
@@ -82,13 +98,5 @@ public class App extends Application implements EventListener {
 				body.getChildren().add(node);
 			}
 		});
-	}
-	
-	private void setLoginViewToBody() {
-		changeBodyToNode(new LoginViewer().getLoginViewer());
-	}
-	
-	private void setRegisterViewToBody() {
-		changeBodyToNode(new RegisterViewer().getRegisterViewer());
 	}
 }
