@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
@@ -17,36 +18,37 @@
             <Font name="Verdana" size="36.0" />
          </font>
       </Label>
-      <Label focusTraversable="false" layoutX="349.0" layoutY="184.0" text="ID">
+      <Label focusTraversable="false" layoutX="398.0" layoutY="185.0" text="ID">
 		 <font>
             <Font name="Verdana Bold" size="11.0" />
          </font>
       </Label>
       <TextField fx:id="txtSingleId" layoutX="424.0" layoutY="180.0" />
-      <Label focusTraversable="false" layoutX="349.0" layoutY="219.0" text="Password">
+      <Label focusTraversable="false" layoutX="353.0" layoutY="219.0" text="Password">
 		 <font>
             <Font name="Verdana Bold" size="11.0" />
          </font>
       </Label>
       <PasswordField fx:id="txtPassword" layoutX="424.0" layoutY="215.0" />
-      <Label focusTraversable="false" layoutX="349.0" layoutY="254.0" text="Confirm">
+      <Label focusTraversable="false" layoutX="364.0" layoutY="255.0" text="Confirm">
 		 <font>
             <Font name="Verdana Bold" size="11.0" />
          </font>
       </Label>
       <PasswordField fx:id="txtConfirm" layoutX="424.0" layoutY="250.0" />
-      <Label focusTraversable="false" layoutX="349.0" layoutY="289.0" text="Name">
+      <Label focusTraversable="false" layoutX="377.0" layoutY="290.0" text="Name">
          <font>
             <Font name="Verdana Bold" size="11.0" />
          </font>
       </Label>
       <TextField fx:id="txtName" layoutX="424.0" layoutY="285.0" />
-      <Label focusTraversable="false" layoutX="349.0" layoutY="324.0" text="E-Mail">
+      <Label focusTraversable="false" layoutX="375.0" layoutY="320.0" text="E-Mail">
 		 <font>
             <Font name="Verdana Bold" size="11.0" />
          </font>
       </Label>
       <TextField fx:id="txtEmail" layoutX="424.0" layoutY="315.0" />
+      <Line endX="350.0" layoutX="280.0" layoutY="361.0" strokeWidth="0.3" />
       <Button fx:id="btnDone" defaultButton="true" layoutX="424.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnDone_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
 		 <font>
             <Font name="Verdana Bold" size="11.0" />

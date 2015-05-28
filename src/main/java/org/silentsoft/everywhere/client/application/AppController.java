@@ -8,9 +8,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.everywhere.client.button.ImageButton;
 import org.silentsoft.everywhere.client.model.Delta;
 import org.silentsoft.everywhere.client.utility.DragResizer;
+import org.silentsoft.everywhere.context.BizConst;
 
 public class AppController {
 	
@@ -26,6 +28,9 @@ public class AppController {
 	private Pane body;
 	
 	@FXML
+	private ImageButton appMenuBtn;
+	
+	@FXML
 	private ImageButton appMinimizeBtn;
 	
 	@FXML
@@ -37,6 +42,8 @@ public class AppController {
 	protected void initialize() {
 		makeDraggable(App.getStage(), head);
 		makeNormalizable(App.getStage(), head);
+		
+		makeTransportable(appMenuBtn);
 		
 		makeMinimizable(App.getStage(), appMinimizeBtn);
 		makeMaximizable(App.getStage(), appMaximizeBtn);
@@ -94,6 +101,19 @@ public class AppController {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getClickCount() >= MOUSE_DOUBLE_CLICK) {
     			stage.setMaximized(!stage.isMaximized());
+    		}
+    	});
+    }
+    
+    /**
+     * makes a transportable to specific menu using a given node.
+     * @param stage
+     * @param byNode
+     */
+    private void makeTransportable(final Node byNode) {
+    	byNode.setOnMouseReleased(mouseEvent -> {
+    		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+    			EventHandler.callEvent(AppController.class, BizConst.EVENT_VIEW_MAIN);
     		}
     	});
     }
