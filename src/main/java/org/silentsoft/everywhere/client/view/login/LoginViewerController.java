@@ -40,6 +40,8 @@ public class LoginViewerController {
 					txtSingleId.setText(userId);
 					txtPassword.requestFocus();
 				}
+				
+				SharedMemory.getDataMap().clear();
 			}
 		});
 	}
@@ -79,7 +81,7 @@ public class LoginViewerController {
 				result.append("Eng Dept Name: " + param.getEngDeptNm() + "\r\n");
 				result.append("Mobile Tel: " + param.getMobileTel());
 				
-				MessageBox.showAbout(App.getStage(), String.format("Welcome, %s", param.getUserNm()), result.toString());
+				//MessageBox.showAbout(App.getStage(), String.format("Welcome, %s", param.getUserNm()), result.toString());
 				
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getSingleId());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_NM, param.getUserNm());
