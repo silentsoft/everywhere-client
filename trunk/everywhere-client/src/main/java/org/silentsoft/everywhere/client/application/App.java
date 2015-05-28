@@ -15,6 +15,7 @@ import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.event.EventListener;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.main.MainViewer;
+import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
 
@@ -74,6 +75,9 @@ public class App extends Application implements EventListener {
 		case BizConst.EVENT_VIEW_MAIN:
 			setMainViewToBody();
 			break;
+		case BizConst.EVENT_VIEW_MODIFY:
+			setModifyViewToBody();
+			break;
 		}
 	}
 	
@@ -87,6 +91,10 @@ public class App extends Application implements EventListener {
 	
 	private void setMainViewToBody() {
 		changeBodyToNode(new MainViewer().getMainViewer());
+	}
+	
+	private void setModifyViewToBody() {
+		changeBodyToNode(new ModifyViewer().getModifyViewer());
 	}
 	
 	private void changeBodyToNode(Node node) {

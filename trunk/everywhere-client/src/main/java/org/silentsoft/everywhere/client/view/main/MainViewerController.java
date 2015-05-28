@@ -1,13 +1,17 @@
 package org.silentsoft.everywhere.client.view.main;
 
-import org.silentsoft.core.util.ObjectUtil;
-import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.core.SharedMemory;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import org.controlsfx.dialog.Dialog;
+import org.silentsoft.core.component.messagebox.MessageBox;
+import org.silentsoft.core.event.EventHandler;
+import org.silentsoft.core.util.ObjectUtil;
+import org.silentsoft.everywhere.client.application.App;
+import org.silentsoft.everywhere.client.button.ImageButton;
+import org.silentsoft.everywhere.context.BizConst;
+import org.silentsoft.everywhere.context.core.SharedMemory;
 
 public class MainViewerController {
 	
@@ -15,7 +19,7 @@ public class MainViewerController {
 	private Label lblSingleId;
 	
 	@FXML
-	private Button btnManage;
+	private ImageButton btnManage;
 	
 	@FXML
 	private Label lblLatest;
@@ -31,5 +35,17 @@ public class MainViewerController {
 				}
 			}
 		});
+	}
+	
+	@FXML
+	private void modify_OnMouseClick() {
+		EventHandler.callEvent(MainViewerController.class, BizConst.EVENT_VIEW_MODIFY);
+	}
+	
+	@FXML
+	private void logout_OnMouseClick() {
+		if (MessageBox.showConfirm(App.getStage(), "Are you sure to logout ?") == Dialog.ACTION_YES) {
+			EventHandler.callEvent(MainViewerController.class, BizConst.EVENT_VIEW_LOGIN);
+		}
 	}
 }
