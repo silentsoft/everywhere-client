@@ -61,8 +61,11 @@ public class LoginViewerController {
 				LOGGER.error("I got catch error during encoding the password !", e);
 			}
 			
+			String userId = txtSingleId.getText();
+			
 			TbmSmUserDVO param = new TbmSmUserDVO();
-			param.setSingleId(txtSingleId.getText());
+			param.setUserId(userId);
+			param.setSingleId(userId);
 			param.setUserPwd(SecurityUtil.encodePassword(txtPassword.getText()));
 			
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
