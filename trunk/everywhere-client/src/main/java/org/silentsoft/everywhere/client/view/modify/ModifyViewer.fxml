@@ -21,14 +21,14 @@
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
+                        <TextField fx:id="txtName" layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
                         <Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
-                        <Button defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+                        <Button fx:id="btnDoneInName" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInName_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Button>
-                        <Button cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+                        <Button fx:id="btnCancelInName" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInName_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
@@ -46,26 +46,26 @@
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Label>
-                        <PasswordField layoutX="236.0" layoutY="21.0" prefHeight="23.0" prefWidth="137.0" />
+                        <PasswordField fx:id="txtCurrentPassword" layoutX="236.0" layoutY="21.0" prefHeight="23.0" prefWidth="137.0" />
                         <Label layoutX="135.0" layoutY="60.0" text="New Password">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Label>
-                        <PasswordField layoutX="236.0" layoutY="56.0" prefHeight="23.0" prefWidth="137.0" />
+                        <PasswordField fx:id="txtNewPassword" layoutX="236.0" layoutY="56.0" prefHeight="23.0" prefWidth="137.0" />
                         <Label layoutX="113.0" layoutY="95.0" text="Confirm Password">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Label>
-                        <PasswordField layoutX="236.0" layoutY="91.0" prefHeight="23.0" prefWidth="137.0" />
+                        <PasswordField fx:id="txtConfirmPassword" layoutX="236.0" layoutY="91.0" prefHeight="23.0" prefWidth="137.0" />
                         <Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
-                        <Button defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+                        <Button fx:id="btnDoneInPassword" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInPassword_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Button>
-                        <Button cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+                        <Button fx:id="btnCancelInPassword" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInPassword_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
@@ -83,14 +83,14 @@
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
+                        <TextField fx:id="txtEmail" layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
                         <Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
-                        <Button defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+                        <Button fx:id="btnDoneInEmail" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInEmail_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>
                         </Button>
-                        <Button cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+                        <Button fx:id="btnCancelInEmail" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInEmail_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
                            <font>
                               <Font name="Verdana Bold" size="11.0" />
                            </font>

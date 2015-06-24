@@ -86,6 +86,7 @@ public class LoginViewerController {
 				//MessageBox.showAbout(App.getStage(), String.format("Welcome, %s", param.getUserNm()), result.toString());
 				
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getSingleId());
+				SharedMemory.getDataMap().put(BizConst.KEY_USER_EMAIL, param.getEmailAddr());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_NM, param.getUserNm());
 				
 				EventHandler.callEvent(LoginViewerController.class, BizConst.EVENT_VIEW_MAIN);
