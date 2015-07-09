@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.*?>
 <?import org.silentsoft.everywhere.client.button.*?>
 
-<Pane prefHeight="485.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.main.MainViewerController">
+<Pane minHeight="485.0" minWidth="910.0" prefHeight="485.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.main.MainViewerController">
    <children>
-      <SplitPane dividerPositions="0.5682819383259912" prefHeight="485.0" prefWidth="910.0">
+      <SplitPane dividerPositions="0.5" prefHeight="485.0" prefWidth="910.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="483.0" prefWidth="345.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="345.0">
                <children>
                   <Label fx:id="lblSingleId" layoutX="14.0" layoutY="14.0" text="User Name" textFill="#646464">
                      <font>
@@ -54,14 +54,14 @@
                   <Button layoutX="78.0" layoutY="91.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Share" />
                   <Label alignment="CENTER" layoutX="8.0" layoutY="120.0" prefHeight="15.0" prefWidth="140.0" text="100MB / Unlimited" />
                   <Line endX="150.0" layoutX="5.0" layoutY="140.0" strokeWidth="0.1" />
-                  <ScrollPane layoutY="142.0" prefHeight="342.0" prefWidth="152.0">
+                  <ScrollPane layoutY="141.0" minHeight="343.0" minWidth="152.0" prefHeight="343.0" prefWidth="152.0" style="-fx-background-color: transparent;" vbarPolicy="ALWAYS">
                      <content>
-                        <TreeView prefHeight="329.0" prefWidth="138.0" />
+                        <TreeView fx:id="treeDirectory" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
                      </content>
                   </ScrollPane>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="484.0" prefWidth="750.0">
                <children>
                   <Pane prefHeight="84.0" prefWidth="750.0">
                      <children>
@@ -71,11 +71,11 @@
                            </font>
                         </Label>
                         <Line endX="750.0" layoutY="30.0" strokeWidth="0.1" />
-                        <Label alignment="CENTER" layoutX="97.0" layoutY="7.0" prefHeight="15.0" prefWidth="429.0" text="[Notice] Silentsoft, launched cloud service" />
+                        <Label alignment="CENTER" layoutX="97.0" layoutY="7.0" prefHeight="15.0" prefWidth="429.0" text="[Notice] Make it cloud your self !" />
                         <TextField layoutX="536.0" layoutY="32.0" prefHeight="23.0" prefWidth="113.0" promptText="Everythings" />
                         <Button defaultButton="true" layoutX="645.0" layoutY="32.0" mnemonicParsing="false" text="Search" />
                         <Button layoutX="700.0" layoutY="32.0" mnemonicParsing="false" text="Detail" />
-                        <TextField layoutY="32.0" prefHeight="23.0" prefWidth="528.0" text="Home\hs830.lee\test" />
+                        <TextField layoutY="32.0" prefHeight="23.0" prefWidth="528.0" text="Home\hs830.lee\" />
                         <Line endY="22.0" layoutX="532.0" layoutY="32.0" strokeWidth="0.1" />
                         <Label layoutX="7.0" layoutY="61.0" text="Order By :" />
                         <ComboBox layoutX="69.0" layoutY="58.0" prefHeight="23.0" prefWidth="74.0" />
@@ -83,9 +83,10 @@
                         <Label layoutX="257.0" layoutY="61.0" text="Layout : " />
                         <Button layoutX="307.0" layoutY="58.0" mnemonicParsing="false" text="__" />
                         <Button layoutX="333.0" layoutY="58.0" mnemonicParsing="false" text="||" />
+                        <Line endX="750.0" layoutY="84.0" strokeWidth="0.1" />
                      </children>
                   </Pane>
-                  <ListView layoutY="84.0" prefHeight="427.0" prefWidth="750.0" />
+                  <ListView layoutY="85.0" minHeight="398.0" minWidth="750.0" prefHeight="398.0" prefWidth="750.0" style="-fx-background-color: transparent;" />
                </children>
             </AnchorPane>
         </items>
