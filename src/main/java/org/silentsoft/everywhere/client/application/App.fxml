@@ -19,54 +19,54 @@
 	<children>
 		<HBox fx:id="head" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="910.0" style="-fx-background-color: rgb(35,35,35); -fx-blend-mode: darken;">
 			<children>
-				<ImageButton fx:id="appMenuBtn" layoutX="5.0" prefHeight="45.0" prefWidth="55.0">
+				<ImageButton fx:id="appMenuBtn" layoutX="5.0" minHeight="45.0" minWidth="55.0" prefHeight="45.0" prefWidth="55.0">
 					<graphic>
-						<ImageView fitHeight="45.0" fitWidth="55.0" pickOnBounds="true">
+						<ImageView fitHeight="45.0" fitWidth="55.0">
 							<image>
 								<Image url="@/images/app/ic_menu_white_48dp.png" />
 							</image>
 						</ImageView>
 					</graphic>
 				</ImageButton>
-				<Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+				<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
 				<Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="365.0" layoutY="15.0" text="Everywhere" textAlignment="CENTER" textFill="#f4f4f4">
 					<font>
 						<Font name="Verdana" size="13.0" />
 					</font>
 				</Label>
-				<Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-				<ImageButton fx:id="appMinimizeBtn" layoutX="785.0" layoutY="2.5" prefHeight="40.0" prefWidth="40.0">
+				<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+				<ImageButton fx:id="appMinimizeBtn" layoutX="785.0" layoutY="2.5" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0">
 					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+						<ImageView fitHeight="40.0" fitWidth="40.0">
 							<image>
 								<Image url="@/images/app/ic_minimize_white_48dp.png" />
 							</image>
 						</ImageView>
 					</graphic>
 				</ImageButton>
-				<ImageButton fx:id="appMaximizeBtn" layoutX="825.0" layoutY="2.5" prefHeight="40.0" prefWidth="40.0">
+				<ImageButton fx:id="appMaximizeBtn" layoutX="825.0" layoutY="2.5" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0">
 					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+						<ImageView fitHeight="40.0" fitWidth="40.0">
 							<image>
 								<Image url="@/images/app/ic_maximize_white_48dp.png" />
 							</image>
 						</ImageView>                  	
 					</graphic>
 				</ImageButton>
-				<ImageButton fx:id="appCloseBtn" layoutX="865.0" layoutY="2.5" prefHeight="40.0" prefWidth="40.0">
+				<ImageButton fx:id="appCloseBtn" layoutX="865.0" layoutY="2.5" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0">
 					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+						<ImageView fitHeight="40.0" fitWidth="40.0">
 							<image>
 								<Image url="@/images/app/ic_close_white_48dp.png" />
 							</image>
-						</ImageView>                  
+						</ImageView>
 					</graphic>                  
 				</ImageButton>
 			</children>
 		</HBox>
 		<Pane fx:id="body" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" prefHeight="485.0" prefWidth="910.0" style="-fx-background-color: #ffffff;">
 		   <children>
-		      <Button layoutX="797.0" layoutY="429.0" mnemonicParsing="false" text="Button" />
+		      
 		   </children>
 		</Pane>
 	</children>

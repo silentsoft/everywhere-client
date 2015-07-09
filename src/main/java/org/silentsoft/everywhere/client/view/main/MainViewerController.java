@@ -2,7 +2,11 @@ package org.silentsoft.everywhere.client.view.main;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+
 
 import org.controlsfx.dialog.Dialog;
 import org.silentsoft.core.component.messagebox.MessageBox;
@@ -22,18 +26,29 @@ public class MainViewerController {
 	private ImageButton btnManage;
 	
 	@FXML
-	private Label lblLatest;
+	private TreeView treeDirectory;
+	
+	private TreeItem<String> rootDirectory;
 	
 	public void initialize() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-//				String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
-				String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM));
-				if (ObjectUtil.isNotEmpty(userNm)) {
-					lblSingleId.setText(userNm);
-				}
+		Platform.runLater(() -> {
+//			String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
+			String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM));
+			if (ObjectUtil.isNotEmpty(userNm)) {
+				lblSingleId.setText(userNm);
 			}
+			
+			//TEMP CODING
+			rootDirectory = new TreeItem<String>();
+			rootDirectory.setExpanded(true);
+			
+			TreeItem<String> recycleBin = new TreeItem<String>("Recycle Bin");
+			recycleBin.getChildren().add(new TreeItem<String>("WTF.avi"));
+			
+			rootDirectory.getChildren().add(recycleBin);
+			
+			treeDirectory.setRoot(rootDirectory);
+			//
 		});
 	}
 	
