@@ -1,5 +1,10 @@
 package org.silentsoft.everywhere.client.application;
 	
+import java.awt.Toolkit;
+import java.awt.TrayIcon.MessageType;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +16,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.event.EventListener;
+import org.silentsoft.core.tray.TrayIconHandler;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
@@ -60,7 +67,33 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void initialize() {
+		displayTrayIcon();
+		
 		EventHandler.addListener(this);
+	}
+	
+	private void displayTrayIcon() {
+		TrayIconHandler.registerTrayIcon(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/tray/ic_cloud_circle_grey600_48dp.png"), "Everywhere");
+		
+		TrayIconHandler.addItem("About", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Platform.runLater(() -> {
+					MessageBox.showAbout(App.getStage(), "Everywhere", "author : hs830.lee");
+				});
+			}
+		});
+		
+		TrayIconHandler.addSeparator();
+		
+		TrayIconHandler.addItem("Exit", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		TrayIconHandler.displayMessage("Everywhere", "Hello, World !", MessageType.WARNING);
 	}
 	
 	@Override
@@ -98,13 +131,10 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void changeBodyToNode(Node node) {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				Pane body = (Pane)app.lookup("#body");
-				body.getChildren().clear();
-				body.getChildren().add(node);
-			}
+		Platform.runLater(() -> {
+			Pane body = (Pane)app.lookup("#body");
+			body.getChildren().clear();
+			body.getChildren().add(node);
 		});
 	}
 }

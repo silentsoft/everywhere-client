@@ -2,12 +2,14 @@ package org.silentsoft.everywhere.client.application;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.everywhere.client.button.ImageButton;
 import org.silentsoft.everywhere.client.model.Delta;
@@ -52,13 +54,16 @@ public class AppController {
 		DragResizer.makeResizable(main);
 	}
 	
+	public Pane getHead() {
+		return head;
+	}
+	
 	public Pane getBody() {
 		return body;
 	}
 	
 	public void setBody(Pane body) {
 		this.body = body;
-		int t = 10;
 	}
 
 	/**
