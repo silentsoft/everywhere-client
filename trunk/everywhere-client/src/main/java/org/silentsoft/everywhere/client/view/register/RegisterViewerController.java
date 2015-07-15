@@ -78,15 +78,15 @@ public class RegisterViewerController {
 			param = RESTfulAPI.doPost("/fx/register/authentication", param, TbmSmUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
-				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Register Failed.. Try again !!!");
+				MessageBox.showError(App.getStage(), "Register Failed.. Try again !!!");
 			} else {
-				MessageBox.showAbout(App.getStage(), "Welcome", "Succeed to register member !");
+				MessageBox.showInformation(App.getStage(), "Welcome", "Succeed to register member !");
 				saveUserInfoToSharedMemory(param.getUserId());
 				btnCancel_OnActionClick();
 			}
 		} catch (EverywhereException e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "response failure from server :(");
+			MessageBox.showError(App.getStage(), "response failure from server :(");
 		}
 	}
 	
@@ -101,39 +101,39 @@ public class RegisterViewerController {
 	
 	private boolean isValidate() {
 		if (txtSingleId.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "ID is empty !");
+			MessageBox.showError(App.getStage(), "ID is empty !");
 			return false;
 		}
 		
 		if (txtPassword.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password is empty !");
+			MessageBox.showError(App.getStage(), "Password is empty !");
 			return false;
 		}
 		
 		if (txtConfirm.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password is empty !");
+			MessageBox.showError(App.getStage(), "Password is empty !");
 			return false;
 		}
 		
 		if (!txtPassword.getText().equals(txtConfirm.getText())) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password is not matched !");
+			MessageBox.showError(App.getStage(), "Password is not matched !");
 			return false;
 		} else if (txtPassword.getText().equals(txtSingleId.getText())) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password cannot be same with ID !");
+			MessageBox.showError(App.getStage(), "Password cannot be same with ID !");
 			return false;
 		}
 		
 		if (txtName.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Name is empty !");
+			MessageBox.showError(App.getStage(), "Name is empty !");
 			return false;
 		}
 		
 		if (txtEmail.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Email is empty !");
+			MessageBox.showError(App.getStage(), "Email is empty !");
 			return false;
 		} else if (txtEmail.getText().indexOf(CommonConst.AT) == -1 ||
 				txtEmail.getText().indexOf(CommonConst.DOT) == -1) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Not available email type !");
+			MessageBox.showError(App.getStage(), "Not available email type !");
 			return false;
 		}
 		
