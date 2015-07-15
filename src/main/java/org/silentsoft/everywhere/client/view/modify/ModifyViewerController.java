@@ -78,14 +78,14 @@ public class ModifyViewerController {
 			param = RESTfulAPI.doPost("/fx/modify/update", param, TbmSmUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
-				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Modify Failed.. Try again !!!");
+				MessageBox.showError(App.getStage(), "Modify Failed.. Try again !!!");
 			} else {
 				saveUserInfoToSharedMemory(param);
 				btnCancelInName_OnActionClick();
 			}
 		} catch (EverywhereException e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "response failure from server :(");
+			MessageBox.showError(App.getStage(), "response failure from server :(");
 		}
 	}
 	
@@ -120,12 +120,12 @@ public class ModifyViewerController {
 	
 	private boolean isValidateName() {
 		if (txtName.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Name is empty !");
+			MessageBox.showError(App.getStage(), "Name is empty !");
 			return false;
 		}
 		
 		if (StringUtils.isNumeric(txtName.getText())) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Name cannot be numeric !");
+			MessageBox.showError(App.getStage(), "Name cannot be numeric !");
 			return false;
 		}
 		

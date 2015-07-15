@@ -70,7 +70,7 @@ public class LoginViewerController {
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
-				MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Login Failed.. Try again !!!");
+				MessageBox.showError(App.getStage(), "Login Failed.. Try again !!!");
 			} else {
 				result.append("Login Succeed ! \r\n\r\n");
 				result.append("MES ID: " + param.getUserId() + "\r\n");
@@ -93,7 +93,7 @@ public class LoginViewerController {
 			}
 		} catch (EverywhereException e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "response failure from server :(");
+			MessageBox.showError(App.getStage(), "response failure from server :(");
 		}
 	}
 	
@@ -104,12 +104,12 @@ public class LoginViewerController {
 	
 	private boolean isValidate() {
 		if (txtSingleId.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "ID is empty !");
+			MessageBox.showError(App.getStage(), "ID is empty !");
 			return false;
 		}
 		
 		if (txtPassword.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showErrorTypeVaildationFailure(App.getStage(), "Password is empty !");
+			MessageBox.showError(App.getStage(), "Password is empty !");
 			return false;
 		}
 		

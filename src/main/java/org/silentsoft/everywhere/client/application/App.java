@@ -79,7 +79,7 @@ public class App extends Application implements EventListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Platform.runLater(() -> {
-					MessageBox.showAbout(App.getStage(), "Everywhere", "author : hs830.lee");
+					MessageBox.showInformation(App.getStage(), "Everywhere", "author : hs830.lee");
 				});
 			}
 		});
