@@ -1,7 +1,6 @@
 package org.silentsoft.everywhere.client.view.main;
 
 import java.io.FileInputStream;
-import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -98,27 +97,29 @@ public class MainViewerController {
 	private void upload_OnMouseClick() {
 		Platform.runLater(() -> {
 			Optional<String> optionalString = Dialogs.create().owner(App.getStage()).title("Upload Target").masthead("File Upload Prototype").showTextInput();
-			String file = optionalString.get();
-			
-			FilePOJO filePOJO = new FilePOJO();
-			
-			try {
-				filePOJO.setName(FileUtil.getName(file));
-				filePOJO.setExtension(FileUtil.getExtension(file));
-				filePOJO.setInputStream(new FileInputStream(file));
-			} catch (Exception e) {
-				LOGGER.error(e.toString());
-				return;
-			}
-			
-			try {
-				long startTime = System.currentTimeMillis();
-				RESTfulAPI.doMultipart("/fx/main/upload", filePOJO, null);
-				long endTime = System.currentTimeMillis();
+			if (optionalString.isPresent()) {
+				String file = optionalString.get();
 				
-				MessageBox.showInformation(App.getStage(), "Sending file succeed in " + (endTime-startTime) + "ms", optionalString.get());
-			} catch (EverywhereException e) {
-				LOGGER.error(e.toString());
+				FilePOJO filePOJO = new FilePOJO();
+				
+				try {
+					filePOJO.setName(FileUtil.getName(file));
+					filePOJO.setExtension(FileUtil.getExtension(file));
+					filePOJO.setInputStream(new FileInputStream(file));
+				} catch (Exception e) {
+					LOGGER.error(e.toString());
+					return;
+				}
+				
+				try {
+					long startTime = System.currentTimeMillis();
+					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO, null);
+					long endTime = System.currentTimeMillis();
+					
+					MessageBox.showInformation(App.getStage(), "Sending file succeed in " + (endTime-startTime) + "ms", optionalString.get());
+				} catch (EverywhereException e) {
+					LOGGER.error(e.toString());
+				}
 			}
 		});
 	}
