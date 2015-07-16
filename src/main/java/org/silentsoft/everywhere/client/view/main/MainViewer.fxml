@@ -44,7 +44,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <Label fx:id="lblLatest" layoutX="14.0" layoutY="58.0" text="2015-07-07 PM 20:30:15">
+                  <Label fx:id="lblLatest" layoutX="14.0" layoutY="58.0"> <!-- text="2015-07-07 PM 20:30:15">  --> 
                      <font>
                         <Font size="10.0" />
                      </font>

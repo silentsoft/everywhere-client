@@ -88,6 +88,7 @@ public class LoginViewerController {
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getSingleId());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_EMAIL, param.getEmailAddr());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_NM, param.getUserNm());
+				SharedMemory.getDataMap().put(BizConst.KEY_USER_FNL_ACCS_DT, param.getFnlAccsDt());
 				
 				EventHandler.callEvent(LoginViewerController.class, BizConst.EVENT_VIEW_MAIN);
 			}
