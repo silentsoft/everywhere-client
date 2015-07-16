@@ -1,7 +1,8 @@
 package org.silentsoft.everywhere.client.view.main;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,11 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-import org.apache.commons.io.FileUtils;
 import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import org.silentsoft.core.component.messagebox.MessageBox;
+import org.silentsoft.core.component.notification.Notification;
+import org.silentsoft.core.component.notification.Notification.NotifyType;
 import org.silentsoft.core.event.EventHandler;
-import org.silentsoft.core.util.ByteArrayUtil;
+import org.silentsoft.core.util.DateUtil;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
@@ -35,6 +38,9 @@ public class MainViewerController {
 	private Label lblSingleId;
 	
 	@FXML
+	private Label lblLatest;
+	
+	@FXML
 	private ImageButton btnManage;
 	
 	@FXML
@@ -51,6 +57,15 @@ public class MainViewerController {
 			String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM));
 			if (ObjectUtil.isNotEmpty(userNm)) {
 				lblSingleId.setText(userNm);
+				
+				try {
+					String latest = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_FNL_ACCS_DT));
+					lblLatest.setText(DateUtil.getDateAsStr(latest, DateUtil.DATEFORMAT_YYYYMMDDHHMMSS, DateUtil.DATEFORMAT_YYYYMMDDHHMMSS_MASK));
+				} catch (Exception e) {
+					;
+				}
+				
+				Notification.show(App.getStage(), userNm, "Welcome to Everywhere !", NotifyType.INFORMATION);
 			}
 			
 			//TEMP CODING
@@ -81,23 +96,30 @@ public class MainViewerController {
 	
 	@FXML
 	private void upload_OnMouseClick() {
-		String file = "E:\\Bruno mars - Marry You.mp3";
-		
-		FilePOJO filePOJO = new FilePOJO();
-		
-		try {
-			filePOJO.setName(FileUtil.getName(file));
-			filePOJO.setExtension(FileUtil.getExtension(file));
-			filePOJO.setInputStream(new FileInputStream(file));
-		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			return;
-		}
-		
-		try {
-			RESTfulAPI.doMultipart("/fx/main/upload", filePOJO, null);
-		} catch (EverywhereException e) {
-			LOGGER.error(e.toString());
-		}
+		Platform.runLater(() -> {
+			Optional<String> optionalString = Dialogs.create().owner(App.getStage()).title("Upload Target").masthead("File Upload Prototype").showTextInput();
+			String file = optionalString.get();
+			
+			FilePOJO filePOJO = new FilePOJO();
+			
+			try {
+				filePOJO.setName(FileUtil.getName(file));
+				filePOJO.setExtension(FileUtil.getExtension(file));
+				filePOJO.setInputStream(new FileInputStream(file));
+			} catch (Exception e) {
+				LOGGER.error(e.toString());
+				return;
+			}
+			
+			try {
+				long startTime = System.currentTimeMillis();
+				RESTfulAPI.doMultipart("/fx/main/upload", filePOJO, null);
+				long endTime = System.currentTimeMillis();
+				
+				MessageBox.showInformation(App.getStage(), "Sending file succeed in " + (endTime-startTime) + "ms", optionalString.get());
+			} catch (EverywhereException e) {
+				LOGGER.error(e.toString());
+			}
+		});
 	}
 }

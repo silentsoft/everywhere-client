@@ -93,7 +93,7 @@ public class App extends Application implements EventListener {
 			}
 		});
 		
-		TrayIconHandler.displayMessage("Everywhere", "Hello, World !", MessageType.WARNING);
+		TrayIconHandler.displayMessage("Everywhere", "Hello, World !", MessageType.INFO);
 	}
 	
 	@Override
