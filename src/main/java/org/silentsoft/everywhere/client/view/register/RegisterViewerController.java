@@ -45,7 +45,7 @@ public class RegisterViewerController {
 	@FXML
 	Button btnCancel;
 	
-	public void initialize() {
+	protected void initialize() {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {

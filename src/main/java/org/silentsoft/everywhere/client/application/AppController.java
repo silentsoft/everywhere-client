@@ -2,23 +2,22 @@ package org.silentsoft.everywhere.client.application;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.silentsoft.core.component.messagebox.MessageBox;
+import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.event.EventHandler;
+import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.button.ImageButton;
 import org.silentsoft.everywhere.client.model.Delta;
 import org.silentsoft.everywhere.client.utility.DragResizer;
 import org.silentsoft.everywhere.context.BizConst;
+import org.silentsoft.everywhere.context.core.SharedMemory;
 
 public class AppController {
-	
-	private final int MOUSE_DOUBLE_CLICK = 2;
 	
 	@FXML
 	private VBox main;
@@ -104,7 +103,7 @@ public class AppController {
      */
     private void makeNormalizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
-    		if (mouseEvent.getClickCount() >= MOUSE_DOUBLE_CLICK) {
+    		if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
     			stage.setMaximized(!stage.isMaximized());
     		}
     	});
@@ -118,7 +117,10 @@ public class AppController {
     private void makeTransportable(final Node byNode) {
     	byNode.setOnMouseReleased(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-    			EventHandler.callEvent(AppController.class, BizConst.EVENT_VIEW_MAIN);
+    			boolean appLoginStatus = ObjectUtil.toBoolean(SharedMemory.getDataMap().get(BizConst.KEY_APP_LOGIN_STATUS), false);
+    			if (appLoginStatus) {
+    				EventHandler.callEvent(AppController.class, BizConst.EVENT_VIEW_MAIN);
+    			}
     		}
     	});
     }

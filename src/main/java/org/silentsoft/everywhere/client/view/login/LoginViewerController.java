@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
+import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
@@ -28,20 +29,41 @@ public class LoginViewerController {
 	@FXML
 	private PasswordField txtPassword;
 	
-	public void initialize() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
-				if (ObjectUtil.isEmpty(userId)) {
-					txtSingleId.requestFocus();
-				} else {
-					txtSingleId.setText(userId);
-					txtPassword.requestFocus();
-				}
+	protected void initialize() {
+		Platform.runLater(() -> {
+			SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, false);
+			
+			String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
+			if (ObjectUtil.isEmpty(userId)) {
+				// Why do i write many code to just request focus on text field.. ?
+				new Thread(() -> {
+					try {
+						Thread.sleep(500);
+						
+						Platform.runLater(() -> {
+							txtSingleId.requestFocus();
+						});
+					} catch (Exception e) {
+						;
+					}
+				}).start();
+			} else {
+				txtSingleId.setText(userId);
 				
-				SharedMemory.getDataMap().clear();
+				new Thread(() -> {
+					try {
+						Thread.sleep(500);
+						
+						Platform.runLater(()->{
+							txtPassword.requestFocus();
+						});
+					} catch (Exception e) {
+						;
+					}
+				}).start();
 			}
+			
+			SharedMemory.getDataMap().clear();
 		});
 	}
 	
@@ -66,6 +88,8 @@ public class LoginViewerController {
 			param.setUserId(userId);
 			param.setSingleId(userId);
 			param.setUserPwd(SecurityUtil.encodePassword(txtPassword.getText()));
+			param.setLangCode(SysUtil.getLanguage());
+			param.setFnlAccsIp(SysUtil.getHostAddress());
 			
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
@@ -84,6 +108,8 @@ public class LoginViewerController {
 				result.append("Mobile Tel: " + param.getMobileTel());
 				
 				//MessageBox.showAbout(App.getStage(), String.format("Welcome, %s", param.getUserNm()), result.toString());
+				
+				SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, true);
 				
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getSingleId());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_EMAIL, param.getEmailAddr());
