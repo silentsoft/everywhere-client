@@ -56,7 +56,7 @@ public class ModifyViewerController {
 	@FXML
 	Button btnCancelInEmail;
 	
-	public void initialize() {
+	protected void initialize() {
 		Platform.runLater(() ->
 		{
 			txtName.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM)));
