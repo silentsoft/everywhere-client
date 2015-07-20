@@ -20,7 +20,7 @@
       <TextField fx:id="txtSingleId" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" promptText="ID" />
       <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="237.0" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" promptText="Password" />
       <!-- textFill="#fffafa" -->
-      <Button defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#8a8a8a">
+      <Button fx:id="btnLogin" defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#8a8a8a">
          <font>
             <Font name="Verdana Bold" size="11.0" />
          </font>

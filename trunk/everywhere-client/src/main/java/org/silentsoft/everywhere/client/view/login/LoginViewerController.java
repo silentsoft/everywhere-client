@@ -1,9 +1,12 @@
 package org.silentsoft.everywhere.client.view.login;
 
+import javafx.animation.Interpolator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
@@ -19,6 +22,8 @@ import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fxexperience.javafx.animation.ShakeTransition;
+
 public class LoginViewerController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginViewerController.class);
@@ -28,6 +33,9 @@ public class LoginViewerController {
 	
 	@FXML
 	private PasswordField txtPassword;
+	
+	@FXML
+	private Button btnLogin;
 	
 	protected void initialize() {
 		Platform.runLater(() -> {
@@ -94,7 +102,7 @@ public class LoginViewerController {
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
-				MessageBox.showError(App.getStage(), "Login Failed.. Try again !!!");
+				new ShakeTransition(btnLogin).play();
 			} else {
 				result.append("Login Succeed ! \r\n\r\n");
 				result.append("MES ID: " + param.getUserId() + "\r\n");
@@ -120,7 +128,7 @@ public class LoginViewerController {
 			}
 		} catch (EverywhereException e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
-			MessageBox.showError(App.getStage(), "response failure from server :(");
+			MessageBox.showError(App.getStage(), "Response failure from server :(");
 		}
 	}
 	
