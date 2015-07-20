@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.util.Duration;
 
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
@@ -32,6 +33,10 @@ import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fxexperience.javafx.animation.BounceTransition;
+import com.fxexperience.javafx.animation.FadeInUpTransition;
+import com.fxexperience.javafx.animation.FadeOutUpTransition;
 
 public class MainViewerController {
 	
@@ -109,7 +114,7 @@ public class MainViewerController {
 						});
 						
 						try {
-							Thread.sleep(10000);
+							Thread.sleep(3000);
 						} catch (Exception e) {
 							;
 						}
@@ -123,6 +128,14 @@ public class MainViewerController {
 	}
 	
 	private void setNotice(String notice) {
+		new FadeInUpTransition(lblNotice).playFrom(Duration.millis(200));
+		
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			;
+		}
+		
 		lblNotice.setText(notice);
 	}
 	

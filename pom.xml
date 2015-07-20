@@ -1,44 +1,49 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.silentsoft</groupId>
-  <artifactId>everywhere-client</artifactId>
-  <version>1.0.0</version>
-  
-  <properties>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.silentsoft</groupId>
+	<artifactId>everywhere-client</artifactId>
+	<version>1.0.0</version>
+
+	<properties>
 		<everywhere.context.version>1.0.0</everywhere.context.version>
 		<slf4j.version>1.6.1</slf4j.version>
+		<jidefx-common.version>0.9.1</jidefx-common.version>
 		<buildtime>${maven.build.timestamp}</buildtime>
 		<project.deploymentdir>${basedir}/target/Everywhere-client</project.deploymentdir>
 	</properties>
-  
-  <build>
-	<resources>
-		<resource>
-			<directory>src/main/java</directory>
-			<includes>
-				<include>**/*.fxml</include>
-				<include>**/*.css</include>
-			</includes>
-		</resource>
-		<resource>
-			<directory>src/main/resources</directory>
-			<includes>
-				<include>**/*.png</include>
-				<include>**/*.jpg</include>
-			</includes>
-		</resource>
-	</resources>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <encoding>EUC-KR</encoding>
-        </configuration>
-      </plugin>
-   			<!-- copy all dependencies to deployment lib -->
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.fxml</include>
+					<include>**/*.css</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.png</include>
+					<include>**/*.jpg</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>EUC-KR</encoding>
+				</configuration>
+			</plugin>
+			<!-- copy all dependencies to deployment lib -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -93,7 +98,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.silentsoft</groupId>
@@ -115,6 +120,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jidesoft</groupId>
+			<artifactId>jidefx-common</artifactId>
+			<version>${jidefx-common.version}</version>
 		</dependency>
 	</dependencies>
 </project>
