@@ -26,6 +26,11 @@ import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
 
+import com.fxexperience.javafx.animation.BounceInTransition;
+import com.fxexperience.javafx.animation.FadeInTransition;
+import com.fxexperience.javafx.animation.FlipInXTransition;
+import com.fxexperience.javafx.animation.FlipTransition;
+
 public class App extends Application implements EventListener {
 	
 	private static Stage stage;
@@ -58,6 +63,11 @@ public class App extends Application implements EventListener {
 			
 			Scene scene = new Scene(app, 910, 530, Color.TRANSPARENT);
 			
+//			new FlipTransition(app).play();
+//			new FadeInTransition(app).play();
+			new BounceInTransition(app).play();
+//			new FlipInXTransition(app).play();
+			
 			stage.initStyle(StageStyle.TRANSPARENT);
 			stage.setScene(scene);
 			stage.show();
@@ -73,7 +83,7 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void displayTrayIcon() {
-		TrayIconHandler.registerTrayIcon(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/tray/ic_cloud_circle_grey600_48dp.png"), "Everywhere");
+		TrayIconHandler.registerTrayIcon(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon/everywhere.png"), "Everywhere");
 		
 		TrayIconHandler.addItem("About", new ActionListener() {
 			@Override
