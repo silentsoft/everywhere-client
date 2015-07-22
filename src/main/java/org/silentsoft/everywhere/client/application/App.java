@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -27,15 +28,12 @@ import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
 
 import com.fxexperience.javafx.animation.BounceInTransition;
-import com.fxexperience.javafx.animation.FadeInTransition;
-import com.fxexperience.javafx.animation.FlipInXTransition;
-import com.fxexperience.javafx.animation.FlipTransition;
 
 public class App extends Application implements EventListener {
 	
-	private static Stage stage;
+	private static Parent app;
 	
-	private Parent app;
+	private static Stage stage;
 	
 	private AppController appController;
 	
@@ -43,6 +41,10 @@ public class App extends Application implements EventListener {
 		launch(args);
 	}
 
+	protected static Parent getParent() {
+		return app;
+	}
+	
 	public static Stage getStage() {
 		return stage;
 	}
@@ -68,6 +70,7 @@ public class App extends Application implements EventListener {
 			new BounceInTransition(app).play();
 //			new FlipInXTransition(app).play();
 			
+			stage.setTitle("Everywhere");
 			stage.initStyle(StageStyle.TRANSPARENT);
 			stage.setScene(scene);
 			stage.show();
@@ -77,13 +80,31 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void initialize() {
-		displayTrayIcon();
+		Platform.setImplicitExit(false);
+		
+		displayIcon();
 		
 		EventHandler.addListener(this);
 	}
 	
-	private void displayTrayIcon() {
-		TrayIconHandler.registerTrayIcon(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon/everywhere.png"), "Everywhere");
+	private void displayIcon() {
+		// taskbar
+		stage.getIcons().add(new Image("/images/icon/everywhere.png"));
+		
+		// system tray
+		TrayIconHandler.registerTrayIcon(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon/everywhere.png"), "Everywhere", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Platform.runLater(() -> {
+					if (stage.isShowing()) {
+						stage.setIconified(false);
+					} else {
+						new BounceInTransition(app).play();
+						stage.show();
+					}
+				});
+			}
+		});
 		
 		TrayIconHandler.addItem("About", new ActionListener() {
 			@Override

@@ -8,6 +8,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
+
+
+import javafx.util.Duration;
+
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
@@ -16,6 +21,14 @@ import org.silentsoft.everywhere.client.model.Delta;
 import org.silentsoft.everywhere.client.utility.DragResizer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
+
+
+
+
+import com.fxexperience.javafx.animation.BounceOutDownTransition;
+import com.fxexperience.javafx.animation.TadaTransition;
+import com.sun.javafx.application.PlatformImpl;
+
 
 public class AppController {
 	
@@ -159,7 +172,11 @@ public class AppController {
     private void makeClosable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseReleased(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-    			stage.close();
+    			BounceOutDownTransition animation = new BounceOutDownTransition(App.getParent());
+    			animation.setOnFinished(actionEvent -> {
+    				stage.hide();
+    			});
+    			animation.play();
     		}
     	});
     }
