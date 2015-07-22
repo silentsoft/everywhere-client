@@ -1,6 +1,8 @@
 package org.silentsoft.everywhere.client.view.main;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -9,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import org.controlsfx.dialog.Dialog;
@@ -34,9 +37,7 @@ import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fxexperience.javafx.animation.BounceTransition;
 import com.fxexperience.javafx.animation.FadeInUpTransition;
-import com.fxexperience.javafx.animation.FadeOutUpTransition;
 
 public class MainViewerController {
 	
@@ -176,31 +177,38 @@ public class MainViewerController {
 	@FXML
 	private void upload_OnMouseClick() {
 		Platform.runLater(() -> {
-			Optional<String> optionalString = Dialogs.create().owner(App.getStage()).title("Upload Target").masthead("File Upload Prototype").showTextInput();
-			if (optionalString.isPresent()) {
-				String file = optionalString.get();
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Upload Files");
+			
+			List<File> listFiles = fileChooser.showOpenMultipleDialog(App.getStage());
+			
+			StringBuffer sendingInfo = new StringBuffer();
+			
+			long startTime = System.currentTimeMillis();
+			for (File file : listFiles) {
+				String fileName = file.getName();
 				
 				FilePOJO filePOJO = new FilePOJO();
 				
 				try {
-					filePOJO.setName(FileUtil.getName(file));
-					filePOJO.setExtension(FileUtil.getExtension(file));
+					filePOJO.setName(FileUtil.getName(fileName));
+					filePOJO.setExtension(FileUtil.getExtension(fileName));
 					filePOJO.setInputStream(new FileInputStream(file));
+					
+					long fileUploadStartTime = System.currentTimeMillis();
+					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
+					long fileUploadEndTime = System.currentTimeMillis();
+					
+					double fileSize = ((double)file.length()/1024/1024);
+					sendingInfo.append(String.format("%.4f", fileSize) + "MB " + fileName + " " + (fileUploadEndTime-fileUploadStartTime) + "ms \r\n");
 				} catch (Exception e) {
 					LOGGER.error(e.toString());
 					return;
 				}
-				
-				try {
-					long startTime = System.currentTimeMillis();
-					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
-					long endTime = System.currentTimeMillis();
-					
-					MessageBox.showInformation(App.getStage(), "Sending file succeed in " + (endTime-startTime) + "ms", optionalString.get());
-				} catch (EverywhereException e) {
-					LOGGER.error(e.toString());
-				}
 			}
+			long endTime = System.currentTimeMillis();
+			
+			MessageBox.showInformation(App.getStage(), "Sending files succeed in " + (endTime-startTime) + "ms", sendingInfo.toString());
 		});
 	}
 }
