@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import jidefx.animation.AnimationType;
+import jidefx.animation.AnimationUtils;
 
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
@@ -26,8 +28,6 @@ import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
-
-import com.fxexperience.javafx.animation.BounceInTransition;
 
 public class App extends Application implements EventListener {
 	
@@ -65,14 +65,11 @@ public class App extends Application implements EventListener {
 			
 			Scene scene = new Scene(app, 910, 530, Color.TRANSPARENT);
 			
-//			new FlipTransition(app).play();
-//			new FadeInTransition(app).play();
-			new BounceInTransition(app).play();
-//			new FlipInXTransition(app).play();
-			
 			stage.setTitle("Everywhere");
 			stage.initStyle(StageStyle.TRANSPARENT);
 			stage.setScene(scene);
+			
+			AnimationUtils.createTransition(app, AnimationType.BOUNCE_IN).play();
 			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -99,7 +96,7 @@ public class App extends Application implements EventListener {
 					if (stage.isShowing()) {
 						stage.setIconified(false);
 					} else {
-						new BounceInTransition(app).play();
+						AnimationUtils.createTransition(app, AnimationType.BOUNCE_IN).play();
 						stage.show();
 					}
 				});

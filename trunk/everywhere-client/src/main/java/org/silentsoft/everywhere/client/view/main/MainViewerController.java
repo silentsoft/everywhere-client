@@ -3,8 +3,8 @@ package org.silentsoft.everywhere.client.view.main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
-import java.util.Optional;
 
+import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,10 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
+import jidefx.animation.AnimationType;
+import jidefx.animation.AnimationUtils;
 
 import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.component.notification.Notification;
 import org.silentsoft.core.component.notification.Notification.NotifyType;
@@ -36,8 +36,6 @@ import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fxexperience.javafx.animation.FadeInUpTransition;
 
 public class MainViewerController {
 	
@@ -115,7 +113,7 @@ public class MainViewerController {
 						});
 						
 						try {
-							Thread.sleep(3000);
+							Thread.sleep(10000);
 						} catch (Exception e) {
 							;
 						}
@@ -129,15 +127,16 @@ public class MainViewerController {
 	}
 	
 	private void setNotice(String notice) {
-		new FadeInUpTransition(lblNotice).playFrom(Duration.millis(200));
-		
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			;
-		}
-		
-		lblNotice.setText(notice);
+		Transition fadeOutAnimation = AnimationUtils.createTransition(lblNotice, AnimationType.FADE_OUT_UP);
+		fadeOutAnimation.setRate(7.5);
+		fadeOutAnimation.setOnFinished(actionEvent -> {
+			lblNotice.setText(notice);
+			
+			Transition fadeInAnimation = AnimationUtils.createTransition(lblNotice, AnimationType.FADE_IN_UP);
+			fadeInAnimation.setRate(7.5);
+			fadeInAnimation.play();
+		});
+		fadeOutAnimation.play();
 	}
 	
 	private void displayUserInfo() {

@@ -1,5 +1,6 @@
 package org.silentsoft.everywhere.client.application;
 
+import javafx.animation.Transition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
@@ -7,11 +8,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
-
-
-import javafx.util.Duration;
+import jidefx.animation.AnimationType;
+import jidefx.animation.AnimationUtils;
 
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.event.EventHandler;
@@ -21,13 +19,6 @@ import org.silentsoft.everywhere.client.model.Delta;
 import org.silentsoft.everywhere.client.utility.DragResizer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
-
-
-
-
-import com.fxexperience.javafx.animation.BounceOutDownTransition;
-import com.fxexperience.javafx.animation.TadaTransition;
-import com.sun.javafx.application.PlatformImpl;
 
 
 public class AppController {
@@ -172,7 +163,7 @@ public class AppController {
     private void makeClosable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseReleased(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-    			BounceOutDownTransition animation = new BounceOutDownTransition(App.getParent());
+    			Transition animation = AnimationUtils.createTransition(App.getParent(), AnimationType.BOUNCE_OUT_DOWN);
     			animation.setOnFinished(actionEvent -> {
     				stage.hide();
     			});
