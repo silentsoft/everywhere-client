@@ -48,6 +48,10 @@ public class App extends Application implements EventListener {
 	public static Stage getStage() {
 		return stage;
 	}
+	
+	public static Pane getBody() {
+		return (Pane)getParent().lookup("#body");
+	}
     
 	@Override
 	public void start(Stage stage) {
@@ -160,9 +164,8 @@ public class App extends Application implements EventListener {
 	
 	private void changeBodyToNode(Node node) {
 		Platform.runLater(() -> {
-			Pane body = (Pane)app.lookup("#body");
-			body.getChildren().clear();
-			body.getChildren().add(node);
+			getBody().getChildren().clear();
+			getBody().getChildren().add(node);
 		});
 	}
 }
