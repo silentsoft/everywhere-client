@@ -1,12 +1,12 @@
 package org.silentsoft.everywhere.client.view.login;
 
-import javafx.animation.Interpolator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.util.Duration;
+import jidefx.animation.AnimationType;
+import jidefx.animation.AnimationUtils;
 
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
@@ -21,8 +21,6 @@ import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fxexperience.javafx.animation.ShakeTransition;
 
 public class LoginViewerController {
 
@@ -102,7 +100,7 @@ public class LoginViewerController {
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
-				new ShakeTransition(btnLogin).play();
+				AnimationUtils.createTransition(btnLogin, AnimationType.PANIC_SHAKE).play();
 			} else {
 				result.append("Login Succeed ! \r\n\r\n");
 				result.append("MES ID: " + param.getUserId() + "\r\n");

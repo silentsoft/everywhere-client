@@ -26,6 +26,9 @@ import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.button.ImageButton;
+import org.silentsoft.everywhere.client.utility.PopupHandler;
+import org.silentsoft.everywhere.client.utility.PopupHandler.CloseType;
+import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
@@ -71,6 +74,10 @@ public class MainViewerController {
 		}
 		
 		return mainSVO;
+	}
+	
+	private void setMainSVO(MainSVO mainSVO) {
+		this.mainSVO = mainSVO;
 	}
 	
 	protected void initialize() {
@@ -158,7 +165,7 @@ public class MainViewerController {
 	
 	@FXML
 	private void notice_OnMouseClick() {
-		MessageBox.showError("Sorry, Notice popup function not support yet !");
+		PopupHandler.show(new NoticeViewer().getNoticeViewer(), CloseType.FOCUS_BASE, true);
 	}
 	
 	@FXML
@@ -180,6 +187,9 @@ public class MainViewerController {
 			fileChooser.setTitle("Upload Files");
 			
 			List<File> listFiles = fileChooser.showOpenMultipleDialog(App.getStage());
+			if (listFiles == null) {
+				return;
+			}
 			
 			StringBuffer sendingInfo = new StringBuffer();
 			
