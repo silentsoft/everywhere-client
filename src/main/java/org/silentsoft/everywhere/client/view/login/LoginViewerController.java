@@ -126,7 +126,7 @@ public class LoginViewerController {
 			}
 		} catch (EverywhereException e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
-			MessageBox.showError(App.getStage(), "Response failure from server :(");
+			MessageBox.showError(App.getStage(), "Response Failure", "Please contact administrator :(");
 		}
 	}
 	

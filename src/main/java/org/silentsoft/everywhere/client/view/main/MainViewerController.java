@@ -1,9 +1,5 @@
 package org.silentsoft.everywhere.client.view.main;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.List;
-
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -11,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.stage.FileChooser;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
@@ -21,7 +16,6 @@ import org.silentsoft.core.component.notification.Notification;
 import org.silentsoft.core.component.notification.Notification.NotifyType;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.DateUtil;
-import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
@@ -29,13 +23,13 @@ import org.silentsoft.everywhere.client.button.ImageButton;
 import org.silentsoft.everywhere.client.utility.PopupHandler;
 import org.silentsoft.everywhere.client.utility.PopupHandler.CloseType;
 import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
+import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
 import org.silentsoft.everywhere.context.fx.main.vo.Notice001DVO;
 import org.silentsoft.everywhere.context.fx.main.vo.Notice002DVO;
 import org.silentsoft.everywhere.context.host.EverywhereException;
-import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,42 +176,6 @@ public class MainViewerController {
 	
 	@FXML
 	private void upload_OnMouseClick() {
-		Platform.runLater(() -> {
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("Upload Files");
-			
-			List<File> listFiles = fileChooser.showOpenMultipleDialog(App.getStage());
-			if (listFiles == null) {
-				return;
-			}
-			
-			StringBuffer sendingInfo = new StringBuffer();
-			
-			long startTime = System.currentTimeMillis();
-			for (File file : listFiles) {
-				String fileName = file.getName();
-				
-				FilePOJO filePOJO = new FilePOJO();
-				
-				try {
-					filePOJO.setName(FileUtil.getName(fileName));
-					filePOJO.setExtension(FileUtil.getExtension(fileName));
-					filePOJO.setInputStream(new FileInputStream(file));
-					
-					long fileUploadStartTime = System.currentTimeMillis();
-					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
-					long fileUploadEndTime = System.currentTimeMillis();
-					
-					double fileSize = ((double)file.length()/1024/1024);
-					sendingInfo.append(String.format("%.4f", fileSize) + "MB " + fileName + " " + (fileUploadEndTime-fileUploadStartTime) + "ms \r\n");
-				} catch (Exception e) {
-					LOGGER.error(e.toString());
-					return;
-				}
-			}
-			long endTime = System.currentTimeMillis();
-			
-			MessageBox.showInformation(App.getStage(), "Sending files succeed in " + (endTime-startTime) + "ms", sendingInfo.toString());
-		});
+		PopupHandler.show(new UploadViewer().getUploadViewer(), CloseType.BUTTON_BASE, true);
 	}
 }
