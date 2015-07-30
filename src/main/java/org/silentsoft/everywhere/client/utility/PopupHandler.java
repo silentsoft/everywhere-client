@@ -1,5 +1,9 @@
 package org.silentsoft.everywhere.client.utility;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
@@ -18,11 +22,25 @@ public class PopupHandler {
 		BUTTON_BASE
 	};
 	
+	private static Map<Parent, Map<Stage, Effect>> popupMap = new HashMap<Parent, Map<Stage, Effect>>();
+	
 	public static void show(Parent popup, CloseType closeType, boolean showColorAdjustEffect) {
-		Stage popupStage = new Stage();
-		popupStage.initOwner(App.getStage());
-		popupStage.initStyle(StageStyle.TRANSPARENT);
-		popupStage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+		if (popup == null) {
+			return;
+		}
+		
+		Stage stage = new Stage();
+		stage.initOwner(App.getStage());
+		stage.initStyle(StageStyle.TRANSPARENT);
+		
+		if (closeType == CloseType.BUTTON_BASE) {
+			Map<Stage, Effect> value = new HashMap<Stage, Effect>();
+			value.put(stage, App.getBody().getEffect());
+			
+			popupMap.put(popup, value);
+		}
+		
+		stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			Effect defaultEffect = App.getBody().getEffect();
 			
 			@Override
@@ -30,12 +48,14 @@ public class PopupHandler {
 				if (!oldValue && newValue) {
 					// if got focus
 					setEffect(new ColorAdjust(0, 0, -0.5, 0));
+					App.getBody().setDisable(true);
 				} else if (oldValue && !newValue) {
 					// if lost focus
-					setEffect(defaultEffect);
-					
 					if (closeType == CloseType.FOCUS_BASE) {
-						popupStage.close();
+						stage.close();
+						
+						setEffect(defaultEffect);
+						App.getBody().setDisable(false);
 					}
 				}
 				
@@ -50,11 +70,39 @@ public class PopupHandler {
 		
 		double prefWidth = popup.prefWidth(0);
 		double prefHeight = popup.prefHeight(0);
-		Scene popupScene = new Scene(popup, prefWidth, prefHeight);
+		Scene scene = new Scene(popup, prefWidth, prefHeight);
 		
-		popupStage.setScene(popupScene);
-		popupStage.setX(App.getStage().getX() + (App.getStage().getWidth()/2) - (popupScene.getWidth()/2));
-		popupStage.setY(App.getStage().getY() + (App.getStage().getHeight()/2) - (popupScene.getHeight()/2));
-		popupStage.show();
+		stage.setScene(scene);
+		stage.setX(App.getStage().getX() + (App.getStage().getWidth()/2) - (scene.getWidth()/2));
+		stage.setY(App.getStage().getY() + (App.getStage().getHeight()/2) - (scene.getHeight()/2));
+		stage.show();
+	}
+	
+	public static Stage get(Parent popup) {
+		for(Entry<Stage, Effect> entrySet : popupMap.get(popup).entrySet()) {
+			return entrySet.getKey();
+		}
+		
+		return null;
+	}
+	
+	public static void close(Parent popup) {
+		if (popup == null) {
+			return;
+		}
+		
+		for(Entry<Stage, Effect> entrySet : popupMap.get(popup).entrySet()) {
+			Stage stage = entrySet.getKey();
+			if (stage != null) {
+				stage.close();
+				
+				App.getBody().setEffect(entrySet.getValue());
+				App.getBody().setDisable(false);
+				
+				popupMap.remove(popup);
+			}
+			
+			break;
+		}
 	}
 }
