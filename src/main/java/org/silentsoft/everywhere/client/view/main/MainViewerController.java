@@ -20,8 +20,8 @@ import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.button.ImageButton;
-import org.silentsoft.everywhere.client.utility.PopupHandler;
-import org.silentsoft.everywhere.client.utility.PopupHandler.CloseType;
+import org.silentsoft.everywhere.client.popup.PopupHandler;
+import org.silentsoft.everywhere.client.popup.PopupHandler.CloseType;
 import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
@@ -159,7 +159,7 @@ public class MainViewerController {
 	
 	@FXML
 	private void notice_OnMouseClick() {
-		PopupHandler.show(new NoticeViewer().getNoticeViewer(), CloseType.FOCUS_BASE, true);
+		PopupHandler.show("Notice", new NoticeViewer().getNoticeViewer(), CloseType.FOCUS_BASE, true);
 	}
 	
 	@FXML
@@ -176,6 +176,6 @@ public class MainViewerController {
 	
 	@FXML
 	private void upload_OnMouseClick() {
-		PopupHandler.show(new UploadViewer().getUploadViewer(), CloseType.BUTTON_BASE, true);
+		PopupHandler.show("File Upload", new UploadViewer().getUploadViewer(), CloseType.BUTTON_BASE, true);
 	}
 }
