@@ -2,7 +2,16 @@ package org.silentsoft.everywhere.client.view.main.upload;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+
+
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -17,12 +26,19 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 
+
+
+import org.silentsoft.core.CommonConst;
+import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.component.notification.Notification;
 import org.silentsoft.core.component.notification.Notification.NotifyType;
 import org.silentsoft.core.util.FileUtil;
+import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.model.FileModel;
-import org.silentsoft.everywhere.client.utility.PopupHandler;
+import org.silentsoft.everywhere.client.popup.PopupHandler;
+import org.silentsoft.everywhere.context.BizConst;
+import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
@@ -110,25 +126,60 @@ public class UploadViewerController {
 			return;
 		}
 		
-		FileModel fileModel = new FileModel();
-		fileModel.setFile(file);
-		fileModel.setPath(file.getAbsolutePath());
-		fileModel.setLength(file.length());
-		
-		fileModelList.add(fileModel);
-	}
-	
-	@FXML
-	private void close_OnMouseClick() {
-		PopupHandler.close(uploadViewer);
+		try {
+			Files.walkFileTree(Paths.get(file.getAbsolutePath()), new FileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+					if (dir.toString().length() >= CommonConst.MAX_DIRECTORY_LENGTH) {
+						LOGGER.error("The depth is to deep ! it will be skip subtree <{}>", new Object[]{dir});
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+					
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					File visitFile = file.toFile();
+					
+					FileModel fileModel = new FileModel();
+					fileModel.setFile(visitFile);
+					fileModel.setPath(visitFile.getAbsolutePath());
+					fileModel.setLength(visitFile.length());
+					
+					fileModelList.add(fileModel);
+					
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+					LOGGER.error("Visit file failed ! <{}>", new Object[]{file});
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					return FileVisitResult.CONTINUE;
+				}
+				
+			});
+		} catch (IOException e) {
+			LOGGER.error(e.toString());
+		}
 	}
 	
 	@FXML
 	private void upload_OnMouseClick() {
 		Platform.runLater(() -> {
-//			StringBuffer sendingInfo = new StringBuffer();
-			
 			long startTime = System.currentTimeMillis();
+			String userUniqueSeq = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_UNIQUE_SEQ));
+			if (ObjectUtil.isEmpty(userUniqueSeq)) {
+				MessageBox.showError(App.getStage(), "Wrong User", "Please contact administrator :(");
+				return;
+			}
+			
 			for (FileModel fileModel : fileModelList) {
 				File file = fileModel.getFile();
 				
@@ -137,13 +188,11 @@ public class UploadViewerController {
 				try {
 					filePOJO.setName(FileUtil.getName(fileName));
 					filePOJO.setExtension(FileUtil.getExtension(fileName));
+					filePOJO.setUserUniqueSeq(userUniqueSeq);
 					filePOJO.setInputStream(new FileInputStream(file));
 					
-//					long fileUploadStartTime = System.currentTimeMillis();
 					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
-//					long fileUploadEndTime = System.currentTimeMillis();
 					
-//					sendingInfo.append(fileModel.getSize() + " " + fileName + " " + (fileUploadEndTime-fileUploadStartTime) + "ms \r\n");
 				} catch (Exception e) {
 					LOGGER.error(e.toString());
 					return;
@@ -152,11 +201,8 @@ public class UploadViewerController {
 			long endTime = System.currentTimeMillis();
 			
 			Notification.show(App.getStage(), "Transfer Complete", fileModelList.size() + " files sending succeed in " + (endTime-startTime) + "ms", NotifyType.INFORMATION);
-//			Notification.show(App.getStage(), "Transfer Complete", fileModelList.size() + " files sending succeed in " + (endTime-startTime) + "ms", NotifyType.INFORMATION, (actionEvent) -> {
-//				MessageBox.showInformation(App.getStage(), null, sendingInfo.toString());
-//			});
 			
-			close_OnMouseClick();
+			PopupHandler.close(uploadViewer);
 		});
 	}
 }

@@ -102,22 +102,10 @@ public class LoginViewerController {
 			if (param == null || ObjectUtil.isEmpty(param)) {
 				AnimationUtils.createTransition(btnLogin, AnimationType.PANIC_SHAKE).play();
 			} else {
-				result.append("Login Succeed ! \r\n\r\n");
-				result.append("MES ID: " + param.getUserId() + "\r\n");
-				result.append("User Name: " + param.getUserNm() + "\r\n");
-				result.append("Eng User Name: " + param.getEngUserNm() + "\r\n");
-				result.append("Emp NO: " + param.getEmpNo() + "\r\n");
-				result.append("Email Addr: " + param.getEmailAddr() + "\r\n");
-				result.append("Dept Code: " + param.getDeptCode() + "\r\n");
-				result.append("Dept Name: " + param.getDeptNm() + "\r\n");
-				result.append("Eng Dept Name: " + param.getEngDeptNm() + "\r\n");
-				result.append("Mobile Tel: " + param.getMobileTel());
-				
-				//MessageBox.showAbout(App.getStage(), String.format("Welcome, %s", param.getUserNm()), result.toString());
-				
 				SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, true);
 				
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getSingleId());
+				SharedMemory.getDataMap().put(BizConst.KEY_USER_UNIQUE_SEQ, param.getUniqueSeq());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_EMAIL, param.getEmailAddr());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_NM, param.getUserNm());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_FNL_ACCS_DT, param.getFnlAccsDt());
