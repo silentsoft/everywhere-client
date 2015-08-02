@@ -11,8 +11,6 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
-
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,8 +23,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
-
-
 
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.component.messagebox.MessageBox;
@@ -126,6 +122,8 @@ public class UploadViewerController {
 			return;
 		}
 		
+		String parent = file.getParent();
+		
 		try {
 			Files.walkFileTree(Paths.get(file.getAbsolutePath()), new FileVisitor<Path>() {
 
@@ -136,6 +134,15 @@ public class UploadViewerController {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 					
+					String path = dir.toString();
+					path = path.substring(parent.length(), path.length());
+					
+					FileModel fileModel = new FileModel();
+					fileModel.setDirectory(true);
+					fileModel.setPath(path);
+					
+					fileModelList.add(fileModel);
+					
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -143,9 +150,13 @@ public class UploadViewerController {
 				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 					File visitFile = file.toFile();
 					
+					String path = file.toString();
+					path = path.substring(parent.length(), path.length());
+					
 					FileModel fileModel = new FileModel();
+					fileModel.setDirectory(false);
+					fileModel.setPath(path);
 					fileModel.setFile(visitFile);
-					fileModel.setPath(visitFile.getAbsolutePath());
 					fileModel.setLength(visitFile.length());
 					
 					fileModelList.add(fileModel);
@@ -183,13 +194,20 @@ public class UploadViewerController {
 			for (FileModel fileModel : fileModelList) {
 				File file = fileModel.getFile();
 				
-				String fileName = file.getName();
+				
 				FilePOJO filePOJO = new FilePOJO();
 				try {
-					filePOJO.setName(FileUtil.getName(fileName));
-					filePOJO.setExtension(FileUtil.getExtension(fileName));
+					filePOJO.setDirectory(fileModel.isDirectory());
+					filePOJO.setPath(fileModel.getPath());
 					filePOJO.setUserUniqueSeq(userUniqueSeq);
-					filePOJO.setInputStream(new FileInputStream(file));
+					
+					if (filePOJO.isDirectory() == false) {
+						String fileName = file.getName();
+						
+						filePOJO.setName(FileUtil.getName(fileName));
+						filePOJO.setExtension(FileUtil.getExtension(fileName));
+						filePOJO.setInputStream(new FileInputStream(file));
+					}
 					
 					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
 					
