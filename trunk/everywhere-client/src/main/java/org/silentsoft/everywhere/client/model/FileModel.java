@@ -8,6 +8,8 @@ public class FileModel {
 	
 	private String path;
 	
+	private boolean isDirectory;
+	
 	private long length;
 	
 	private String size;
@@ -26,6 +28,14 @@ public class FileModel {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public boolean isDirectory() {
+		return isDirectory;
+	}
+
+	public void setDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
 	}
 
 	public long getLength() {
