@@ -192,21 +192,22 @@ public class UploadViewerController {
 			}
 			
 			for (FileModel fileModel : fileModelList) {
-				File file = fileModel.getFile();
-				
-				
 				FilePOJO filePOJO = new FilePOJO();
 				try {
 					filePOJO.setDirectory(fileModel.isDirectory());
 					filePOJO.setPath(fileModel.getPath());
 					filePOJO.setUserUniqueSeq(userUniqueSeq);
 					
+					Path path = Paths.get(filePOJO.getPath());
+					String fileName = path.getFileName().toString(); 
+					
 					if (filePOJO.isDirectory() == false) {
-						String fileName = file.getName();
-						
 						filePOJO.setName(FileUtil.getName(fileName));
 						filePOJO.setExtension(FileUtil.getExtension(fileName));
-						filePOJO.setInputStream(new FileInputStream(file));
+						filePOJO.setSize(fileModel.getSize());
+						filePOJO.setInputStream(new FileInputStream(fileModel.getFile()));
+					} else {
+						filePOJO.setName(fileName);
 					}
 					
 					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
