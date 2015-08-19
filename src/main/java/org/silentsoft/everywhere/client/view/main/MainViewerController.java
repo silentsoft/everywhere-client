@@ -1,5 +1,7 @@
 package org.silentsoft.everywhere.client.view.main;
 
+import java.io.File;
+
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -26,6 +28,8 @@ import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
+import org.silentsoft.everywhere.context.fx.main.vo.Cloud001DVO;
+import org.silentsoft.everywhere.context.fx.main.vo.Cloud002DVO;
 import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
 import org.silentsoft.everywhere.context.fx.main.vo.Notice001DVO;
 import org.silentsoft.everywhere.context.fx.main.vo.Notice002DVO;
@@ -55,12 +59,12 @@ public class MainViewerController {
 	private ImageButton btnManage;
 	
 	@FXML
-	private TreeView treeDirectory;
+	private TreeView treeCloud;
 	
 	@FXML
 	private Button btnUpload;
 	
-	private TreeItem<String> rootDirectory;
+	private TreeItem<String> rootCloud;
 	
 	private MainSVO getMainSVO() {
 		if (mainSVO == null) {
@@ -78,19 +82,7 @@ public class MainViewerController {
 		Platform.runLater(() -> {
 			displayNotices();
 			displayUserInfo();
-
-			
-			//TEMP CODING
-			rootDirectory = new TreeItem<String>();
-			rootDirectory.setExpanded(true);
-			
-			TreeItem<String> recycleBin = new TreeItem<String>("Recycle Bin");
-			recycleBin.getChildren().add(new TreeItem<String>("WTF.avi"));
-			
-			rootDirectory.getChildren().add(recycleBin);
-			
-			treeDirectory.setRoot(rootDirectory);
-			//
+			displayClouds();
 		});
 	}
 	
@@ -122,6 +114,64 @@ public class MainViewerController {
 				}
 			});
 			threadNotice.start();
+		} catch (EverywhereException e) {
+			LOGGER.error(e.toString());
+		}
+	}
+	
+	private void displayClouds() {
+		try {
+			String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
+			
+			Cloud001DVO cloud001DVO = new Cloud001DVO();
+			cloud001DVO.setUserId(userId);
+			
+			getMainSVO().setCloud001DVO(cloud001DVO);
+			
+			mainSVO = RESTfulAPI.doPost("/fx/main/cloud", getMainSVO(), MainSVO.class);
+
+			
+			rootCloud = new TreeItem<String>();
+			rootCloud.setExpanded(true);
+			
+			TreeItem<String> recycleBin = new TreeItem<String>("Recycle Bin");
+			recycleBin.getChildren().add(new TreeItem<String>("Not support function"));
+			rootCloud.getChildren().add(recycleBin);
+			
+//			for (Cloud002DVO cloud002DVO : getMainSVO().getCloud002DVOList()) {
+//				boolean isRootPath = (cloud002DVO.getFilePath().indexOf(File.separator) == -1 ? true : false);
+//				if (isRootPath) {
+//					TreeItem<String> item = new TreeItem<String>(cloud002DVO.getFileName());
+//					rootCloud.getChildren().add(item);
+//				} else {
+//					for (int i=0, j=rootCloud.getChildren().size(); i<j; i++) {
+//						TreeItem<String> item = rootCloud.getChildren().get(i);
+//						if (cloud002DVO.getFileName().equals(item.getValue())) {
+//							continue;
+//						} else {
+//							if (item.getValue().equals(cloud002DVO.getFilePath().substring(0, cloud002DVO.getFilePath().lastIndexOf(File.separator)))) {
+//								if (cloud002DVO.getDirectoryYn().equals("Y")) {
+//									item.getParent().getChildren().add(new TreeItem<String>(cloud002DVO.getFileName()));
+//									break;
+//								} else if (cloud002DVO.getDirectoryYn().equals("N")) {
+//									item.getChildren().add(new TreeItem<String>(cloud002DVO.getFileName()));
+//									break;
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+			
+			// for (...)
+			//  1. if root path and directoryYn is "N" then insert into the root.
+			//  2. else not root path and directoryYn is "Y" then
+			//  2-1. (skip self) if already exists directory then insert into the directory nor create.
+			//  3. else not root path and directoryYn is "N" then
+			//  3-1. (skip self) if already exists parent directory then insert into the file to directory nor create directory, and put.
+			
+			
+			treeCloud.setRoot(rootCloud);
 		} catch (EverywhereException e) {
 			LOGGER.error(e.toString());
 		}
