@@ -57,7 +57,7 @@
                   <Line endX="150.0" layoutX="5.0" layoutY="140.0" strokeWidth="0.1" />
                   <ScrollPane layoutY="141.0" minHeight="343.0" minWidth="152.0" prefHeight="343.0" prefWidth="152.0" style="-fx-background-color: transparent;" vbarPolicy="ALWAYS">
                      <content>
-                        <TreeView fx:id="treeDirectory" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
+                        <TreeView fx:id="treeCloud" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
                      </content>
                   </ScrollPane>
                </children>
