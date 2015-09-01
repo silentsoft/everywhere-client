@@ -1,4 +1,4 @@
-package org.silentsoft.everywhere.client.popup;
+package org.silentsoft.everywhere.client.component.popup;
 
 import java.io.IOException;
 import java.util.HashMap;

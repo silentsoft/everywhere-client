@@ -1,11 +1,11 @@
-package org.silentsoft.everywhere.client.popup;
+package org.silentsoft.everywhere.client.component.popup;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-import org.silentsoft.everywhere.client.button.ImageButton;
+import org.silentsoft.everywhere.client.component.button.ImageButton;
 
 public class PopupHandlerController {
 	
