@@ -14,7 +14,7 @@ import jidefx.animation.AnimationUtils;
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
-import org.silentsoft.everywhere.client.button.ImageButton;
+import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.model.Delta;
 import org.silentsoft.everywhere.client.utility.DragResizer;
 import org.silentsoft.everywhere.context.BizConst;

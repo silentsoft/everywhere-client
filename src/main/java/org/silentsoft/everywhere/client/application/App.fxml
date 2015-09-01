@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<?import org.silentsoft.everywhere.client.button.ImageButton?>
+<?import org.silentsoft.everywhere.client.component.button.ImageButton?>
 
 
 <!-- prefHeight="530.0" prefWidth="910.0" -->

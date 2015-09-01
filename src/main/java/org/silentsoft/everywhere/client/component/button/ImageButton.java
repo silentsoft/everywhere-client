@@ -1,4 +1,4 @@
-package org.silentsoft.everywhere.client.button;
+package org.silentsoft.everywhere.client.component.button;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
