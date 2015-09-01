@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.image.*?>
-<?import org.silentsoft.everywhere.client.button.ImageButton?>
+<?import org.silentsoft.everywhere.client.component.button.ImageButton?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.popup.PopupHandlerController">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.component.popup.PopupHandlerController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="-1.0" style="-fx-background-color: #f2f2f2;">
 		<children>

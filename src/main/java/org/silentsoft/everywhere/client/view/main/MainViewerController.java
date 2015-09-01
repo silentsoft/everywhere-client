@@ -21,9 +21,9 @@ import org.silentsoft.core.util.DateUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
-import org.silentsoft.everywhere.client.button.ImageButton;
-import org.silentsoft.everywhere.client.popup.PopupHandler;
-import org.silentsoft.everywhere.client.popup.PopupHandler.CloseType;
+import org.silentsoft.everywhere.client.component.button.ImageButton;
+import org.silentsoft.everywhere.client.component.popup.PopupHandler;
+import org.silentsoft.everywhere.client.component.popup.PopupHandler.CloseType;
 import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
@@ -138,6 +138,24 @@ public class MainViewerController {
 			recycleBin.getChildren().add(new TreeItem<String>("Not support function"));
 			rootCloud.getChildren().add(recycleBin);
 			
+			/**
+			 *  FILE_PATH               ||  DIRECTORY_YN  ||  FILE_NAME
+			 *  "test"					||  "Y"           || "test"
+				"test\test"				||  "Y"           || "test"
+				"test\test\test.txt"    ||  "N"			  || "test.txt"
+				"test\trass.txt"		||  "N"			  || "trass.txt"
+				"test\trass - 복사본.txt" ||  "N"			  || "trass - 복사본.txt"
+			 */
+			
+			/**
+			 * if FILE_PATH doesnt have file.separator, then insert to root.
+			 *   --> if DIRECTORY_YN is "Y" then create Directory to root.
+			 *       or DIRECTORY_YN is "N" then create FILE to root.
+			 * or FILE_PATH have file.separator, then find parent DIRECTORY node and insert to that node.
+			 *   --> if DIRECTORY_YN is "Y" then create Directory to parent DIRECTORY node.
+			 *       or DIRECTORY_YN is "N" then create FILE to parent DIRECTORY node.
+			 */
+			
 //			for (Cloud002DVO cloud002DVO : getMainSVO().getCloud002DVOList()) {
 //				boolean isRootPath = (cloud002DVO.getFilePath().indexOf(File.separator) == -1 ? true : false);
 //				if (isRootPath) {
@@ -162,14 +180,6 @@ public class MainViewerController {
 //					}
 //				}
 //			}
-			
-			// for (...)
-			//  1. if root path and directoryYn is "N" then insert into the root.
-			//  2. else not root path and directoryYn is "Y" then
-			//  2-1. (skip self) if already exists directory then insert into the directory nor create.
-			//  3. else not root path and directoryYn is "N" then
-			//  3-1. (skip self) if already exists parent directory then insert into the file to directory nor create directory, and put.
-			
 			
 			treeCloud.setRoot(rootCloud);
 		} catch (EverywhereException e) {
