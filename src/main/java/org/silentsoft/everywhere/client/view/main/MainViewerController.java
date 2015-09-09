@@ -1,17 +1,15 @@
 package org.silentsoft.everywhere.client.view.main;
 
-import java.io.File;
-
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
+import org.controlsfx.control.BreadCrumbBar;
 import org.controlsfx.dialog.Dialog;
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.component.notification.Notification;
@@ -24,6 +22,8 @@ import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler.CloseType;
+import org.silentsoft.everywhere.client.component.tree.CloudTreeItem;
+import org.silentsoft.everywhere.client.component.tree.CloudTreeView;
 import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
@@ -59,12 +59,17 @@ public class MainViewerController {
 	private ImageButton btnManage;
 	
 	@FXML
-	private TreeView treeCloud;
+	private BreadCrumbBar<String> breadCrumbBar;
+	
+	private TreeItem<String> crumb;
+	
+	@FXML
+	private CloudTreeView treeCloud;
 	
 	@FXML
 	private Button btnUpload;
 	
-	private TreeItem<String> rootCloud;
+//	private TreeItem<File> rootCloud;
 	
 	private MainSVO getMainSVO() {
 		if (mainSVO == null) {
@@ -82,7 +87,13 @@ public class MainViewerController {
 		Platform.runLater(() -> {
 			displayNotices();
 			displayUserInfo();
-			displayClouds();
+//			displayClouds();
+			
+			TreeItem<String> hs830 = new TreeItem<String>("hs830.lee");
+			
+			crumb = new TreeItem<String>("Home");
+			crumb.getChildren().add(hs830);
+			breadCrumbBar.setSelectedCrumb(hs830);
 		});
 	}
 	
@@ -130,13 +141,21 @@ public class MainViewerController {
 			
 			mainSVO = RESTfulAPI.doPost("/fx/main/cloud", getMainSVO(), MainSVO.class);
 
+			for (Cloud002DVO cloud002DVO : getMainSVO().getCloud002DVOList()) {
+				String filePath = cloud002DVO.getFilePath();
+				boolean isDirectory = "Y".equals(cloud002DVO.getDirectoryYn()) ? true : false;
+				String fileName = cloud002DVO.getFileName();
+				String fileSize = cloud002DVO.getFileSize();
+				boolean isDeleted = "Y".equals(cloud002DVO.getDelYn()) ? true : false;
+				treeCloud.add(new CloudTreeItem(filePath, isDirectory, fileName, fileSize, isDeleted));
+			}
+			treeCloud.synchronization();
 			
-			rootCloud = new TreeItem<String>();
-			rootCloud.setExpanded(true);
+//			rootCloud = new TreeItem<FileNode>();
+//			rootCloud.setExpanded(true);
 			
-			TreeItem<String> recycleBin = new TreeItem<String>("Recycle Bin");
-			recycleBin.getChildren().add(new TreeItem<String>("Not support function"));
-			rootCloud.getChildren().add(recycleBin);
+//			TreeItem<FileNode> recycleBin = new TreeItem<FileNode>(new FileNode(NodeType.RECYCLE_BIN, "Recycle Bin"));
+//			rootCloud.getChildren().add(recycleBin);
 			
 			/**
 			 *  FILE_PATH               ||  DIRECTORY_YN  ||  FILE_NAME
@@ -144,7 +163,7 @@ public class MainViewerController {
 				"test\test"				||  "Y"           || "test"
 				"test\test\test.txt"    ||  "N"			  || "test.txt"
 				"test\trass.txt"		||  "N"			  || "trass.txt"
-				"test\trass - º¹»çº».txt" ||  "N"			  || "trass - º¹»çº».txt"
+				"test\trass - ï¿½ï¿½ï¿½çº».txt" ||  "N"			  || "trass - ï¿½ï¿½ï¿½çº».txt"
 			 */
 			
 			/**
@@ -181,7 +200,7 @@ public class MainViewerController {
 //				}
 //			}
 			
-			treeCloud.setRoot(rootCloud);
+//			treeCloud.setRoot(rootCloud);
 		} catch (EverywhereException e) {
 			LOGGER.error(e.toString());
 		}
