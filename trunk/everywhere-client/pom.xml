@@ -7,6 +7,13 @@
 	<groupId>org.silentsoft</groupId>
 	<artifactId>everywhere-client</artifactId>
 	<version>1.0.0</version>
+	
+	<repositories>
+		<repository>
+			<id>maven-repo</id>
+			<url>http://central.maven.org/maven2</url>
+		</repository>
+	</repositories>
 
 	<properties>
 		<everywhere.context.version>1.0.0</everywhere.context.version>
