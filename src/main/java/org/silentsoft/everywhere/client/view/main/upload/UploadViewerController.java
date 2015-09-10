@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +25,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 
+
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.component.notification.Notification;
 import org.silentsoft.core.component.notification.Notification.NotifyType;
+import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
@@ -220,6 +223,8 @@ public class UploadViewerController {
 			long endTime = System.currentTimeMillis();
 			
 			Notification.show(App.getStage(), "Transfer Complete", fileModelList.size() + " files sending succeed in " + (endTime-startTime) + "ms", NotifyType.INFORMATION);
+			
+			EventHandler.callEvent(UploadViewerController.class, BizConst.EVENT_REFRESH_CLOUD_DIRECTORY);
 			
 			PopupHandler.close(uploadViewer);
 		});
