@@ -7,12 +7,17 @@ import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
@@ -25,6 +30,7 @@ import org.silentsoft.core.component.notification.Notification.NotifyType;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.event.EventListener;
 import org.silentsoft.core.util.DateUtil;
+import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
@@ -117,50 +123,59 @@ public class MainViewerController implements EventListener {
 		});
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void initializeComponents() {
+		colName.setCellFactory(new Callback<TableColumn<CloudDirectoryOutDVO, Object>, TableCell<CloudDirectoryOutDVO, Object>>() {
+			@Override
+			public TableCell<CloudDirectoryOutDVO, Object> call(TableColumn<CloudDirectoryOutDVO, Object> param) {
+				TableCell<CloudDirectoryOutDVO, Object> cell = new TableCell<CloudDirectoryOutDVO, Object>() {
+					@Override
+					protected void updateItem(Object item, boolean empty) {
+						super.updateItem(item, empty);
+						
+						if (empty || item == null) {
+							setGraphic(null);
+						} else {
+							HBox hBox = new HBox();
+							hBox.setAlignment(Pos.CENTER_LEFT);
+							
+							Label fileName = new Label(item.toString());
+							ImageView icon = new ImageView(SysUtil.getIconFromExtensionFx(FileUtil.getExtension(item.toString())));
+							
+							hBox.getChildren().addAll(icon, fileName);
+							
+							setGraphic(hBox);
+						}
+					}
+				};
+				return cell;
+			}
+			
+		});
+		
 		colName.setCellValueFactory(new PropertyValueFactory<CloudDirectoryOutDVO, Object>("fileName"));
 		colSize.setCellValueFactory(new PropertyValueFactory<CloudDirectoryOutDVO, Object>("fileSize"));
 		colModified.setCellValueFactory(new PropertyValueFactory<CloudDirectoryOutDVO, Object>("fnlUpdDt"));
 		
 		viewCloudDirectory.setOnMouseClicked(mouseEvent -> {
-//			Platform.runLater(() -> {
-				if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
-					Object selectedItem = viewCloudDirectory.getSelectionModel().getSelectedItem();
-					if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
-						CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;//(CloudDirectoryOutDVO) viewCloudDirectory.getSelectionModel().getSelectedItem();
-						if (cloudDirectoryOutDVO.getDirectoryYn().equals("Y")) {
-							TreeItem<String> item = getCrumb(cloudDirectoryOutDVO.getFileName());
-							
-							breadCrumbBar.setSelectedCrumb(item);
-							displayCloudDirectory();
-		//					String currentPath = breadCrumbBar.getSelectedCrumb().getValue();
-		//					if (currentPath.equals(File.separator)) {
-		//						// just add
-		//						TreeItem<String> item = new TreeItem<String>(cloudDirectoryOutDVO.getFileName());
-		//						
-		//						TreeItem<String> root = new TreeItem<String>(File.separator);
-		//						root.getChildren().add(item);
-		//						
-		//						breadCrumbBar.setSelectedCrumb(item);
-		//						
-		//						displayCloudDirectory();
-		//					} else {
-		//						// add with separator at first.
-		//						TreeItem<String> item = new TreeItem<String>(File.separator.concat(cloudDirectoryOutDVO.getFileName()));
-		//						
-		//					}
-						}
+			if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
+				Object selectedItem = viewCloudDirectory.getSelectionModel().getSelectedItem();
+				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
+					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;//(CloudDirectoryOutDVO) viewCloudDirectory.getSelectionModel().getSelectedItem();
+					if (cloudDirectoryOutDVO.getDirectoryYn().equals("Y")) {
+						TreeItem<String> item = getCrumb(cloudDirectoryOutDVO.getFileName());
+						
+						breadCrumbBar.setSelectedCrumb(item);
+						displayCloudDirectory();
 					}
 				}
-//			});
+			}
 		});
 		
 		crumb = new TreeItem<String>(File.separator);
 		breadCrumbBar.setSelectedCrumb(crumb);
 		breadCrumbBar.setOnCrumbAction(breadCrumbAction -> {
-//			Platform.runLater(() -> {
-				displayCloudDirectory(breadCrumbAction.getSelectedCrumb());
-//			});
+			displayCloudDirectory(breadCrumbAction.getSelectedCrumb());
 		});
 	}
 	

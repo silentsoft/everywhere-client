@@ -11,20 +11,24 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
-
+import javafx.util.Callback;
 
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.component.messagebox.MessageBox;
@@ -33,6 +37,7 @@ import org.silentsoft.core.component.notification.Notification.NotifyType;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
+import org.silentsoft.core.util.SysUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.model.FileModel;
@@ -71,8 +76,37 @@ public class UploadViewerController {
 	private ObservableList<FileModel> fileModelList;
 	
 	
+	@SuppressWarnings("unchecked")
 	protected void initialize(Parent uploadViewer) {
 		this.uploadViewer = uploadViewer;
+		
+		colFilePath.setCellFactory(new Callback<TableColumn<FileModel, Object>, TableCell<FileModel, Object>>() {
+			@Override
+			public TableCell<FileModel, Object> call(TableColumn<FileModel, Object> param) {
+				TableCell<FileModel, Object> cell = new TableCell<FileModel, Object>() {
+					@Override
+					protected void updateItem(Object item, boolean empty) {
+						super.updateItem(item, empty);
+						
+						if (empty || item == null) {
+							setGraphic(null);
+						} else {
+							HBox hBox = new HBox();
+							hBox.setAlignment(Pos.CENTER_LEFT);
+							
+							Label fileName = new Label(item.toString());
+							ImageView icon = new ImageView(SysUtil.getIconFromExtensionFx(FileUtil.getExtension(item.toString())));
+							
+							hBox.getChildren().addAll(icon, fileName);
+							
+							setGraphic(hBox);
+						}
+					}
+				};
+				return cell;
+			}
+			
+		});
 		
 		colFilePath.setCellValueFactory(new PropertyValueFactory<FileModel, Object>("path"));
 		colSize.setCellValueFactory(new PropertyValueFactory<FileModel, Object>("size"));
