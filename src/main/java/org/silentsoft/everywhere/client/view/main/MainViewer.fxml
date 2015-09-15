@@ -56,7 +56,7 @@
                   <Line endX="150.0" layoutX="5.0" layoutY="140.0" strokeWidth="0.1" />
                   <ScrollPane layoutY="141.0" minHeight="343.0" minWidth="152.0" prefHeight="343.0" prefWidth="152.0" style="-fx-background-color: transparent;" vbarPolicy="ALWAYS">
                      <content>
-                        <CloudTreeView fx:id="treeCloud" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
+                        <TreeView fx:id="treeCloudViewer" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
                      </content>
                   </ScrollPane>
                </children>
@@ -84,7 +84,7 @@
                         <Line endX="750.0" layoutY="84.0" strokeWidth="0.1" />
                      </children>
                   </Pane>
-                  <TableView fx:id="viewCloudDirectory" layoutY="85.0" minHeight="398.0" minWidth="750.0" prefHeight="398.0" prefWidth="750.0">
+                  <TableView fx:id="tableCloudViewer" layoutY="85.0" minHeight="398.0" minWidth="750.0" prefHeight="398.0" prefWidth="750.0">
                     <columns>
                       <TableColumn fx:id="colName" editable="false" prefWidth="545.0" text="Name" />
                       <TableColumn fx:id="colSize" editable="false" minWidth="0.0" prefWidth="78.0" text="Size" />
