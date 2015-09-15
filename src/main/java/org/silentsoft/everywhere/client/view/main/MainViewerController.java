@@ -9,11 +9,16 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -37,7 +42,6 @@ import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler.CloseType;
-import org.silentsoft.everywhere.client.component.tree.CloudTreeView;
 import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
@@ -78,16 +82,13 @@ public class MainViewerController implements EventListener {
 	private TreeItem<String> crumb;
 	
 	@FXML
-	private CloudTreeView treeCloud;
-	
-	@FXML
 	private Button btnUpload;
 	
-//	private TreeItem<File> rootCloud;
-	
+	@FXML
+	private TreeView treeCloudViewer;
 	
 	@FXML
-	private TableView viewCloudDirectory;
+	private TableView tableCloudViewer;
 	
 	@FXML
 	private TableColumn colName;
@@ -118,7 +119,6 @@ public class MainViewerController implements EventListener {
 			
 			displayNotices();
 			displayUserInfo();
-//			displayClouds();
 			displayCloudDirectory();
 		});
 	}
@@ -157,11 +157,35 @@ public class MainViewerController implements EventListener {
 		colSize.setCellValueFactory(new PropertyValueFactory<CloudDirectoryOutDVO, Object>("fileSize"));
 		colModified.setCellValueFactory(new PropertyValueFactory<CloudDirectoryOutDVO, Object>("fnlUpdDt"));
 		
-		viewCloudDirectory.setOnMouseClicked(mouseEvent -> {
-			if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
-				Object selectedItem = viewCloudDirectory.getSelectionModel().getSelectedItem();
+		ContextMenu contextMenu = new ContextMenu();
+		SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+		MenuItem downloadMenuItem = new MenuItem("Download");
+		downloadMenuItem.setOnAction(actionEvent -> {
+			for (Object selectedItem : tableCloudViewer.getSelectionModel().getSelectedItems()) {
 				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
-					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;//(CloudDirectoryOutDVO) viewCloudDirectory.getSelectionModel().getSelectedItem();
+					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
+					
+				}
+			}
+		});
+		MenuItem deleteMenuItem = new MenuItem("Delete");
+		deleteMenuItem.setOnAction(actionEvent -> {
+			for (Object selectedItem : tableCloudViewer.getSelectionModel().getSelectedItems()) {
+				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
+					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
+					
+				}
+			}
+		});
+		contextMenu.getItems().addAll(downloadMenuItem, separatorMenuItem, deleteMenuItem);
+		
+		tableCloudViewer.setContextMenu(contextMenu);
+		tableCloudViewer.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		tableCloudViewer.setOnMouseClicked(mouseEvent -> {
+			if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
+				Object selectedItem = tableCloudViewer.getSelectionModel().getSelectedItem();
+				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
+					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
 					if (cloudDirectoryOutDVO.getDirectoryYn().equals("Y")) {
 						TreeItem<String> item = getCrumb(cloudDirectoryOutDVO.getFileName());
 						
@@ -171,6 +195,27 @@ public class MainViewerController implements EventListener {
 				}
 			}
 		});
+//		viewCloudDirectory.setOnDragDetected(dragEvent -> {
+//			ObservableList<Object> selectedItems = viewCloudDirectory.getSelectionModel().getSelectedItems();
+//			if (selectedItems != null) {
+//				Dragboard dragboard = viewCloudDirectory.startDragAndDrop(TransferMode.COPY);
+//				
+//				List<File> files = new ArrayList<File>();
+//				for (Object selectedItem : selectedItems) {
+//					if (selectedItem instanceof CloudDirectoryOutDVO) {
+//						CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
+//						File file = new File(cloudDirectoryOutDVO.getFileName());
+//						
+//						files.add(file);
+//					}
+//				}
+//				
+//				ClipboardContent content = new ClipboardContent();
+//				content.putFiles(files);
+//				
+//				dragboard.setContent(content);
+//			}
+//		});
 		
 		crumb = new TreeItem<String>(File.separator);
 		breadCrumbBar.setSelectedCrumb(crumb);
@@ -180,8 +225,6 @@ public class MainViewerController implements EventListener {
 	}
 	
 	private TreeItem<String> getCrumb(String path) {
-//		String[] currentPathArray = breadCrumbBar.getSelectedCrumb().getValue().split(Pattern.quote(File.separator));
-		
 		String filePath = breadCrumbBar.getSelectedCrumb().getValue();
 		
 		TreeItem<String> selectedCrumb = breadCrumbBar.getSelectedCrumb();
@@ -222,15 +265,6 @@ public class MainViewerController implements EventListener {
 		} else {
 			root.getChildren().add(tempParent);
 		}
-//		TreeItem<String> root = new TreeItem<String>(File.separator);
-//		for (String dir : currentPathArray) {
-//			if (dir.equals("") == false) {
-//				root.getChildren().add(new TreeItem<String>(dir));
-//			}
-//		}
-//		
-//		TreeItem<String> item = new TreeItem<String>(path);
-//		root.getChildren().add(item);
 		
 		return leafChild;
 	}
@@ -295,87 +329,11 @@ public class MainViewerController implements EventListener {
 			
 			mainSVO = RESTfulAPI.doPost("/fx/main/cloudDirectory", getMainSVO(), MainSVO.class);
 			
-			viewCloudDirectory.setItems(FXCollections.observableList(getMainSVO().getCloudDirectoryOutDVOList()));
+			tableCloudViewer.setItems(FXCollections.observableList(getMainSVO().getCloudDirectoryOutDVOList()));
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 		}
 	}
-	
-//	private void displayClouds() {
-//		try {
-//			String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
-//			
-//			Cloud001DVO cloud001DVO = new Cloud001DVO();
-//			cloud001DVO.setUserId(userId);
-//			
-//			getMainSVO().setCloud001DVO(cloud001DVO);
-//			
-//			mainSVO = RESTfulAPI.doPost("/fx/main/cloud", getMainSVO(), MainSVO.class);
-//
-//			for (Cloud002DVO cloud002DVO : getMainSVO().getCloud002DVOList()) {
-//				String filePath = cloud002DVO.getFilePath();
-//				boolean isDirectory = "Y".equals(cloud002DVO.getDirectoryYn()) ? true : false;
-//				String fileName = cloud002DVO.getFileName();
-//				String fileSize = cloud002DVO.getFileSize();
-//				boolean isDeleted = "Y".equals(cloud002DVO.getDelYn()) ? true : false;
-//				treeCloud.add(new CloudTreeItem(filePath, isDirectory, fileName, fileSize, isDeleted));
-//			}
-//			treeCloud.synchronization();
-//			
-////			rootCloud = new TreeItem<FileNode>();
-////			rootCloud.setExpanded(true);
-//			
-////			TreeItem<FileNode> recycleBin = new TreeItem<FileNode>(new FileNode(NodeType.RECYCLE_BIN, "Recycle Bin"));
-////			rootCloud.getChildren().add(recycleBin);
-//			
-//			/**
-//			 *  FILE_PATH               ||  DIRECTORY_YN  ||  FILE_NAME
-//			 *  "test"					||  "Y"           || "test"
-//				"test\test"				||  "Y"           || "test"
-//				"test\test\test.txt"    ||  "N"			  || "test.txt"
-//				"test\trass.txt"		||  "N"			  || "trass.txt"
-//				"test\trass - ���纻.txt" ||  "N"			  || "trass - ���纻.txt"
-//			 */
-//			
-//			/**
-//			 * if FILE_PATH doesnt have file.separator, then insert to root.
-//			 *   --> if DIRECTORY_YN is "Y" then create Directory to root.
-//			 *       or DIRECTORY_YN is "N" then create FILE to root.
-//			 * or FILE_PATH have file.separator, then find parent DIRECTORY node and insert to that node.
-//			 *   --> if DIRECTORY_YN is "Y" then create Directory to parent DIRECTORY node.
-//			 *       or DIRECTORY_YN is "N" then create FILE to parent DIRECTORY node.
-//			 */
-//			
-////			for (Cloud002DVO cloud002DVO : getMainSVO().getCloud002DVOList()) {
-////				boolean isRootPath = (cloud002DVO.getFilePath().indexOf(File.separator) == -1 ? true : false);
-////				if (isRootPath) {
-////					TreeItem<String> item = new TreeItem<String>(cloud002DVO.getFileName());
-////					rootCloud.getChildren().add(item);
-////				} else {
-////					for (int i=0, j=rootCloud.getChildren().size(); i<j; i++) {
-////						TreeItem<String> item = rootCloud.getChildren().get(i);
-////						if (cloud002DVO.getFileName().equals(item.getValue())) {
-////							continue;
-////						} else {
-////							if (item.getValue().equals(cloud002DVO.getFilePath().substring(0, cloud002DVO.getFilePath().lastIndexOf(File.separator)))) {
-////								if (cloud002DVO.getDirectoryYn().equals("Y")) {
-////									item.getParent().getChildren().add(new TreeItem<String>(cloud002DVO.getFileName()));
-////									break;
-////								} else if (cloud002DVO.getDirectoryYn().equals("N")) {
-////									item.getChildren().add(new TreeItem<String>(cloud002DVO.getFileName()));
-////									break;
-////								}
-////							}
-////						}
-////					}
-////				}
-////			}
-//			
-////			treeCloud.setRoot(rootCloud);
-//		} catch (EverywhereException e) {
-//			LOGGER.error(e.toString());
-//		}
-//	}
 	
 	private void setNotice(String notice) {
 		Transition fadeOutAnimation = AnimationUtils.createTransition(lblNotice, AnimationType.FADE_OUT_UP);
