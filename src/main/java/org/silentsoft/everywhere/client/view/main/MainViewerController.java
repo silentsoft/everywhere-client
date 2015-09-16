@@ -49,8 +49,8 @@ import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.fx.main.vo.CloudDirectoryInDVO;
 import org.silentsoft.everywhere.context.fx.main.vo.CloudDirectoryOutDVO;
 import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
-import org.silentsoft.everywhere.context.fx.main.vo.Notice001DVO;
-import org.silentsoft.everywhere.context.fx.main.vo.Notice002DVO;
+import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
+import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
 import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
@@ -271,10 +271,10 @@ public class MainViewerController implements EventListener {
 	
 	private void displayNotices() {
 		try {
-			Notice001DVO notice001DVO = new Notice001DVO();
-			notice001DVO.setLangCode(SysUtil.getLanguage());
+			NoticeInDVO noticeInDVO = new NoticeInDVO();
+			noticeInDVO.setLangCode(SysUtil.getLanguage());
 			
-			getMainSVO().setNotice001DVO(notice001DVO);
+			getMainSVO().setNoticeInDVO(noticeInDVO);
 			
 			mainSVO = RESTfulAPI.doPost("/fx/main/notice", getMainSVO(), MainSVO.class);
 			
@@ -283,9 +283,9 @@ public class MainViewerController implements EventListener {
 			}
 			threadNotice = new Thread(() -> {
 				while (true) {
-					for (Notice002DVO notice002DVO : getMainSVO().getNotice002DVOList()) {
+					for (NoticeOutDVO noticeOutDVO : getMainSVO().getNoticeOutDVOList()) {
 						Platform.runLater(() -> {
-							setNotice(notice002DVO.getTitle());
+							setNotice(noticeOutDVO.getTitle());
 						});
 						
 						try {
