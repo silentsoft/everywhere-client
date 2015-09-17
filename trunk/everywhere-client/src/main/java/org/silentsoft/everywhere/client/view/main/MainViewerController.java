@@ -1,7 +1,10 @@
 package org.silentsoft.everywhere.client.view.main;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.regex.Pattern;
+
+
 
 import javafx.animation.Transition;
 import javafx.application.Platform;
@@ -26,6 +29,10 @@ import javafx.util.Callback;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
+
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.controlsfx.control.BreadCrumbBar;
 import org.controlsfx.dialog.Dialog;
 import org.silentsoft.core.CommonConst;
@@ -52,9 +59,11 @@ import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
 import org.silentsoft.everywhere.context.host.EverywhereException;
+import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.FileCopyUtils;
 
 public class MainViewerController implements EventListener {
 	
@@ -161,11 +170,24 @@ public class MainViewerController implements EventListener {
 		SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
 		MenuItem downloadMenuItem = new MenuItem("Download");
 		downloadMenuItem.setOnAction(actionEvent -> {
-			for (Object selectedItem : tableCloudViewer.getSelectionModel().getSelectedItems()) {
-				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
-					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
-					
-				}
+//			for (Object selectedItem : tableCloudViewer.getSelectionModel().getSelectedItems()) {
+//				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
+//					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
+//					
+//				}
+//			}
+			try {
+				long start = System.currentTimeMillis();
+				FilePOJO filePOJO = RESTfulAPI.doPost("/fx/main/download", "NA", FilePOJO.class);
+				
+				FileOutputStream fileOutputStream = new FileOutputStream("H:\\iTunes64Setup_down.exe");
+				IOUtils.write(filePOJO.getBytes(), fileOutputStream);
+				fileOutputStream.close();
+				long end = System.currentTimeMillis();
+				
+				MessageBox.showInformation(App.getStage(), "File download .. ", end-start+"".concat(" ms"));
+			} catch (Exception e) {
+				LOGGER.error(e.toString());
 			}
 		});
 		MenuItem deleteMenuItem = new MenuItem("Delete");
