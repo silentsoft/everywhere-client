@@ -7,104 +7,122 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="485.0" prefWidth="910.0" style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.modify.ModifyViewerController">
+<StackPane style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-size: cover; -fx-background-position: center center;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.modify.ModifyViewerController">
    <children>
-      <Accordion layoutX="205.0" layoutY="147.0" prefHeight="250.0" prefWidth="500.0">
-        <panes>
-          <TitledPane expanded="false" text="Name">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+      <VBox alignment="CENTER">
+         <children>
+            <Pane />
+            <HBox alignment="CENTER">
+               <children>
+                  <Pane />
+                  <AnchorPane prefHeight="485.0" prefWidth="910.0">
                      <children>
-                        <Label layoutX="190.0" layoutY="68.0" text="Name">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtName" layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
-                        <Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
-                        <Button fx:id="btnDoneInName" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInName_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelInName" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInName_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Button>
+						<Accordion layoutX="205.0" layoutY="147.0" prefHeight="250.0" prefWidth="500.0">
+						<panes>
+						  <TitledPane expanded="false" text="Name">
+							<content>
+							  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									 <children>
+										<Label layoutX="190.0" layoutY="68.0" text="Name">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Label>
+										<TextField fx:id="txtName" layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
+										<Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
+										<Button fx:id="btnDoneInName" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInName_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Button>
+										<Button fx:id="btnCancelInName" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInName_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Button>
+									 </children>
+								  </AnchorPane>
+							</content>
+						  </TitledPane>
+						  <TitledPane expanded="false" text="Password">
+							<content>
+							  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									 <children>
+										<Label layoutX="116.0" layoutY="25.0" text="Current Password">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Label>
+										<PasswordField fx:id="txtCurrentPassword" layoutX="236.0" layoutY="21.0" prefHeight="23.0" prefWidth="137.0" />
+										<Label layoutX="135.0" layoutY="60.0" text="New Password">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Label>
+										<PasswordField fx:id="txtNewPassword" layoutX="236.0" layoutY="56.0" prefHeight="23.0" prefWidth="137.0" />
+										<Label layoutX="113.0" layoutY="95.0" text="Confirm Password">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Label>
+										<PasswordField fx:id="txtConfirmPassword" layoutX="236.0" layoutY="91.0" prefHeight="23.0" prefWidth="137.0" />
+										<Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
+										<Button fx:id="btnDoneInPassword" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInPassword_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Button>
+										<Button fx:id="btnCancelInPassword" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInPassword_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Button>
+									 </children>
+								  </AnchorPane>
+							</content>
+						  </TitledPane>
+						  <TitledPane expanded="false" text="E-Mail">
+							<content>
+							  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									 <children>
+										<Label layoutX="187.0" layoutY="68.0" text="E-Mail">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Label>
+										<TextField fx:id="txtEmail" layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
+										<Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
+										<Button fx:id="btnDoneInEmail" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInEmail_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Button>
+										<Button fx:id="btnCancelInEmail" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInEmail_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
+										   <font>
+											  <Font name="Verdana Bold" size="11.0" />
+										   </font>
+										</Button>
+									 </children>
+								  </AnchorPane>
+							</content>
+						  </TitledPane>
+						</panes>
+					  </Accordion>
+					  <Label layoutX="312.0" layoutY="58.0" text="Account Setting" textFill="#7c7c7c">
+						 <font>
+							<Font name="Verdana" size="36.0" />
+						 </font>
+					  </Label>
                      </children>
                   </AnchorPane>
-            </content>
-          </TitledPane>
-          <TitledPane expanded="false" text="Password">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="116.0" layoutY="25.0" text="Current Password">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="txtCurrentPassword" layoutX="236.0" layoutY="21.0" prefHeight="23.0" prefWidth="137.0" />
-                        <Label layoutX="135.0" layoutY="60.0" text="New Password">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="txtNewPassword" layoutX="236.0" layoutY="56.0" prefHeight="23.0" prefWidth="137.0" />
-                        <Label layoutX="113.0" layoutY="95.0" text="Confirm Password">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="txtConfirmPassword" layoutX="236.0" layoutY="91.0" prefHeight="23.0" prefWidth="137.0" />
-                        <Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
-                        <Button fx:id="btnDoneInPassword" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInPassword_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelInPassword" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInPassword_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-          <TitledPane expanded="false" text="E-Mail">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="187.0" layoutY="68.0" text="E-Mail">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtEmail" layoutX="236.0" layoutY="63.0" prefHeight="23.0" prefWidth="137.0" />
-                        <Line endX="350.0" layoutX="70.0" layoutY="130.0" strokeWidth="0.3" />
-                        <Button fx:id="btnDoneInEmail" defaultButton="true" layoutX="236.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnDoneInEmail_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelInEmail" cancelButton="true" layoutX="161.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnCancelInEmail_OnActionClick" prefHeight="23.0" prefWidth="72.0" text="Cancel" textFill="#8a8a8a">
-                           <font>
-                              <Font name="Verdana Bold" size="11.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
-      <Label layoutX="312.0" layoutY="58.0" text="Account Setting" textFill="#7c7c7c">
-         <font>
-            <Font name="Verdana" size="36.0" />
-         </font>
-      </Label>
+                  <Pane />
+               </children>
+            </HBox>
+            <Pane />
+         </children>
+      </VBox>
    </children>
-</Pane>
+</StackPane>
+

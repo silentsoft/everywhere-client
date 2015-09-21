@@ -4,9 +4,8 @@ import javafx.animation.Transition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
@@ -16,7 +15,7 @@ import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.model.Delta;
-import org.silentsoft.everywhere.client.utility.DragResizer;
+import org.silentsoft.everywhere.client.utility.StageDragResizer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
 
@@ -24,13 +23,13 @@ import org.silentsoft.everywhere.context.core.SharedMemory;
 public class AppController {
 	
 	@FXML
-	private VBox main;
+	private AnchorPane main;
 	
 	@FXML
 	private HBox head;
 	
 	@FXML
-	private Pane body;
+	private AnchorPane body;
 	
 	@FXML
 	private ImageButton appMenuBtn;
@@ -54,20 +53,20 @@ public class AppController {
 		makeMaximizable(App.getStage(), appMaximizeBtn);
 		makeClosable(App.getStage(), appCloseBtn);
 		
-		DragResizer.makeResizable(main);
+		StageDragResizer.makeResizable(App.getStage(), main);
 	}
 	
-	public Pane getHead() {
-		return head;
-	}
-	
-	public Pane getBody() {
-		return body;
-	}
-	
-	public void setBody(Pane body) {
-		this.body = body;
-	}
+//	public Pane getHead() {
+//		return head;
+//	}
+//	
+//	public Pane getBody() {
+//		return body;
+//	}
+//	
+//	public void setBody(Pane body) {
+//		this.body = body;
+//	}
 
 	/**
 	 * makes a stage draggable using a given node.

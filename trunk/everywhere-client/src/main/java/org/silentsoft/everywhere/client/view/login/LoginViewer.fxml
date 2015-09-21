@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
@@ -10,28 +11,44 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="485.0" prefWidth="910.0" style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.login.LoginViewerController">
+<StackPane style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-size: cover; -fx-background-position: center center;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.login.LoginViewerController">
    <children>
-      <Label focusTraversable="false" layoutX="327.0" layoutY="94.0" text="Member Login" textFill="#7c7c7c">
-         <font>
-            <Font name="Verdana" size="36.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtSingleId" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" promptText="ID" />
-      <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="237.0" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" promptText="Password" />
-      <!-- textFill="#fffafa" -->
-      <Button fx:id="btnLogin" defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#8a8a8a">
-         <font>
-            <Font name="Verdana Bold" size="11.0" />
-         </font>
-      </Button>
-      <Label layoutX="375.0" layoutY="310.0" onMouseClicked="#register_OnMouseClick" text="Register" textFill="#4b8df8" underline="true">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Verdana" size="12.0" />
-         </font>
-      </Label>
+      <VBox alignment="CENTER">
+         <children>
+            <Pane />
+            <HBox alignment="CENTER">
+               <children>
+                  <Pane />
+                  <AnchorPane prefHeight="485.0" prefWidth="910.0">
+                     <children>
+                        <Label focusTraversable="false" layoutX="327.0" layoutY="94.0" text="Member Login" textFill="#7c7c7c">
+                           <font>
+                              <Font name="Verdana" size="36.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtSingleId" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" promptText="ID" />
+                        <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="237.0" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" promptText="Password" />
+                        <!-- textFill="#fffafa" -->
+                        <Button fx:id="btnLogin" defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#8a8a8a">
+                           <font>
+                              <Font name="Verdana Bold" size="11.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="375.0" layoutY="310.0" onMouseClicked="#register_OnMouseClick" text="Register" textFill="#4b8df8" underline="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <Pane />
+               </children>
+            </HBox>
+            <Pane />
+         </children>
+      </VBox>
    </children>
-</Pane>
+</StackPane>
