@@ -11,7 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SceneBuilder;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -28,6 +30,7 @@ import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
+import org.springframework.util.ResizableByteArrayOutputStream;
 
 public class App extends Application implements EventListener {
 	
@@ -49,8 +52,8 @@ public class App extends Application implements EventListener {
 		return stage;
 	}
 	
-	public static Pane getBody() {
-		return (Pane)getParent().lookup("#body");
+	public static AnchorPane getBody() {
+		return (AnchorPane)getParent().lookup("#body");
 	}
     
 	@Override
