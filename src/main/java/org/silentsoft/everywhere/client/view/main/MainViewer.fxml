@@ -8,92 +8,91 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
 <?import org.silentsoft.everywhere.client.component.button.*?>
 <?import org.silentsoft.everywhere.client.component.tree.*?>
 <?import org.controlsfx.control.BreadCrumbBar?>
 
-<Pane minHeight="485.0" minWidth="910.0" prefHeight="485.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.main.MainViewerController">
+<AnchorPane minHeight="485.0" minWidth="910.0" prefHeight="485.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.main.MainViewerController">
    <children>
-      <SplitPane dividerPositions="0.5" prefHeight="485.0" prefWidth="910.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="345.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblSingleId" layoutX="14.0" layoutY="14.0" text="User Name" textFill="#646464">
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+            </Label>
+            <ImageButton fx:id="btnManage" layoutX="116.0" layoutY="4.0" onMouseClicked="#modify_OnMouseClick" prefHeight="27.0" prefWidth="27.0">
+					<graphic>
+						<ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true">
+							<image>
+								<Image url="@/images/app/ic_settings_applications_black_18dp.png" />
+							</image>
+						</ImageView>
+					</graphic>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+			  </ImageButton>
+            <Label layoutX="14.0" layoutY="40.0" text="latest" />
+            <Label layoutX="110.0" layoutY="40.0" onMouseClicked="#logout_OnMouseClick" text="Logout" textFill="#4b8df8" underline="true">
+               <font>
+                  <Font size="11.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="lblLatest" layoutX="14.0" layoutY="58.0"> <!-- text="2015-07-07 PM 20:30:15">  --> 
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Line endX="150.0" layoutX="5.0" layoutY="84.0" strokeWidth="0.1" />
+            <Button fx:id="btnUpload" layoutX="8.0" layoutY="91.0" mnemonicParsing="false" onAction="#upload_OnMouseClick" prefHeight="23.0" prefWidth="70.0" text="Upload" />
+            <Button layoutX="78.0" layoutY="91.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Share" />
+            <Label alignment="CENTER" layoutX="8.0" layoutY="120.0" prefHeight="15.0" prefWidth="140.0" text="100MB / Unlimited" />
+            <Line endX="150.0" layoutX="5.0" layoutY="140.0" strokeWidth="0.1" />
+            <ScrollPane layoutY="141.0" minHeight="343.0" minWidth="152.0" prefHeight="343.0" prefWidth="152.0" style="-fx-background-color: transparent;" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="2.0" AnchorPane.topAnchor="142.0">
+               <content>
+                  <TreeView fx:id="treeCloudViewer" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="155.0" prefHeight="484.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="85.0" prefWidth="755.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Label fx:id="lblSingleId" layoutX="14.0" layoutY="14.0" text="User Name" textFill="#646464">
+                  <Label layoutX="7.0" layoutY="7.0" text="[Notice]">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ImageButton fx:id="btnManage" layoutX="116.0" layoutY="4.0" onMouseClicked="#modify_OnMouseClick" prefHeight="27.0" prefWidth="27.0">
-      					<graphic>
-      						<ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true">
-      							<image>
-      								<Image url="@/images/app/ic_settings_applications_black_18dp.png" />
-      							</image>
-      						</ImageView>
-      					</graphic>
-      					<cursor>
-      						<Cursor fx:constant="HAND" />
-      					</cursor>
-     			  </ImageButton>
-                  <Label layoutX="14.0" layoutY="40.0" text="latest" />
-                  <Label layoutX="110.0" layoutY="40.0" onMouseClicked="#logout_OnMouseClick" text="Logout" textFill="#4b8df8" underline="true">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
+                  <Line endX="750.0" layoutY="30.0" strokeWidth="0.1" />
+                  <Label fx:id="lblNotice" layoutX="80.0" layoutY="7.0" onMouseClicked="#notice_OnMouseClick" prefHeight="15.0" prefWidth="669.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="6.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <Label fx:id="lblLatest" layoutX="14.0" layoutY="58.0"> <!-- text="2015-07-07 PM 20:30:15">  --> 
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <Line endX="150.0" layoutX="5.0" layoutY="84.0" strokeWidth="0.1" />
-                  <Button fx:id="btnUpload" layoutX="8.0" layoutY="91.0" mnemonicParsing="false" onAction="#upload_OnMouseClick" prefHeight="23.0" prefWidth="70.0" text="Upload" />
-                  <Button layoutX="78.0" layoutY="91.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Share" />
-                  <Label alignment="CENTER" layoutX="8.0" layoutY="120.0" prefHeight="15.0" prefWidth="140.0" text="100MB / Unlimited" />
-                  <Line endX="150.0" layoutX="5.0" layoutY="140.0" strokeWidth="0.1" />
-                  <ScrollPane layoutY="141.0" minHeight="343.0" minWidth="152.0" prefHeight="343.0" prefWidth="152.0" style="-fx-background-color: transparent;" vbarPolicy="ALWAYS">
-                     <content>
-                        <TreeView fx:id="treeCloudViewer" minHeight="341.0" minWidth="150.0" prefHeight="341.0" prefWidth="150.0" showRoot="false" style="-fx-background-color: transparent;" />
-                     </content>
-                  </ScrollPane>
+                  <TextField layoutX="536.0" layoutY="32.0" prefHeight="23.0" prefWidth="106.0" promptText="Everythings" AnchorPane.rightAnchor="113.0" />
+                  <Button defaultButton="true" layoutX="645.0" layoutY="32.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="55.0" />
+                  <Button layoutX="700.0" layoutY="32.0" mnemonicParsing="false" text="Detail" AnchorPane.rightAnchor="5.0" />
+                  <TextField layoutY="32.0" prefHeight="23.0" prefWidth="528.0" text="Home\hs830.lee\" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="227.0" />
+                  <Line endY="22.0" layoutX="532.0" layoutY="32.0" strokeWidth="0.1" AnchorPane.rightAnchor="222.5" />
+                  <BreadCrumbBar fx:id="breadCrumbBar" layoutY="58.0" prefHeight="23.0" prefWidth="528.0" />
+                  <Line endX="755.0" layoutY="84.0" strokeWidth="0.1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="484.0" prefWidth="750.0">
-               <children>
-                  <Pane prefHeight="84.0" prefWidth="750.0">
-                     <children>
-                        <Label layoutX="7.0" layoutY="7.0" text="[Notice]">
-                           <font>
-                              <Font name="Verdana Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Line endX="750.0" layoutY="30.0" strokeWidth="0.1" />
-                        <Label fx:id="lblNotice" alignment="CENTER" layoutX="97.0" layoutY="7.0" onMouseClicked="#notice_OnMouseClick" prefHeight="15.0" prefWidth="429.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></Label>
-                        <TextField layoutX="536.0" layoutY="32.0" prefHeight="23.0" prefWidth="113.0" promptText="Everythings" />
-                        <Button defaultButton="true" layoutX="645.0" layoutY="32.0" mnemonicParsing="false" text="Search" />
-                        <Button layoutX="700.0" layoutY="32.0" mnemonicParsing="false" text="Detail" />
-                        <TextField layoutY="32.0" prefHeight="23.0" prefWidth="528.0" text="Home\hs830.lee\" />
-                        <Line endY="22.0" layoutX="532.0" layoutY="32.0" strokeWidth="0.1" />
-                        <BreadCrumbBar fx:id="breadCrumbBar" layoutY="58.0" prefHeight="23.0" prefWidth="528.0" />
-                        <Line endX="750.0" layoutY="84.0" strokeWidth="0.1" />
-                     </children>
-                  </Pane>
-                  <TableView fx:id="tableCloudViewer" layoutY="85.0" minHeight="398.0" minWidth="750.0" prefHeight="398.0" prefWidth="750.0">
-                    <columns>
-                      <TableColumn fx:id="colName" editable="false" prefWidth="545.0" text="Name" />
-                      <TableColumn fx:id="colSize" editable="false" minWidth="0.0" prefWidth="78.0" text="Size" />
-                        <TableColumn fx:id="colModified" editable="false" prefWidth="126.0" text="Modified" />
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
+            <TableView fx:id="tableCloudViewer" layoutY="85.0" minHeight="400.0" minWidth="755.0" prefHeight="400.0" prefWidth="755.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="85.0">
+              <columns>
+                <TableColumn fx:id="colName" editable="false" prefWidth="545.0" text="Name" />
+                <TableColumn fx:id="colSize" editable="false" minWidth="0.0" prefWidth="78.0" text="Size" />
+                  <TableColumn fx:id="colModified" editable="false" prefWidth="126.0" text="Modified" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
    </children>
-</Pane>
+</AnchorPane>
