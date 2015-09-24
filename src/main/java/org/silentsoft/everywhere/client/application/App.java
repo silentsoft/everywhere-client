@@ -11,10 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SceneBuilder;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -24,13 +24,13 @@ import jidefx.animation.AnimationUtils;
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.event.EventListener;
+import org.silentsoft.core.hotkey.HotkeyHandler;
 import org.silentsoft.core.tray.TrayIconHandler;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
-import org.springframework.util.ResizableByteArrayOutputStream;
 
 public class App extends Application implements EventListener {
 	
@@ -87,10 +87,11 @@ public class App extends Application implements EventListener {
 		Platform.setImplicitExit(false);
 		
 		displayIcon();
+		registerHotkey();
 		
 		EventHandler.addListener(this);
 	}
-	
+
 	private void displayIcon() {
 		// taskbar
 		stage.getIcons().add(new Image("/images/icon/everywhere.png"));
@@ -129,6 +130,14 @@ public class App extends Application implements EventListener {
 		});
 		
 		TrayIconHandler.displayMessage("Everywhere", "Hello, World !", MessageType.INFO);
+	}
+	
+	private void registerHotkey() {
+		HotkeyHandler.getInstance().registerHotkey(KeyCode.K, true, true, true, () -> {
+			System.out.println("Easter eggs !!");
+		});
+		
+		stage.addEventHandler(KeyEvent.KEY_RELEASED, HotkeyHandler.getInstance());
 	}
 	
 	@Override

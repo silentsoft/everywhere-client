@@ -10,7 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import org.controlsfx.control.MasterDetailPane;
-import org.silentsoft.core.util.SysUtil;
+import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
@@ -93,7 +93,7 @@ public class NoticeViewerController {
 	private void getNotices() {
 		try {
 			NoticeInDVO noticeInDVO = new NoticeInDVO();
-			noticeInDVO.setLangCode(SysUtil.getLanguage());
+			noticeInDVO.setLangCode(SystemUtil.getLanguage());
 			
 			getMainSVO().setNoticeInDVO(noticeInDVO);
 			
