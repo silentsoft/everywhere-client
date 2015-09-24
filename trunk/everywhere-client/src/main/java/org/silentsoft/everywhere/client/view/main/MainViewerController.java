@@ -44,7 +44,7 @@ import org.silentsoft.core.event.EventListener;
 import org.silentsoft.core.util.DateUtil;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
-import org.silentsoft.core.util.SysUtil;
+import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
@@ -149,7 +149,7 @@ public class MainViewerController implements EventListener {
 							hBox.setAlignment(Pos.CENTER_LEFT);
 							
 							Label fileName = new Label(item.toString());
-							ImageView icon = new ImageView(SysUtil.getIconFromExtensionFx(FileUtil.getExtension(item.toString())));
+							ImageView icon = new ImageView(SystemUtil.getIconFromExtensionFx(FileUtil.getExtension(item.toString())));
 							
 							hBox.getChildren().addAll(icon, fileName);
 							
@@ -294,7 +294,7 @@ public class MainViewerController implements EventListener {
 	private void displayNotices() {
 		try {
 			NoticeInDVO noticeInDVO = new NoticeInDVO();
-			noticeInDVO.setLangCode(SysUtil.getLanguage());
+			noticeInDVO.setLangCode(SystemUtil.getLanguage());
 			
 			getMainSVO().setNoticeInDVO(noticeInDVO);
 			
