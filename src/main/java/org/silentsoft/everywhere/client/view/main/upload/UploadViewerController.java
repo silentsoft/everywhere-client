@@ -37,7 +37,7 @@ import org.silentsoft.core.component.notification.Notification.NotifyType;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
-import org.silentsoft.core.util.SysUtil;
+import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.model.FileModel;
@@ -95,7 +95,7 @@ public class UploadViewerController {
 							hBox.setAlignment(Pos.CENTER_LEFT);
 							
 							Label fileName = new Label(item.toString());
-							ImageView icon = new ImageView(SysUtil.getIconFromExtensionFx(FileUtil.getExtension(item.toString())));
+							ImageView icon = new ImageView(SystemUtil.getIconFromExtensionFx(FileUtil.getExtension(item.toString())));
 							
 							hBox.getChildren().addAll(icon, fileName);
 							

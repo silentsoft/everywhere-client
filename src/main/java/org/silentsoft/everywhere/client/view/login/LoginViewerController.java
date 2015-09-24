@@ -11,7 +11,7 @@ import jidefx.animation.AnimationUtils;
 import org.silentsoft.core.component.messagebox.MessageBox;
 import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
-import org.silentsoft.core.util.SysUtil;
+import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.everywhere.context.core.SharedMemory;
@@ -94,8 +94,8 @@ public class LoginViewerController {
 			param.setUserId(userId);
 			param.setSingleId(userId);
 			param.setUserPwd(SecurityUtil.encodePassword(txtPassword.getText()));
-			param.setLangCode(SysUtil.getLanguage());
-			param.setFnlAccsIp(SysUtil.getHostAddress());
+			param.setLangCode(SystemUtil.getLanguage());
+			param.setFnlAccsIp(SystemUtil.getHostAddress());
 			
 			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
 			
