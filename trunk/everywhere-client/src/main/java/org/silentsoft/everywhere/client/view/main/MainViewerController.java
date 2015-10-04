@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.regex.Pattern;
 
-
-
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -29,9 +27,6 @@ import javafx.util.Callback;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
-
-
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.controlsfx.control.BreadCrumbBar;
 import org.controlsfx.dialog.Dialog;
@@ -49,6 +44,7 @@ import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler.CloseType;
+import org.silentsoft.everywhere.client.view.main.download.DownloadViewer;
 import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
 import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
@@ -63,7 +59,6 @@ import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.FileCopyUtils;
 
 public class MainViewerController implements EventListener {
 	
@@ -170,12 +165,39 @@ public class MainViewerController implements EventListener {
 		SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
 		MenuItem downloadMenuItem = new MenuItem("Download");
 		downloadMenuItem.setOnAction(actionEvent -> {
-//			for (Object selectedItem : tableCloudViewer.getSelectionModel().getSelectedItems()) {
-//				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
-//					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
-//					
-//				}
-//			}
+			/**
+			 * Everywhere Download Architecture
+			 * 
+			 * CLIENT >>
+			 * 	Post full path of file to server (Must send FilePOJO[])
+			 *  and open download Popup(Button base) to showing progress
+			 *  then list up FilePOJO[] element info to download popup viewer's grid.
+			 *  
+			 * SERVER >>
+			 *  receive FilePOJO[], and return size of each files.
+			 *  
+			 * CLIENT >>
+			 *  receive FilePOJO[], show each size to grid.
+			 *  and make thread to download file each step by step. (if 3 files, then make 3 threads.)
+			 *  you know, this is very important : make 1 observer thread to check each file size.
+			 *  and showing download progress.
+			 *  
+			 * SERVER >>
+			 *  receive one full path of file, and find real path in server(or NAS),
+			 *  return that file's byte[] using IOUtils.
+			 *  
+			 * CLIENT >>
+			 *  at observer thread, check if all files are downloaded,
+			 *  then make popup message box or make notification & close.
+			 */
+			
+			PopupHandler.show("File Download", new DownloadViewer().getDownloadViewer(), CloseType.BUTTON_BASE, true);
+			
+			boolean isDebugMode = true;
+			if (isDebugMode) {
+				return;
+			}
+			
 			try {
 				long start = System.currentTimeMillis();
 				FilePOJO filePOJO = RESTfulAPI.doPost("/fx/main/download", "NA", FilePOJO.class);
