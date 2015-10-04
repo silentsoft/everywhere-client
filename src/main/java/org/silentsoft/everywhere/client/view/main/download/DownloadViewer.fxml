@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import org.controlsfx.control.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.main.download.DownloadViewerController">
+   <children>
+      <TableView fx:id="tableDownload" focusTraversable="false" prefHeight="315.0" prefWidth="900.0">
+        <columns>
+          <TableColumn fx:id="colStatus" prefWidth="85.0" text="Status" />
+          <TableColumn fx:id="colFileName" prefWidth="245.0" text="File Name" />
+            <TableColumn fx:id="colStorePath" prefWidth="190.0" text="Store Path" />
+            <TableColumn fx:id="colSpeed" minWidth="0.0" prefWidth="70.0" text="Speed" />
+            <TableColumn prefWidth="150.0" text="Size">
+               <columns>
+                  <TableColumn fx:id="colDownSize" prefWidth="75.0" text="Down" />
+                  <TableColumn fx:id="colTotalSize" prefWidth="75.0" text="Total" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="colProgress" prefWidth="160.0" text="Progress" />
+        </columns>
+      </TableView>
+      <ProgressBar fx:id="prgTotalProgress" layoutY="315.0" prefHeight="24.0" prefWidth="900.0" progress="0.32" />
+      <Button fx:id="btnDownOrResume" defaultButton="true" layoutX="717.0" layoutY="347.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" text="RESUME" />
+   </children>
+</AnchorPane>
