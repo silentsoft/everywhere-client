@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -40,6 +41,7 @@ import org.silentsoft.core.util.DateUtil;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SystemUtil;
+import org.silentsoft.core.util.ZipUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
@@ -191,26 +193,50 @@ public class MainViewerController implements EventListener {
 			 *  then make popup message box or make notification & close.
 			 */
 			
-			PopupHandler.show("File Download", new DownloadViewer().getDownloadViewer(), CloseType.BUTTON_BASE, true);
-			
-			boolean isDebugMode = true;
-			if (isDebugMode) {
-				return;
+			ObservableList<Object> selectedItems = tableCloudViewer.getSelectionModel().getSelectedItems();
+			for (Object selectedItem : selectedItems) {
+				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
+					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
+					
+					String path = getCurrentPath();
+					boolean isDirectory = (cloudDirectoryOutDVO.getDirectoryYn() == "Y" ? true : false);
+					String name = cloudDirectoryOutDVO.getFileName();
+					
+					try {
+						long start = System.currentTimeMillis();
+						
+						FilePOJO filePOJO = new FilePOJO();
+						filePOJO.setPath(path);
+						filePOJO.setDirectory(isDirectory);
+						filePOJO.setName(name);
+						
+						filePOJO = RESTfulAPI.doPost("/fx/main/download", filePOJO, FilePOJO.class);
+						
+						String downloadPath = "H:\\incoming";
+						downloadPath = downloadPath.concat((filePOJO.getPath().equals(File.separator) ? filePOJO.getPath() : filePOJO.getPath().concat(File.separator)));
+						File downloadDir = new File(downloadPath);
+						if (!downloadDir.exists()) {
+							downloadDir.mkdirs();
+						}
+						
+						String downloadZipFilePath = downloadPath.concat("~".concat(filePOJO.getName()).concat(".zip"));
+						FileOutputStream fileOutputStream = new FileOutputStream(downloadZipFilePath);
+						IOUtils.write(filePOJO.getBytes(), fileOutputStream);
+						fileOutputStream.close();
+						
+						new ZipUtil().unZip(downloadZipFilePath, downloadPath.concat(filePOJO.getName()));
+						new File(downloadZipFilePath).delete();
+						
+						long end = System.currentTimeMillis();
+						
+						MessageBox.showInformation(App.getStage(), "File download .. ", end-start+"".concat(" ms"));
+					} catch (Exception e) {
+						LOGGER.error(e.toString());
+					}
+				}
 			}
 			
-			try {
-				long start = System.currentTimeMillis();
-				FilePOJO filePOJO = RESTfulAPI.doPost("/fx/main/download", "NA", FilePOJO.class);
-				
-				FileOutputStream fileOutputStream = new FileOutputStream("H:\\iTunes64Setup_down.exe");
-				IOUtils.write(filePOJO.getBytes(), fileOutputStream);
-				fileOutputStream.close();
-				long end = System.currentTimeMillis();
-				
-				MessageBox.showInformation(App.getStage(), "File download .. ", end-start+"".concat(" ms"));
-			} catch (Exception e) {
-				LOGGER.error(e.toString());
-			}
+			//PopupHandler.show("File Download", new DownloadViewer().getDownloadViewer(), CloseType.BUTTON_BASE, true);
 		});
 		MenuItem deleteMenuItem = new MenuItem("Delete");
 		deleteMenuItem.setOnAction(actionEvent -> {
@@ -268,23 +294,27 @@ public class MainViewerController implements EventListener {
 		});
 	}
 	
-	private TreeItem<String> getCrumb(String path) {
-		String filePath = breadCrumbBar.getSelectedCrumb().getValue();
+	private String getCurrentPath() {
+		String currentPath = breadCrumbBar.getSelectedCrumb().getValue();
 		
 		TreeItem<String> selectedCrumb = breadCrumbBar.getSelectedCrumb();
 		boolean isNotFind = true;
 		while (isNotFind) {
 			TreeItem<String> parentCrumb = selectedCrumb.getParent();
 			if (parentCrumb != null) {
-				filePath = parentCrumb.getValue().equals(File.separator) ? parentCrumb.getValue().concat(filePath) : parentCrumb.getValue().concat(File.separator.concat(filePath));
+				currentPath = parentCrumb.getValue().equals(File.separator) ? parentCrumb.getValue().concat(currentPath) : parentCrumb.getValue().concat(File.separator.concat(currentPath));
 				selectedCrumb = parentCrumb;
 			} else {
 				isNotFind = false;
 			}
 		}
 		
-		String[] currentPathArray = filePath.split(Pattern.quote(File.separator));
-		
+		return currentPath;
+	}
+	
+	private TreeItem<String> getCrumb(String path) {
+		String currentPath = getCurrentPath();
+		String[] currentPathArray = currentPath.split(Pattern.quote(File.separator));
 		
 		boolean isFirst = true;
 		TreeItem<String> tempParent = null;
