@@ -233,7 +233,6 @@ public class UploadViewerController {
 				try {
 					filePOJO.setDirectory(fileModel.isDirectory());
 					filePOJO.setPath(fileModel.getPath());
-					filePOJO.setUserUniqueSeq(userUniqueSeq);
 					
 					Path path = Paths.get(filePOJO.getPath());
 					String fileName = path.getFileName().toString(); 
