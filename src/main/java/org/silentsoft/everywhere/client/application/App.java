@@ -22,8 +22,6 @@ import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
 import org.silentsoft.core.component.messagebox.MessageBox;
-import org.silentsoft.core.event.EventHandler;
-import org.silentsoft.core.event.EventListener;
 import org.silentsoft.core.hotkey.HotkeyHandler;
 import org.silentsoft.core.tray.TrayIconHandler;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
@@ -31,6 +29,8 @@ import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
+import org.silentsoft.io.event.EventHandler;
+import org.silentsoft.io.event.EventListener;
 
 public class App extends Application implements EventListener {
 	
@@ -135,6 +135,10 @@ public class App extends Application implements EventListener {
 	private void registerHotkey() {
 		HotkeyHandler.getInstance().registerHotkey(KeyCode.K, true, true, true, () -> {
 			System.out.println("Easter eggs !!");
+		});
+		
+		HotkeyHandler.getInstance().registerHotkey(KeyCode.H, false, true, true, () -> {
+			System.out.println("Ctrl + Alt !");
 		});
 		
 		stage.addEventHandler(KeyEvent.KEY_RELEASED, HotkeyHandler.getInstance());
