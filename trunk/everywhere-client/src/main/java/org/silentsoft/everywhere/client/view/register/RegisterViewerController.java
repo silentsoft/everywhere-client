@@ -8,15 +8,15 @@ import javafx.scene.control.TextField;
 
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.component.messagebox.MessageBox;
-import org.silentsoft.core.event.EventHandler;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.core.SharedMemory;
 import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.util.SecurityUtil;
+import org.silentsoft.io.event.EventHandler;
+import org.silentsoft.io.memory.SharedMemory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
