@@ -21,9 +21,6 @@ import javafx.stage.StageStyle;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
-import org.silentsoft.core.component.messagebox.MessageBox;
-import org.silentsoft.core.hotkey.HotkeyHandler;
-import org.silentsoft.core.tray.TrayIconHandler;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
@@ -31,6 +28,9 @@ import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.event.EventListener;
+import org.silentsoft.ui.component.messagebox.MessageBox;
+import org.silentsoft.ui.hotkey.HotkeyHandler;
+import org.silentsoft.ui.tray.TrayIconHandler;
 
 public class App extends Application implements EventListener {
 	
