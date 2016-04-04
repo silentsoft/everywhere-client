@@ -2,6 +2,7 @@ package org.silentsoft.everywhere.client.view.modify;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,10 +17,11 @@ import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
+import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ModifyViewerController {
+public class ModifyViewerController extends AbstractViewerController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModifyViewerController.class);
 	
@@ -56,12 +58,10 @@ public class ModifyViewerController {
 	@FXML
 	Button btnCancelInEmail;
 	
-	protected void initialize() {
-		Platform.runLater(() ->
-		{
-			txtName.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM)));
-			txtEmail.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_EMAIL)));
-		});
+	@Override
+	protected void initialize(Parent viewer, Object... parameters) {
+		txtName.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM)));
+		txtEmail.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_EMAIL)));
 	}
 	
 	@FXML
@@ -141,4 +141,5 @@ public class ModifyViewerController {
 			SharedMemory.getDataMap().put(BizConst.KEY_USER_NM, tbmSmUserDVO.getUserNm());
 		}
 	}
+	
 }

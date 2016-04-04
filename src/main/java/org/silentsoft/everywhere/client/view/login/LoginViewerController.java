@@ -2,6 +2,7 @@ package org.silentsoft.everywhere.client.view.login;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,10 +20,11 @@ import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
+import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoginViewerController {
+public class LoginViewerController extends AbstractViewerController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginViewerController.class);
 	
@@ -35,42 +37,41 @@ public class LoginViewerController {
 	@FXML
 	private Button btnLogin;
 	
-	protected void initialize() {
-		Platform.runLater(() -> {
-			SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, false);
+	@Override
+	protected void initialize(Parent viewer, Object... parameters) {
+		SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, false);
+		
+		String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
+		if (ObjectUtil.isEmpty(userId)) {
+			// Why do i write many code to just request focus on text field.. ?
+			new Thread(() -> {
+				try {
+					Thread.sleep(500);
+					
+					Platform.runLater(() -> {
+						txtSingleId.requestFocus();
+					});
+				} catch (Exception e) {
+					;
+				}
+			}).start();
+		} else {
+			txtSingleId.setText(userId);
 			
-			String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
-			if (ObjectUtil.isEmpty(userId)) {
-				// Why do i write many code to just request focus on text field.. ?
-				new Thread(() -> {
-					try {
-						Thread.sleep(500);
-						
-						Platform.runLater(() -> {
-							txtSingleId.requestFocus();
-						});
-					} catch (Exception e) {
-						;
-					}
-				}).start();
-			} else {
-				txtSingleId.setText(userId);
-				
-				new Thread(() -> {
-					try {
-						Thread.sleep(500);
-						
-						Platform.runLater(()->{
-							txtPassword.requestFocus();
-						});
-					} catch (Exception e) {
-						;
-					}
-				}).start();
-			}
-			
-			SharedMemory.getDataMap().clear();
-		});
+			new Thread(() -> {
+				try {
+					Thread.sleep(500);
+					
+					Platform.runLater(()->{
+						txtPassword.requestFocus();
+					});
+				} catch (Exception e) {
+					;
+				}
+			}).start();
+		}
+		
+		SharedMemory.getDataMap().clear();
 	}
 	
 	@FXML
@@ -140,4 +141,5 @@ public class LoginViewerController {
 	private boolean isNotValidate() {
 		return !isValidate();
 	}
+	
 }
