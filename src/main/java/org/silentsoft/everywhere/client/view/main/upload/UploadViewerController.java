@@ -45,10 +45,11 @@ import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
 import org.silentsoft.ui.component.notification.Notification;
 import org.silentsoft.ui.component.notification.Notification.NotifyType;
+import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UploadViewerController {
+public class UploadViewerController extends AbstractViewerController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UploadViewerController.class);
 	
@@ -72,13 +73,12 @@ public class UploadViewerController {
 	@FXML
 	private Button btnUpload;
 	
-	
 	private ObservableList<FileModel> fileModelList;
 	
-	
 	@SuppressWarnings("unchecked")
-	protected void initialize(Parent uploadViewer) {
-		this.uploadViewer = uploadViewer;
+	@Override
+	protected void initialize(Parent viewer, Object... parameters) {
+		this.uploadViewer = viewer;
 		
 		colFilePath.setCellFactory(new Callback<TableColumn<FileModel, Object>, TableCell<FileModel, Object>>() {
 			@Override
@@ -262,4 +262,5 @@ public class UploadViewerController {
 			PopupHandler.close(uploadViewer);
 		});
 	}
+	
 }

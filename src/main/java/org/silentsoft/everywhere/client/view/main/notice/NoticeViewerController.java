@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -16,10 +17,11 @@ import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
 import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.rest.RESTfulAPI;
+import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NoticeViewerController {
+public class NoticeViewerController extends AbstractViewerController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(NoticeViewerController.class);
 	
@@ -44,7 +46,8 @@ public class NoticeViewerController {
 		this.mainSVO = mainSVO;
 	}
 	
-	protected void initialize() {
+	@Override
+	protected void initialize(Parent viewer, Object... parameters) {
 		initializeComponents();
 		
 		getNotices();
@@ -108,4 +111,5 @@ public class NoticeViewerController {
 		
 		tableView.setItems(noticeData);
 	}
+	
 }

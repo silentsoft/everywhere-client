@@ -2,6 +2,7 @@ package org.silentsoft.everywhere.client.view.register;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -17,10 +18,11 @@ import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
+import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RegisterViewerController {
+public class RegisterViewerController extends AbstractViewerController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterViewerController.class);
 	
@@ -45,13 +47,9 @@ public class RegisterViewerController {
 	@FXML
 	Button btnCancel;
 	
-	protected void initialize() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				txtSingleId.requestFocus();
-			}
-		});
+	@Override
+	protected void initialize(Parent viewer, Object... parameters) {
+		txtSingleId.requestFocus();
 	}
 	
 	@FXML
@@ -143,4 +141,5 @@ public class RegisterViewerController {
 	private boolean isNotValidate() {
 		return !isValidate();
 	}
+	
 }

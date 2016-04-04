@@ -31,8 +31,13 @@ import org.silentsoft.io.event.EventListener;
 import org.silentsoft.ui.component.messagebox.MessageBox;
 import org.silentsoft.ui.hotkey.HotkeyHandler;
 import org.silentsoft.ui.tray.TrayIconHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class App extends Application implements EventListener {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 	
 	private static Parent app;
 	
@@ -133,12 +138,8 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void registerHotkey() {
-		HotkeyHandler.getInstance().registerHotkey(KeyCode.K, true, true, true, () -> {
-			System.out.println("Easter eggs !!");
-		});
-		
-		HotkeyHandler.getInstance().registerHotkey(KeyCode.H, false, true, true, () -> {
-			System.out.println("Ctrl + Alt !");
+		HotkeyHandler.getInstance().registerHotkey(KeyCode.H, true, true, true, () -> {
+			LOGGER.debug(EventHandler.getHistories().toString());
 		});
 		
 		stage.addEventHandler(KeyEvent.KEY_RELEASED, HotkeyHandler.getInstance());
@@ -163,19 +164,19 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void setRegisterViewToBody() {
-		changeBodyToNode(new RegisterViewer().getRegisterViewer());
+		changeBodyToNode(new RegisterViewer().getViewer());
 	}
 	
 	private void setLoginViewToBody() {
-		changeBodyToNode(new LoginViewer().getLoginViewer());
+		changeBodyToNode(new LoginViewer().getViewer());
 	}
 	
 	private void setMainViewToBody() {
-		changeBodyToNode(new MainViewer().getMainViewer());
+		changeBodyToNode(new MainViewer().getViewer());
 	}
 	
 	private void setModifyViewToBody() {
-		changeBodyToNode(new ModifyViewer().getModifyViewer());
+		changeBodyToNode(new ModifyViewer().getViewer());
 	}
 	
 	private void changeBodyToNode(Node node) {
