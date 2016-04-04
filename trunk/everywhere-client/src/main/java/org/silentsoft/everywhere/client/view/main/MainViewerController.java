@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -59,10 +60,11 @@ import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
 import org.silentsoft.ui.component.notification.Notification;
 import org.silentsoft.ui.component.notification.Notification.NotifyType;
+import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MainViewerController implements EventListener {
+public class MainViewerController extends AbstractViewerController implements EventListener {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MainViewerController.class);
 	
@@ -117,7 +119,8 @@ public class MainViewerController implements EventListener {
 		this.mainSVO = mainSVO;
 	}
 	
-	protected void initialize() {
+	@Override
+	protected void initialize(Parent viewer, Object... parameters) {
 		EventHandler.addListener(this);
 		
 		Platform.runLater(() -> {
@@ -441,7 +444,7 @@ public class MainViewerController implements EventListener {
 	
 	@FXML
 	private void notice_OnMouseClick() {
-		PopupHandler.show("Notice", new NoticeViewer().getNoticeViewer(), CloseType.FOCUS_BASE, true);
+		PopupHandler.show("Notice", new NoticeViewer().getViewer(), CloseType.FOCUS_BASE, true);
 	}
 	
 	@FXML
@@ -458,7 +461,7 @@ public class MainViewerController implements EventListener {
 	
 	@FXML
 	private void upload_OnMouseClick() {
-		PopupHandler.show("File Upload", new UploadViewer().getUploadViewer(), CloseType.BUTTON_BASE, true);
+		PopupHandler.show("File Upload", new UploadViewer().getViewer(), CloseType.BUTTON_BASE, true);
 	}
 
 	@Override
@@ -470,4 +473,5 @@ public class MainViewerController implements EventListener {
 		}
 		
 	}
+	
 }
