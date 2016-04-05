@@ -14,10 +14,11 @@ import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.model.Delta;
-import org.silentsoft.everywhere.client.utility.StageDragResizer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
+import org.silentsoft.ui.model.MaximizeProperty;
+import org.silentsoft.ui.util.StageDragResizer;
 
 
 public class AppController {
@@ -43,7 +44,11 @@ public class AppController {
 	@FXML
 	private ImageButton appCloseBtn;
 	
+	private MaximizeProperty maximizeProperty;
+	
 	protected void initialize() {
+		maximizeProperty = new MaximizeProperty(App.getStage());
+		
 		makeDraggable(App.getStage(), head);
 		makeNormalizable(App.getStage(), head);
 		
@@ -107,7 +112,8 @@ public class AppController {
     private void makeNormalizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
-    			stage.setMaximized(!stage.isMaximized());
+//    			stage.setMaximized(!stage.isMaximized());
+    			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
     		}
     	});
     }
@@ -149,7 +155,8 @@ public class AppController {
     private void makeMaximizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseReleased(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-    			stage.setMaximized(!stage.isMaximized());
+//    			stage.setMaximized(!stage.isMaximized());
+    			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
     		}
     	});
     }
