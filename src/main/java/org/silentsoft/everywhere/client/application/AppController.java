@@ -13,10 +13,10 @@ import jidefx.animation.AnimationUtils;
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
-import org.silentsoft.everywhere.client.model.Delta;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
+import org.silentsoft.ui.model.Delta;
 import org.silentsoft.ui.model.MaximizeProperty;
 import org.silentsoft.ui.util.StageDragResizer;
 
