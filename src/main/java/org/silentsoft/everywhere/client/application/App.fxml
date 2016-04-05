@@ -16,9 +16,9 @@
 	<children>
 		<HBox fx:id="head" alignment="CENTER_LEFT" minHeight="45.0" minWidth="910.0" style="-fx-background-color: rgb(35,35,35); -fx-blend-mode: darken;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 			<children>
-				<ImageButton fx:id="appMenuBtn" layoutX="5.0" minHeight="45.0" minWidth="55.0" prefHeight="45.0" prefWidth="55.0">
+				<ImageButton fx:id="appMenuBtn" layoutX="5.0" layoutY="5.0" minHeight="40.0" minWidth="50.0" prefHeight="40.0" prefWidth="50.0">
 					<graphic>
-						<ImageView fitHeight="45.0" fitWidth="55.0">
+						<ImageView fitHeight="40.0" fitWidth="50.0">
 							<image>
 								<Image url="@/images/app/ic_menu_white_48dp.png" />
 							</image>
