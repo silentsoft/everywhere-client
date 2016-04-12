@@ -1,13 +1,13 @@
 <project
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.silentsoft</groupId>
 	<artifactId>everywhere-client</artifactId>
 	<version>1.0.0</version>
-	
+
 	<repositories>
 		<repository>
 			<id>maven-repo</id>
@@ -19,27 +19,12 @@
 		<everywhere.context.version>1.0.0</everywhere.context.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<jidefx-common.version>0.9.1</jidefx-common.version>
+		
 		<buildtime>${maven.build.timestamp}</buildtime>
-		<project.deploymentdir>${basedir}/target/Everywhere-client</project.deploymentdir>
+		<project.deploymentdir>${basedir}/target/${project.artifactId}</project.deploymentdir>
 	</properties>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.fxml</include>
-					<include>**/*.css</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.png</include>
-					<include>**/*.jpg</include>
-				</includes>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -79,17 +64,28 @@
 				<version>1.7</version>
 				<executions>
 					<execution>
+						<id>generate-version-class</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<ant antfile="${basedir}/build-version.xml" inheritAll="false" inheritRefs="false">
+									<property name="version" value="${project.version}" />
+									<property name="buildtime" value="${buildtime}" />
+									<property name="gensrc.dir" value="${project.build.directory}/version/generated-sources" />
+								</ant>
+							</target>
+							<sourceRoot>${project.build.directory}/version/generated-sources</sourceRoot>
+						</configuration>
+					</execution>
+					<execution>
 						<id>compile</id>
 						<phase>compile</phase>
 						<configuration>
 							<target>
 								<ant antfile="${basedir}/build.xml">
-									<property
-										name="version"
-										value="${project.version}" />
-									<property
-										name="buildtime"
-										value="${buildtime}" />
 									<target name="localtest" />
 								</ant>
 							</target>
@@ -98,9 +94,6 @@
 							<goal>run</goal>
 						</goals>
 					</execution>
-					<!-- <execution> <id>doc</id> <phase>compile</phase> <configuration> 
-						<target> <ant antfile="${basedir}/build.xml"> <target name="doc" /> </ant> 
-						</target> </configuration> <goals> <goal>run</goal> </goals> </execution> -->
 				</executions>
 			</plugin>
 		</plugins>

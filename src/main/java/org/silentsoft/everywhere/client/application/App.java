@@ -1,6 +1,5 @@
 package org.silentsoft.everywhere.client.application;
 	
-import java.awt.Toolkit;
 import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +17,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import javax.swing.ImageIcon;
+
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
+import org.silentsoft.everywhere.client.version.BuildVersion;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
@@ -46,6 +49,8 @@ public class App extends Application implements EventListener {
 	private AppController appController;
 	
 	public static void main(String[] args) {
+		LOGGER.info("Welcome. This is ClientApp (v{}, b{}, j{})", new Object[]{ BuildVersion.VERSION, BuildVersion.BUILD_TIME, System.getProperty("java.version") });
+		
 		launch(args);
 	}
 
@@ -102,7 +107,7 @@ public class App extends Application implements EventListener {
 		stage.getIcons().add(new Image("/images/icon/everywhere.png"));
 		
 		// system tray
-		TrayIconHandler.registerTrayIcon(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon/everywhere.png"), "Everywhere", new ActionListener() {
+		TrayIconHandler.registerTrayIcon(new ImageIcon(getClass().getResource("/images/icon/everywhere.png")).getImage(), "Everywhere", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Platform.runLater(() -> {
@@ -120,7 +125,7 @@ public class App extends Application implements EventListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Platform.runLater(() -> {
-					MessageBox.showInformation(App.getStage(), "Everywhere", "author : hs830.lee");
+					MessageBox.showInformation(App.getStage(), "Everywhere", "author : silentsoft");
 				});
 			}
 		});
