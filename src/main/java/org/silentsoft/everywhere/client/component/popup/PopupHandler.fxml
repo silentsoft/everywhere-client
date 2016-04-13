@@ -6,11 +6,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.image.*?>
-<?import org.silentsoft.everywhere.client.component.button.ImageButton?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.component.popup.PopupHandlerController">
+<VBox styleClass="main" stylesheets="@../../../../../../css/Popup.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.component.popup.PopupHandlerController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="-1.0" style="-fx-background-color: #f2f2f2;">
+      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="-1.0" styleClass="head" style="-fx-background-color: #f2f2f2;">
 		<children>
             <Pane minWidth="14.0" />
             <Label fx:id="title" text="TITLE">
@@ -19,18 +18,10 @@
                </font>
             </Label>
 			<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-			<ImageButton fx:id="closeBtn" minHeight="36.0" minWidth="36.0" onAction="#close_OnActionClick">
-				<graphic>
-					<ImageView fitHeight="36.0" fitWidth="36.0">
-						<image>
-							<Image url="@/images/popup/close.png" />
-						</image>
-					</ImageView>
-				</graphic>
-			</ImageButton>
+			<Button fx:id="closeBtn" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" styleClass="close-button" onAction="#close_OnActionClick" />
 		</children>
       </HBox>
-      <Pane fx:id="body" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: #ffffff;">
+      <Pane fx:id="body" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" prefHeight="-1.0" prefWidth="-1.0" styleClass="body">
 		   <children>
 		      
 		   </children>
