@@ -8,23 +8,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
 
-<?import org.silentsoft.everywhere.client.component.button.ImageButton?>
-<!-- prefHeight="530.0" prefWidth="910.0" -->
-
-<AnchorPane fx:id="main" minHeight="530.0" minWidth="910.0" prefHeight="530.0" prefWidth="910.0" style="-fx-background-color: null;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.application.AppController">
+<AnchorPane fx:id="main" minHeight="530.0" minWidth="910.0" prefHeight="530.0" prefWidth="910.0" styleClass="main" stylesheets="@../../../../../css/App.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.application.AppController">
 	<children>
-		<HBox fx:id="head" alignment="CENTER_LEFT" minHeight="45.0" minWidth="910.0" style="-fx-background-color: rgb(35,35,35); -fx-blend-mode: darken;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+		<HBox fx:id="head" alignment="CENTER_LEFT" minHeight="45.0" minWidth="910.0" styleClass="head" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 			<children>
-				<ImageButton fx:id="appMenuBtn" layoutX="5.0" layoutY="5.0" minHeight="40.0" minWidth="50.0" prefHeight="40.0" prefWidth="50.0">
-					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="50.0">
-							<image>
-								<Image url="@/images/app/ic_menu_white_48dp.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</ImageButton>
+				<Button fx:id="appMenuBtn" minHeight="40.0" minWidth="50.0" prefHeight="40.0" prefWidth="50.0" styleClass="app-menu-button" />
 				<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
 				<Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="365.0" layoutY="15.0" text="Everywhere" textAlignment="CENTER" textFill="#f4f4f4">
 					<font>
@@ -32,35 +22,15 @@
 					</font>
 				</Label>
 				<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-				<ImageButton fx:id="appMinimizeBtn" layoutX="785.0" layoutY="2.5" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0">
-					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="40.0">
-							<image>
-								<Image url="@/images/app/ic_minimize_white_48dp.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</ImageButton>
-				<ImageButton fx:id="appMaximizeBtn" layoutX="825.0" layoutY="2.5" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0">
-					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="40.0">
-							<image>
-								<Image url="@/images/app/ic_maximize_white_48dp.png" />
-							</image>
-						</ImageView>                  	
-					</graphic>
-				</ImageButton>
-				<ImageButton fx:id="appCloseBtn" layoutX="865.0" layoutY="2.5" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0">
-					<graphic>
-						<ImageView fitHeight="40.0" fitWidth="40.0">
-							<image>
-								<Image url="@/images/app/ic_close_white_48dp.png" />
-							</image>
-						</ImageView>
-					</graphic>                  
-				</ImageButton>
+            	<HBox alignment="CENTER_LEFT" minHeight="40.0" prefHeight="40.0" styleClass="controls">
+            		<children>
+            			<Button fx:id="appMinimizeBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-minimize-button" />
+						<Button fx:id="appMaximizeBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-maximize-button" />
+						<Button fx:id="appCloseBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-close-button" />
+            		</children>
+            	</HBox>
 			</children>
 		</HBox>
-		<AnchorPane fx:id="body" layoutY="45.0" prefHeight="485.0" prefWidth="910.0" style="-fx-background-color: #ffffff; -fx-border-color: #333333;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+		<AnchorPane fx:id="body" layoutY="45.0" prefHeight="485.0" prefWidth="910.0" styleClass="body" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
 	</children>
 </AnchorPane>

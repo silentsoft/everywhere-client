@@ -3,6 +3,7 @@ package org.silentsoft.everywhere.client.application;
 import javafx.animation.Transition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -12,7 +13,6 @@ import jidefx.animation.AnimationUtils;
 
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
-import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
@@ -33,16 +33,16 @@ public class AppController {
 	private AnchorPane body;
 	
 	@FXML
-	private ImageButton appMenuBtn;
+	private Button appMenuBtn;
 	
 	@FXML
-	private ImageButton appMinimizeBtn;
+	private Button appMinimizeBtn;
 	
 	@FXML
-	private ImageButton appMaximizeBtn;
+	private Button appMaximizeBtn;
 	
 	@FXML
-	private ImageButton appCloseBtn;
+	private Button appCloseBtn;
 	
 	private MaximizeProperty maximizeProperty;
 	
@@ -112,7 +112,6 @@ public class AppController {
     private void makeNormalizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
-//    			stage.setMaximized(!stage.isMaximized());
     			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
     		}
     	});
@@ -124,7 +123,7 @@ public class AppController {
      * @param byNode
      */
     private void makeTransportable(final Node byNode) {
-    	byNode.setOnMouseReleased(mouseEvent -> {
+    	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
     			boolean appLoginStatus = ObjectUtil.toBoolean(SharedMemory.getDataMap().get(BizConst.KEY_APP_LOGIN_STATUS), false);
     			if (appLoginStatus) {
@@ -140,7 +139,7 @@ public class AppController {
      * @param byNode
      */
     private void makeMinimizable(final Stage stage, final Node byNode) {
-    	byNode.setOnMouseReleased(mouseEvent -> {
+    	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
     			stage.setIconified(true);
     		}
@@ -153,7 +152,7 @@ public class AppController {
      * @param byNode
      */
     private void makeMaximizable(final Stage stage, final Node byNode) {
-    	byNode.setOnMouseReleased(mouseEvent -> {
+    	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
 //    			stage.setMaximized(!stage.isMaximized());
     			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
@@ -167,7 +166,7 @@ public class AppController {
      * @param byNode
      */
     private void makeClosable(final Stage stage, final Node byNode) {
-    	byNode.setOnMouseReleased(mouseEvent -> {
+    	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
     			Transition animation = AnimationUtils.createTransition(App.getParent(), AnimationType.BOUNCE_OUT_DOWN);
     			animation.setOnFinished(actionEvent -> {
