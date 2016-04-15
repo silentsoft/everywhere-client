@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
+import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.client.version.BuildVersion;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.main.MainViewer;
@@ -98,6 +99,8 @@ public class App extends Application implements EventListener {
 		
 		displayIcon();
 		registerHotkey();
+		
+		RESTfulAPI.init();
 		
 		EventHandler.addListener(this);
 	}

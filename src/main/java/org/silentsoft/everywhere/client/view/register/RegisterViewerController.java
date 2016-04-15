@@ -1,6 +1,5 @@
 package org.silentsoft.everywhere.client.view.register;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -10,10 +9,9 @@ import javafx.scene.control.TextField;
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
+import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
-import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
@@ -82,7 +80,7 @@ public class RegisterViewerController extends AbstractViewerController {
 				saveUserInfoToSharedMemory(param.getUserId());
 				btnCancel_OnActionClick();
 			}
-		} catch (EverywhereException e) {
+		} catch (Exception e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
 			MessageBox.showError(App.getStage(), "response failure from server :(");
 		}
