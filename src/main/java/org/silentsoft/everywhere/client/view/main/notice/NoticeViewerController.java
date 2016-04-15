@@ -12,11 +12,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import org.controlsfx.control.MasterDetailPane;
 import org.silentsoft.core.util.SystemUtil;
+import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
 import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
-import org.silentsoft.everywhere.context.host.EverywhereException;
-import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,7 +100,7 @@ public class NoticeViewerController extends AbstractViewerController {
 			getMainSVO().setNoticeInDVO(noticeInDVO);
 			
 			setMainSVO(RESTfulAPI.doPost("/fx/main/notice", getMainSVO(), MainSVO.class));
-		} catch (EverywhereException e) {
+		} catch (Exception e) {
 			LOGGER.error(e.toString());
 		}
 	}

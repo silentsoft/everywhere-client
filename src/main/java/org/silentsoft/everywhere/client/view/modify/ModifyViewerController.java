@@ -11,10 +11,9 @@ import org.apache.commons.lang.StringUtils;
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
+import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.host.EverywhereException;
 import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
-import org.silentsoft.everywhere.context.rest.RESTfulAPI;
 import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
 import org.silentsoft.ui.viewer.AbstractViewerController;
@@ -83,7 +82,7 @@ public class ModifyViewerController extends AbstractViewerController {
 				saveUserInfoToSharedMemory(param);
 				btnCancelInName_OnActionClick();
 			}
-		} catch (EverywhereException e) {
+		} catch (Exception e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
 			MessageBox.showError(App.getStage(), "response failure from server :(");
 		}

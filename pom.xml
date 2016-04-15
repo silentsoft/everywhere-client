@@ -16,7 +16,9 @@
 	</repositories>
 
 	<properties>
+		<silentsoft.net.version>1.0.0</silentsoft.net.version>
 		<everywhere.context.version>1.0.0</everywhere.context.version>
+		
 		<slf4j.version>1.6.1</slf4j.version>
 		<jidefx-common.version>0.9.1</jidefx-common.version>
 		
@@ -100,6 +102,11 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.silentsoft</groupId>
+			<artifactId>silentsoft-net</artifactId>
+			<version>${silentsoft.net.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.silentsoft</groupId>
 			<artifactId>everywhere-context</artifactId>
