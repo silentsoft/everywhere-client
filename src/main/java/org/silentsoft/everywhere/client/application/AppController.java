@@ -24,7 +24,7 @@ import org.silentsoft.ui.util.StageDragResizer;
 public class AppController {
 	
 	@FXML
-	private AnchorPane main;
+	private AnchorPane root;
 	
 	@FXML
 	private HBox head;
@@ -58,7 +58,7 @@ public class AppController {
 		makeMaximizable(App.getStage(), appMaximizeBtn);
 		makeClosable(App.getStage(), appCloseBtn);
 		
-		StageDragResizer.makeResizable(App.getStage(), main);
+		StageDragResizer.makeResizable(App.getStage(), root);
 	}
 	
 //	public Pane getHead() {
