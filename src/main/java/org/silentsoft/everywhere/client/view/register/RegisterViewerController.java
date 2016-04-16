@@ -11,7 +11,7 @@ import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
+import org.silentsoft.everywhere.context.model.table.TbmSysUserDVO;
 import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
@@ -25,7 +25,7 @@ public class RegisterViewerController extends AbstractViewerController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterViewerController.class);
 	
 	@FXML
-	TextField txtSingleId;
+	TextField txtUserId;
 	
 	@FXML
 	PasswordField txtPassword;
@@ -47,7 +47,7 @@ public class RegisterViewerController extends AbstractViewerController {
 	
 	@Override
 	protected void initialize(Parent viewer, Object... parameters) {
-		txtSingleId.requestFocus();
+		txtUserId.requestFocus();
 	}
 	
 	@FXML
@@ -64,14 +64,13 @@ public class RegisterViewerController extends AbstractViewerController {
 				LOGGER.error("I got catch error during encoding the password !", e);
 			}
 			
-			TbmSmUserDVO param = new TbmSmUserDVO();
-			param.setUserId(txtSingleId.getText());
-			param.setSingleId(txtSingleId.getText());
+			TbmSysUserDVO param = new TbmSysUserDVO();
+			param.setUserId(txtUserId.getText());
 			param.setUserPwd(SecurityUtil.encodePassword(txtPassword.getText()));
-			param.setUserNm(txtName.getText());
+			param.setUserName(txtName.getText());
 			param.setEmailAddr(txtEmail.getText());
 			
-			param = RESTfulAPI.doPost("/fx/register/authentication", param, TbmSmUserDVO.class);
+			param = RESTfulAPI.doPost("/fx/register/authentication", param, TbmSysUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
 				MessageBox.showError(App.getStage(), "Register Failed.. Try again !!!");
@@ -96,7 +95,7 @@ public class RegisterViewerController extends AbstractViewerController {
 	}
 	
 	private boolean isValidate() {
-		if (txtSingleId.getText().length() <= BizConst.SIZE_EMPTY) {
+		if (txtUserId.getText().length() <= BizConst.SIZE_EMPTY) {
 			MessageBox.showError(App.getStage(), "ID is empty !");
 			return false;
 		}
@@ -114,15 +113,15 @@ public class RegisterViewerController extends AbstractViewerController {
 		if (!txtPassword.getText().equals(txtConfirm.getText())) {
 			MessageBox.showError(App.getStage(), "Password is not matched !");
 			return false;
-		} else if (txtPassword.getText().equals(txtSingleId.getText())) {
+		} else if (txtPassword.getText().equals(txtUserId.getText())) {
 			MessageBox.showError(App.getStage(), "Password cannot be same with ID !");
 			return false;
 		}
 		
-		if (txtName.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showError(App.getStage(), "Name is empty !");
-			return false;
-		}
+//		if (txtName.getText().length() <= BizConst.SIZE_EMPTY) {
+//			MessageBox.showError(App.getStage(), "Name is empty !");
+//			return false;
+//		}
 		
 		if (txtEmail.getText().length() <= BizConst.SIZE_EMPTY) {
 			MessageBox.showError(App.getStage(), "Email is empty !");

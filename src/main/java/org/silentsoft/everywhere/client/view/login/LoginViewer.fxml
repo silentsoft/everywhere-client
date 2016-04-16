@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<StackPane style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-size: cover; -fx-background-position: center center;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.login.LoginViewerController">
+<StackPane styleClass="root" stylesheets="@../../../../../../css/view/Login.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.login.LoginViewerController">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -26,7 +26,7 @@
                               <Font name="Verdana" size="36.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtSingleId" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" promptText="ID" />
+                        <TextField fx:id="txtLogin" layoutX="375.0" layoutY="213.0" prefHeight="23.0" prefWidth="160.0" promptText="ID or Email address" />
                         <PasswordField fx:id="txtPassword" layoutX="375.0" layoutY="237.0" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" promptText="Password" />
                         <!-- textFill="#fffafa" -->
                         <Button fx:id="btnLogin" defaultButton="true" layoutX="375.0" layoutY="271.0" mnemonicParsing="false" onAction="#login_OnActionClick" prefHeight="23.0" prefWidth="160.0" text="Login" textFill="#8a8a8a">
