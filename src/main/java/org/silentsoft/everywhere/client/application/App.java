@@ -3,7 +3,6 @@ package org.silentsoft.everywhere.client.application;
 import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -11,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -28,10 +26,11 @@ import jidefx.animation.AnimationUtils;
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.client.version.BuildVersion;
 import org.silentsoft.everywhere.client.view.cloud.CloudViewer;
-import org.silentsoft.everywhere.client.view.cloud.CloudViewerController;
+import org.silentsoft.everywhere.client.view.index.IndexViewer;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
+import org.silentsoft.everywhere.client.view.wiki.WikiViewer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.event.EventListener;
@@ -165,6 +164,12 @@ public class App extends Application implements EventListener {
 		case BizConst.EVENT_VIEW_LOGIN:
 			setLoginViewToBody();
 			break;
+		case BizConst.EVENT_VIEW_INDEX:
+			setIndexViewToBody();
+			break;
+		case BizConst.EVENT_VIEW_WIKI:
+			setWikiViewToBody();
+			break;
 		case BizConst.EVENT_VIEW_CLOUD:
 			setCloudViewToBody();
 			break;
@@ -180,6 +185,14 @@ public class App extends Application implements EventListener {
 	
 	private void setLoginViewToBody() {
 		changeBodyToNode(new LoginViewer().getViewer());
+	}
+	
+	private void setIndexViewToBody() {
+		changeBodyToNode(new IndexViewer().getViewer());
+	}
+	
+	private void setWikiViewToBody() {
+		changeBodyToNode(new WikiViewer().getViewer());
 	}
 	
 	private void setCloudViewToBody() {

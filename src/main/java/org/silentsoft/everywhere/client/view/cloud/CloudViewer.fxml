@@ -14,7 +14,7 @@
 <?import org.silentsoft.everywhere.client.component.tree.*?>
 <?import org.controlsfx.control.BreadCrumbBar?>
 
-<AnchorPane minHeight="485.0" minWidth="910.0" prefHeight="485.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.cloud.CloudViewerController">
+<AnchorPane styleClass="root" stylesheets="@../../../../../../css/view/Cloud.css" minHeight="485.0" minWidth="910.0" prefHeight="485.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.cloud.CloudViewerController">
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
