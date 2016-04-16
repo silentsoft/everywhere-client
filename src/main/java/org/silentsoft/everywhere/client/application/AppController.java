@@ -127,7 +127,7 @@ public class AppController {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
     			boolean appLoginStatus = ObjectUtil.toBoolean(SharedMemory.getDataMap().get(BizConst.KEY_APP_LOGIN_STATUS), false);
     			if (appLoginStatus) {
-    				EventHandler.callEvent(AppController.class, BizConst.EVENT_VIEW_MAIN);
+    				EventHandler.callEvent(AppController.class, BizConst.EVENT_VIEW_CLOUD);
     			}
     		}
     	});

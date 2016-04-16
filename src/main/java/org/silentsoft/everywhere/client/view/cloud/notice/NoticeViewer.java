@@ -1,4 +1,4 @@
-package org.silentsoft.everywhere.client.view.main.notice;
+package org.silentsoft.everywhere.client.view.cloud.notice;
 
 import org.silentsoft.ui.viewer.AbstractViewer;
 

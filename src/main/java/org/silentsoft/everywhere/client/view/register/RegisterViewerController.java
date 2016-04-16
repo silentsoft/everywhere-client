@@ -75,8 +75,8 @@ public class RegisterViewerController extends AbstractViewerController {
 			if (param == null || ObjectUtil.isEmpty(param)) {
 				MessageBox.showError(App.getStage(), "Register Failed.. Try again !!!");
 			} else {
-				MessageBox.showInformation(App.getStage(), "Welcome", "Succeed to register member !");
 				saveUserInfoToSharedMemory(param.getUserId());
+				MessageBox.showInformation(App.getStage(), "Welcome", "Succeed to register member !");
 				btnCancel_OnActionClick();
 			}
 		} catch (Exception e) {

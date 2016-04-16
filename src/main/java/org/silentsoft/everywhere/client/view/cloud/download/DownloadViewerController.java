@@ -1,4 +1,4 @@
-package org.silentsoft.everywhere.client.view.main.download;
+package org.silentsoft.everywhere.client.view.cloud.download;
 
 import javafx.scene.Parent;
 

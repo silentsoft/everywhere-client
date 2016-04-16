@@ -1,7 +1,7 @@
-package org.silentsoft.everywhere.client.view.main;
+package org.silentsoft.everywhere.client.view.cloud;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javafx.animation.Transition;
@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -29,31 +30,25 @@ import javafx.util.Callback;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
-import org.apache.commons.io.IOUtils;
 import org.controlsfx.control.BreadCrumbBar;
-import org.controlsfx.dialog.Dialog;
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.DateUtil;
 import org.silentsoft.core.util.FileUtil;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SystemUtil;
-import org.silentsoft.core.util.ZipUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.button.ImageButton;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler.CloseType;
-import org.silentsoft.everywhere.client.view.main.download.DownloadViewer;
-import org.silentsoft.everywhere.client.view.main.notice.NoticeViewer;
-import org.silentsoft.everywhere.client.view.main.upload.UploadViewer;
+import org.silentsoft.everywhere.client.rest.RESTfulAPI;
+import org.silentsoft.everywhere.client.view.cloud.notice.NoticeViewer;
+import org.silentsoft.everywhere.client.view.cloud.upload.UploadViewer;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.fx.main.vo.CloudDirectoryInDVO;
-import org.silentsoft.everywhere.context.fx.main.vo.CloudDirectoryOutDVO;
-import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
-import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
-import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
-import org.silentsoft.everywhere.context.host.EverywhereException;
-import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
-import org.silentsoft.everywhere.context.rest.RESTfulAPI;
+import org.silentsoft.everywhere.context.fx.cloud.vo.CloudDirectoryInDVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.CloudDirectoryOutDVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.CloudSVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.NoticeInDVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.NoticeOutDVO;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.event.EventListener;
 import org.silentsoft.io.memory.SharedMemory;
@@ -64,11 +59,11 @@ import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MainViewerController extends AbstractViewerController implements EventListener {
+public class CloudViewerController extends AbstractViewerController implements EventListener {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainViewerController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CloudViewerController.class);
 	
-	private MainSVO mainSVO;
+	private CloudSVO cloudSVO;
 	
 	@FXML
 	private Label lblSingleId;
@@ -107,29 +102,27 @@ public class MainViewerController extends AbstractViewerController implements Ev
 	@FXML
 	private TableColumn colModified;
 	
-	private MainSVO getMainSVO() {
-		if (mainSVO == null) {
-			mainSVO = new MainSVO();
+	private CloudSVO getCloudSVO() {
+		if (cloudSVO == null) {
+			cloudSVO = new CloudSVO();
 		}
 		
-		return mainSVO;
+		return cloudSVO;
 	}
 	
-	private void setMainSVO(MainSVO mainSVO) {
-		this.mainSVO = mainSVO;
+	private void setCloudSVO(CloudSVO cloudSVO) {
+		this.cloudSVO = cloudSVO;
 	}
 	
 	@Override
 	protected void initialize(Parent viewer, Object... parameters) {
 		EventHandler.addListener(this);
 		
-		Platform.runLater(() -> {
-			initializeComponents();
-			
-			displayNotices();
-			displayUserInfo();
-			displayCloudDirectory();
-		});
+		initializeComponents();
+		
+		displayNotices();
+		displayUserInfo();
+		displayCloudDirectory();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -198,45 +191,45 @@ public class MainViewerController extends AbstractViewerController implements Ev
 			
 			ObservableList<Object> selectedItems = tableCloudViewer.getSelectionModel().getSelectedItems();
 			for (Object selectedItem : selectedItems) {
-				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
-					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
-					
-					String path = getCurrentPath();
-					boolean isDirectory = (cloudDirectoryOutDVO.getDirectoryYn() == "Y" ? true : false);
-					String name = cloudDirectoryOutDVO.getFileName();
-					
-					try {
-						long start = System.currentTimeMillis();
-						
-						FilePOJO filePOJO = new FilePOJO();
-						filePOJO.setPath(path);
-						filePOJO.setDirectory(isDirectory);
-						filePOJO.setName(name);
-						
-						filePOJO = RESTfulAPI.doPost("/fx/main/download", filePOJO, FilePOJO.class);
-						
-						String downloadPath = "H:\\incoming";
-						downloadPath = downloadPath.concat((filePOJO.getPath().equals(File.separator) ? filePOJO.getPath() : filePOJO.getPath().concat(File.separator)));
-						File downloadDir = new File(downloadPath);
-						if (!downloadDir.exists()) {
-							downloadDir.mkdirs();
-						}
-						
-						String downloadZipFilePath = downloadPath.concat("~".concat(filePOJO.getName()).concat(".zip"));
-						FileOutputStream fileOutputStream = new FileOutputStream(downloadZipFilePath);
-						IOUtils.write(filePOJO.getBytes(), fileOutputStream);
-						fileOutputStream.close();
-						
-						new ZipUtil().unZip(downloadZipFilePath, downloadPath.concat(filePOJO.getName()));
-						new File(downloadZipFilePath).delete();
-						
-						long end = System.currentTimeMillis();
-						
-						MessageBox.showInformation(App.getStage(), "File download .. ", end-start+"".concat(" ms"));
-					} catch (Exception e) {
-						LOGGER.error(e.toString());
-					}
-				}
+//				if (selectedItem != null && selectedItem instanceof CloudDirectoryOutDVO) {
+//					CloudDirectoryOutDVO cloudDirectoryOutDVO = (CloudDirectoryOutDVO) selectedItem;
+//					
+//					String path = getCurrentPath();
+//					boolean isDirectory = (cloudDirectoryOutDVO.getDirectoryYn() == "Y" ? true : false);
+//					String name = cloudDirectoryOutDVO.getFileName();
+//					
+//					try {
+//						long start = System.currentTimeMillis();
+//						
+//						FilePOJO filePOJO = new FilePOJO();
+//						filePOJO.setPath(path);
+//						filePOJO.setDirectory(isDirectory);
+//						filePOJO.setName(name);
+//						
+//						filePOJO = RESTfulAPI.doPost("/fx/cloud/download", filePOJO, FilePOJO.class);
+//						
+//						String downloadPath = "H:\\incoming";
+//						downloadPath = downloadPath.concat((filePOJO.getPath().equals(File.separator) ? filePOJO.getPath() : filePOJO.getPath().concat(File.separator)));
+//						File downloadDir = new File(downloadPath);
+//						if (!downloadDir.exists()) {
+//							downloadDir.mkdirs();
+//						}
+//						
+//						String downloadZipFilePath = downloadPath.concat("~".concat(filePOJO.getName()).concat(".zip"));
+//						FileOutputStream fileOutputStream = new FileOutputStream(downloadZipFilePath);
+//						IOUtils.write(filePOJO.getBytes(), fileOutputStream);
+//						fileOutputStream.close();
+//						
+//						new ZipUtil().unZip(downloadZipFilePath, downloadPath.concat(filePOJO.getName()));
+//						new File(downloadZipFilePath).delete();
+//						
+//						long end = System.currentTimeMillis();
+//						
+//						MessageBox.showInformation(App.getStage(), "File download .. ", end-start+"".concat(" ms"));
+//					} catch (Exception e) {
+//						LOGGER.error(e.toString());
+//					}
+//				}
 			}
 			
 			//PopupHandler.show("File Download", new DownloadViewer().getDownloadViewer(), CloseType.BUTTON_BASE, true);
@@ -351,16 +344,16 @@ public class MainViewerController extends AbstractViewerController implements Ev
 			NoticeInDVO noticeInDVO = new NoticeInDVO();
 			noticeInDVO.setLangCode(SystemUtil.getLanguage());
 			
-			getMainSVO().setNoticeInDVO(noticeInDVO);
+			getCloudSVO().setNoticeInDVO(noticeInDVO);
 			
-			mainSVO = RESTfulAPI.doPost("/fx/main/notice", getMainSVO(), MainSVO.class);
+			cloudSVO = RESTfulAPI.doPost("/fx/cloud/notice", getCloudSVO(), CloudSVO.class);
 			
 			if (threadNotice != null) {
 				threadNotice = null;
 			}
 			threadNotice = new Thread(() -> {
 				while (true) {
-					for (NoticeOutDVO noticeOutDVO : getMainSVO().getNoticeOutDVOList()) {
+					for (NoticeOutDVO noticeOutDVO : getCloudSVO().getNoticeOutDVOList()) {
 						Platform.runLater(() -> {
 							setNotice(noticeOutDVO.getTitle());
 						});
@@ -374,7 +367,7 @@ public class MainViewerController extends AbstractViewerController implements Ev
 				}
 			});
 			threadNotice.start();
-		} catch (EverywhereException e) {
+		} catch (Exception e) {
 			LOGGER.error(e.toString());
 		}
 	}
@@ -402,11 +395,11 @@ public class MainViewerController extends AbstractViewerController implements Ev
 			CloudDirectoryInDVO cloudDirectoryInDVO = new CloudDirectoryInDVO();
 			cloudDirectoryInDVO.setFilePath(filePath);
 			
-			getMainSVO().setCloudDirectoryInDVO(cloudDirectoryInDVO);
+			getCloudSVO().setCloudDirectoryInDVO(cloudDirectoryInDVO);
 			
-			mainSVO = RESTfulAPI.doPost("/fx/main/cloudDirectory", getMainSVO(), MainSVO.class);
+			cloudSVO = RESTfulAPI.doPost("/fx/cloud/cloudDirectory", getCloudSVO(), CloudSVO.class);
 			
-			tableCloudViewer.setItems(FXCollections.observableList(getMainSVO().getCloudDirectoryOutDVOList()));
+			tableCloudViewer.setItems(FXCollections.observableList(getCloudSVO().getCloudDirectoryOutDVOList()));
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 		}
@@ -427,7 +420,7 @@ public class MainViewerController extends AbstractViewerController implements Ev
 	
 	private void displayUserInfo() {
 //		String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
-		String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NM));
+		String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NAME));
 		if (ObjectUtil.isNotEmpty(userNm)) {
 			lblSingleId.setText(userNm);
 			
@@ -449,14 +442,17 @@ public class MainViewerController extends AbstractViewerController implements Ev
 	
 	@FXML
 	private void modify_OnMouseClick() {
-		EventHandler.callEvent(MainViewerController.class, BizConst.EVENT_VIEW_MODIFY);
+		EventHandler.callEvent(CloudViewerController.class, BizConst.EVENT_VIEW_MODIFY);
 	}
 	
 	@FXML
 	private void logout_OnMouseClick() {
-		if (MessageBox.showConfirm(App.getStage(), "Are you sure to logout ?") == Dialog.ACTION_YES) {
-			EventHandler.callEvent(MainViewerController.class, BizConst.EVENT_VIEW_LOGIN);
-		}
+		Optional<ButtonType> result = MessageBox.showConfirm(App.getStage(), "Are you sure to logout ?");
+		result.ifPresent(buttonType -> {
+			if (buttonType == ButtonType.OK) {
+				EventHandler.callEvent(CloudViewerController.class, BizConst.EVENT_VIEW_LOGIN);
+			}
+		});
 	}
 	
 	@FXML

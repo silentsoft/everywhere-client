@@ -1,7 +1,6 @@
-package org.silentsoft.everywhere.client.view.main.upload;
+package org.silentsoft.everywhere.client.view.cloud.upload;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -37,9 +36,9 @@ import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.component.popup.PopupHandler;
 import org.silentsoft.everywhere.client.model.FileModel;
+import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
-import org.silentsoft.everywhere.context.rest.RESTfulAPI;
+//import org.silentsoft.everywhere.context.model.pojo.FilePOJO;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.component.messagebox.MessageBox;
@@ -222,36 +221,36 @@ public class UploadViewerController extends AbstractViewerController {
 	private void upload_OnMouseClick() {
 		Platform.runLater(() -> {
 			long startTime = System.currentTimeMillis();
-			String userUniqueSeq = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_UNIQUE_SEQ));
-			if (ObjectUtil.isEmpty(userUniqueSeq)) {
+			String userSeq = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_SEQ));
+			if (ObjectUtil.isEmpty(userSeq)) {
 				MessageBox.showError(App.getStage(), "Wrong User", "Please contact administrator :(");
 				return;
 			}
 			
 			for (FileModel fileModel : fileModelList) {
-				FilePOJO filePOJO = new FilePOJO();
-				try {
-					filePOJO.setDirectory(fileModel.isDirectory());
-					filePOJO.setPath(fileModel.getPath());
-					
-					Path path = Paths.get(filePOJO.getPath());
-					String fileName = path.getFileName().toString(); 
-					
-					if (filePOJO.isDirectory() == false) {
-						filePOJO.setName(FileUtil.getName(fileName));
-						filePOJO.setExtension(FileUtil.getExtension(fileName));
-						filePOJO.setSize(fileModel.getSize());
-						filePOJO.setInputStream(new FileInputStream(fileModel.getFile()));
-					} else {
-						filePOJO.setName(fileName);
-					}
-					
-					RESTfulAPI.doMultipart("/fx/main/upload", filePOJO);
-					
-				} catch (Exception e) {
-					LOGGER.error(e.toString());
-					return;
-				}
+//				FilePOJO filePOJO = new FilePOJO();
+//				try {
+//					filePOJO.setDirectory(fileModel.isDirectory());
+//					filePOJO.setPath(fileModel.getPath());
+//					
+//					Path path = Paths.get(filePOJO.getPath());
+//					String fileName = path.getFileName().toString(); 
+//					
+//					if (filePOJO.isDirectory() == false) {
+//						filePOJO.setName(FileUtil.getName(fileName));
+//						filePOJO.setExtension(FileUtil.getExtension(fileName));
+//						filePOJO.setSize(fileModel.getSize());
+//						filePOJO.setInputStream(new FileInputStream(fileModel.getFile()));
+//					} else {
+//						filePOJO.setName(fileName);
+//					}
+//					
+//					RESTfulAPI.doMultipart("/fx/cloud/upload", filePOJO);
+//					
+//				} catch (Exception e) {
+//					LOGGER.error(e.toString());
+//					return;
+//				}
 			}
 			long endTime = System.currentTimeMillis();
 			

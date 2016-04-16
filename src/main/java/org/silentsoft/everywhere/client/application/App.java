@@ -3,6 +3,7 @@ package org.silentsoft.everywhere.client.application;
 import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -10,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,8 +27,9 @@ import jidefx.animation.AnimationUtils;
 
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.client.version.BuildVersion;
+import org.silentsoft.everywhere.client.view.cloud.CloudViewer;
+import org.silentsoft.everywhere.client.view.cloud.CloudViewerController;
 import org.silentsoft.everywhere.client.view.login.LoginViewer;
-import org.silentsoft.everywhere.client.view.main.MainViewer;
 import org.silentsoft.everywhere.client.view.modify.ModifyViewer;
 import org.silentsoft.everywhere.client.view.register.RegisterViewer;
 import org.silentsoft.everywhere.context.BizConst;
@@ -162,8 +165,8 @@ public class App extends Application implements EventListener {
 		case BizConst.EVENT_VIEW_LOGIN:
 			setLoginViewToBody();
 			break;
-		case BizConst.EVENT_VIEW_MAIN:
-			setMainViewToBody();
+		case BizConst.EVENT_VIEW_CLOUD:
+			setCloudViewToBody();
 			break;
 		case BizConst.EVENT_VIEW_MODIFY:
 			setModifyViewToBody();
@@ -179,8 +182,8 @@ public class App extends Application implements EventListener {
 		changeBodyToNode(new LoginViewer().getViewer());
 	}
 	
-	private void setMainViewToBody() {
-		changeBodyToNode(new MainViewer().getViewer());
+	private void setCloudViewToBody() {
+		changeBodyToNode(new CloudViewer().getViewer());
 	}
 	
 	private void setModifyViewToBody() {
