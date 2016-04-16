@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane fx:id="main" minHeight="530.0" minWidth="910.0" prefHeight="530.0" prefWidth="910.0" styleClass="main" stylesheets="@../../../../../css/App.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.application.AppController">
+<AnchorPane fx:id="root" minHeight="530.0" minWidth="910.0" prefHeight="530.0" prefWidth="910.0" styleClass="root" stylesheets="@../../../../../css/App.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.application.AppController">
 	<children>
 		<HBox fx:id="head" alignment="CENTER_LEFT" minHeight="45.0" minWidth="910.0" styleClass="head" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 			<children>
