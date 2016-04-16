@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<StackPane style="-fx-background-image: url('/images/view/login/blur.jpg'); -fx-background-repeat: stretch; -fx-background-size: cover; -fx-background-position: center center;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.register.RegisterViewerController">
+<StackPane styleClass="root" stylesheets="@../../../../../../css/view/Register.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.register.RegisterViewerController">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
 							<Font name="Verdana Bold" size="11.0" />
 						 </font>
 						</Label>
-						<TextField fx:id="txtSingleId" layoutX="424.0" layoutY="180.0" />
+						<TextField fx:id="txtUserId" layoutX="424.0" layoutY="180.0" />
 						<Label focusTraversable="false" layoutX="353.0" layoutY="219.0" text="Password">
 						 <font>
 							<Font name="Verdana Bold" size="11.0" />
@@ -50,12 +50,12 @@
 						 </font>
 						</Label>
 						<TextField fx:id="txtName" layoutX="424.0" layoutY="285.0" />
-						<Label focusTraversable="false" layoutX="375.0" layoutY="320.0" text="E-Mail">
+						<Label focusTraversable="false" layoutX="375.0" layoutY="325.0" text="E-Mail">
 						 <font>
 							<Font name="Verdana Bold" size="11.0" />
 						 </font>
 						</Label>
-						<TextField fx:id="txtEmail" layoutX="424.0" layoutY="315.0" />
+						<TextField fx:id="txtEmail" layoutX="424.0" layoutY="320.0" />
 						<Line endX="350.0" layoutX="280.0" layoutY="361.0" strokeWidth="0.3" />
 						<Button fx:id="btnDone" defaultButton="true" layoutX="424.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnDone_OnActionClick" prefHeight="23.0" prefWidth="137.0" text="Done" textFill="#8a8a8a">
 						 <font>

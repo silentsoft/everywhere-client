@@ -9,12 +9,13 @@ import javafx.scene.control.TextField;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
+import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.client.application.App;
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.context.BizConst;
-import org.silentsoft.everywhere.context.model.table.TbmSmUserDVO;
+import org.silentsoft.everywhere.context.model.table.TbmSysUserDVO;
 import org.silentsoft.everywhere.context.util.SecurityUtil;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.memory.SharedMemory;
@@ -28,7 +29,7 @@ public class LoginViewerController extends AbstractViewerController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginViewerController.class);
 	
 	@FXML
-	private TextField txtSingleId;
+	private TextField txtLogin;
 	
 	@FXML
 	private PasswordField txtPassword;
@@ -48,14 +49,14 @@ public class LoginViewerController extends AbstractViewerController {
 					Thread.sleep(500);
 					
 					Platform.runLater(() -> {
-						txtSingleId.requestFocus();
+						txtLogin.requestFocus();
 					});
 				} catch (Exception e) {
 					;
 				}
 			}).start();
 		} else {
-			txtSingleId.setText(userId);
+			txtLogin.setText(userId);
 			
 			new Thread(() -> {
 				try {
@@ -88,26 +89,27 @@ public class LoginViewerController extends AbstractViewerController {
 				LOGGER.error("I got catch error during encoding the password !", e);
 			}
 
-			String userId = txtSingleId.getText();
-			
-			TbmSmUserDVO param = new TbmSmUserDVO();
-			param.setUserId(userId);
-			param.setSingleId(userId);
+			TbmSysUserDVO param = new TbmSysUserDVO();
+			if (txtLogin.getText().indexOf(CommonConst.AT) != -1) {
+				param.setEmailAddr(txtLogin.getText());
+			} else {
+				param.setUserId(txtLogin.getText());
+			}
 			param.setUserPwd(SecurityUtil.encodePassword(txtPassword.getText()));
 			param.setLangCode(SystemUtil.getLanguage());
 			param.setFnlAccsIp(SystemUtil.getHostAddress());
 			
-			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSmUserDVO.class);
+			param = RESTfulAPI.doPost("/fx/login/authentication", param, TbmSysUserDVO.class);
 			
 			if (param == null || ObjectUtil.isEmpty(param)) {
 				AnimationUtils.createTransition(btnLogin, AnimationType.PANIC_SHAKE).play();
 			} else {
 				SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, true);
 				
-				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getSingleId());
-				SharedMemory.getDataMap().put(BizConst.KEY_USER_UNIQUE_SEQ, param.getUniqueSeq());
+				SharedMemory.getDataMap().put(BizConst.KEY_USER_ID, param.getUserId());
+				SharedMemory.getDataMap().put(BizConst.KEY_USER_SEQ, param.getUserSeq());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_EMAIL, param.getEmailAddr());
-				SharedMemory.getDataMap().put(BizConst.KEY_USER_NM, param.getUserNm());
+				SharedMemory.getDataMap().put(BizConst.KEY_USER_NAME, param.getUserName());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_FNL_ACCS_DT, param.getFnlAccsDt());
 				
 				EventHandler.callEvent(LoginViewerController.class, BizConst.EVENT_VIEW_MAIN);
@@ -124,8 +126,8 @@ public class LoginViewerController extends AbstractViewerController {
 	}
 	
 	private boolean isValidate() {
-		if (txtSingleId.getText().length() <= BizConst.SIZE_EMPTY) {
-			MessageBox.showError(App.getStage(), "ID is empty !");
+		if (txtLogin.getText().length() <= BizConst.SIZE_EMPTY) {
+			MessageBox.showError(App.getStage(), "ID or Email is empty !");
 			return false;
 		}
 		
