@@ -1,4 +1,4 @@
-package org.silentsoft.everywhere.client.view.main.upload;
+package org.silentsoft.everywhere.client.view.cloud.upload;
 
 import org.silentsoft.ui.viewer.AbstractViewer;
 

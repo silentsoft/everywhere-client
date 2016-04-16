@@ -1,4 +1,4 @@
-package org.silentsoft.everywhere.client.view.main.notice;
+package org.silentsoft.everywhere.client.view.cloud.notice;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,9 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.control.MasterDetailPane;
 import org.silentsoft.core.util.SystemUtil;
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
-import org.silentsoft.everywhere.context.fx.main.vo.MainSVO;
-import org.silentsoft.everywhere.context.fx.main.vo.NoticeInDVO;
-import org.silentsoft.everywhere.context.fx.main.vo.NoticeOutDVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.CloudSVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.NoticeInDVO;
+import org.silentsoft.everywhere.context.fx.cloud.vo.NoticeOutDVO;
 import org.silentsoft.ui.viewer.AbstractViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,18 +31,18 @@ public class NoticeViewerController extends AbstractViewerController {
 	
 	private TextArea textArea;
 	
-	private MainSVO mainSVO;
+	private CloudSVO cloudSVO;
 	
-	private MainSVO getMainSVO() {
-		if (mainSVO == null) {
-			mainSVO = new MainSVO();
+	private CloudSVO getCloudSVO() {
+		if (cloudSVO == null) {
+			cloudSVO = new CloudSVO();
 		}
 		
-		return mainSVO;
+		return cloudSVO;
 	}
 	
-	private void setMainSVO(MainSVO mainSVO) {
-		this.mainSVO = mainSVO;
+	private void setCloudSVO(CloudSVO cloudSVO) {
+		this.cloudSVO = cloudSVO;
 	}
 	
 	@Override
@@ -97,16 +97,16 @@ public class NoticeViewerController extends AbstractViewerController {
 			NoticeInDVO noticeInDVO = new NoticeInDVO();
 			noticeInDVO.setLangCode(SystemUtil.getLanguage());
 			
-			getMainSVO().setNoticeInDVO(noticeInDVO);
+			getCloudSVO().setNoticeInDVO(noticeInDVO);
 			
-			setMainSVO(RESTfulAPI.doPost("/fx/main/notice", getMainSVO(), MainSVO.class));
+			setCloudSVO(RESTfulAPI.doPost("/fx/cloud/notice", getCloudSVO(), CloudSVO.class));
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 		}
 	}
 	
 	private void displayNotices() {
-		ObservableList<NoticeOutDVO> noticeData = FXCollections.observableArrayList(getMainSVO().getNoticeOutDVOList());
+		ObservableList<NoticeOutDVO> noticeData = FXCollections.observableArrayList(getCloudSVO().getNoticeOutDVOList());
 		
 		tableView.setItems(noticeData);
 	}
