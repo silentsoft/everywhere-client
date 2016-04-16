@@ -112,7 +112,7 @@ public class LoginViewerController extends AbstractViewerController {
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_NAME, param.getUserName());
 				SharedMemory.getDataMap().put(BizConst.KEY_USER_FNL_ACCS_DT, param.getFnlAccsDt());
 				
-				EventHandler.callEvent(LoginViewerController.class, BizConst.EVENT_VIEW_CLOUD);
+				EventHandler.callEvent(LoginViewerController.class, BizConst.EVENT_VIEW_INDEX);
 			}
 		} catch (Exception e) {
 			LOGGER.error("I got catch an error !", new Object[]{e});
