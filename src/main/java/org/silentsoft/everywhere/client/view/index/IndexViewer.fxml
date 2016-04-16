@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<StackPane styleClass="root" stylesheets="@../../../../../../css/view/Index.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.index.IndexViewerController" />
+<StackPane styleClass="root" stylesheets="@../../../../../../css/view/Index.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.view.index.IndexViewerController">
+   <children>
+      <VBox alignment="CENTER">
+         <children>
+            <Pane />
+            <HBox alignment="CENTER">
+               <children>
+                  <Pane />
+                  <AnchorPane prefHeight="485.0" prefWidth="910.0" styleClass="body">
+                     <children>
+                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="cloud" onAction="#cloud_OnActionClick">
+                                       <HBox.margin>
+                                          <Insets right="40.0" />
+                                       </HBox.margin></Button>
+                                    <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="wiki" onAction="#wiki_OnActionClick">
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
+                                       </HBox.margin></Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" />
+                     </effect>
+                  </AnchorPane>
+                  <Pane />
+               </children>
+            </HBox>
+            <Pane />
+         </children>
+      </VBox>
+   </children>
+</StackPane>
