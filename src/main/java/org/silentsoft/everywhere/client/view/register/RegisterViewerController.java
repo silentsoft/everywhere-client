@@ -46,7 +46,7 @@ public class RegisterViewerController extends AbstractViewerController {
 	Button btnCancel;
 	
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		txtUserId.requestFocus();
 	}
 	
