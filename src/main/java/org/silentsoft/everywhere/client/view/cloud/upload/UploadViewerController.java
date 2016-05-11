@@ -76,7 +76,7 @@ public class UploadViewerController extends AbstractViewerController {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		this.uploadViewer = viewer;
 		
 		colFilePath.setCellFactory(new Callback<TableColumn<FileModel, Object>, TableCell<FileModel, Object>>() {

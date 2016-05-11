@@ -38,7 +38,7 @@ public class LoginViewerController extends AbstractViewerController {
 	private Button btnLogin;
 	
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		SharedMemory.getDataMap().put(BizConst.KEY_APP_LOGIN_STATUS, false);
 		
 		String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));

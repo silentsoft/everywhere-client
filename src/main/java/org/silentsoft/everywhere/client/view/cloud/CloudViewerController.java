@@ -115,7 +115,7 @@ public class CloudViewerController extends AbstractViewerController implements E
 	}
 	
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		EventHandler.addListener(this);
 		
 		initializeComponents();
@@ -123,6 +123,13 @@ public class CloudViewerController extends AbstractViewerController implements E
 		displayNotices();
 		displayUserInfo();
 		displayCloudDirectory();
+	}
+	
+	@Override
+	public void terminate() {
+		super.terminate();
+		
+		EventHandler.removeListener(this);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -419,10 +426,10 @@ public class CloudViewerController extends AbstractViewerController implements E
 	}
 	
 	private void displayUserInfo() {
-//		String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
-		String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NAME));
-		if (ObjectUtil.isNotEmpty(userNm)) {
-			lblSingleId.setText(userNm);
+		String userId = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID));
+//		String userNm = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NAME));
+		if (ObjectUtil.isNotEmpty(userId)) {
+			lblSingleId.setText(userId);
 			
 			try {
 				String latest = ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_FNL_ACCS_DT));
@@ -431,7 +438,8 @@ public class CloudViewerController extends AbstractViewerController implements E
 				;
 			}
 			
-			Notification.show(App.getStage(), userNm, "Welcome to Everywhere !", NotifyType.INFORMATION);
+			// TODO : Notification is broken under jdk-1.8.77, controlsfx-8.40.10
+			// Notification.show(App.getStage(), userId, "Welcome to Everywhere !", NotifyType.INFORMATION);
 		}
 	}
 	

@@ -67,7 +67,7 @@ public class ModifyViewerController extends AbstractViewerController {
 	Button btnCancelInEmail;
 	
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		txtId.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_ID)));
 		txtName.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_NAME)));
 		txtEmail.setPromptText(ObjectUtil.toString(SharedMemory.getDataMap().get(BizConst.KEY_USER_EMAIL)));

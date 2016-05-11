@@ -13,7 +13,7 @@ public class DownloadViewerController extends AbstractViewerController {
 	private Parent downloadViewer;
 	
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		this.downloadViewer = viewer;
 	}
 

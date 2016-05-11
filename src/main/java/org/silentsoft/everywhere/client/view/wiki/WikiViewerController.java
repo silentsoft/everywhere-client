@@ -7,7 +7,7 @@ import org.silentsoft.ui.viewer.AbstractViewerController;
 public class WikiViewerController extends AbstractViewerController {
 
 	@Override
-	protected void initialize(Parent viewer, Object... parameters) {
+	public void initialize(Parent viewer, Object... parameters) {
 		
 	}
 
