@@ -87,13 +87,9 @@ public class PopupHandler {
 			}
 		});
 		
-		double prefWidth = parent.prefWidth(0);
-		double prefHeight = parent.prefHeight(0);
-		Scene scene = new Scene(parent, prefWidth, prefHeight);
-		
-		stage.setScene(scene);
-		stage.setX(App.getStage().getX() + (App.getStage().getWidth()/2) - (scene.getWidth()/2));
-		stage.setY(App.getStage().getY() + (App.getStage().getHeight()/2) - (scene.getHeight()/2));
+		stage.setScene(new Scene(parent));
+		stage.setX(App.getStage().getX() + (App.getStage().getWidth()/2) - (parent.prefWidth(0)/2));
+		stage.setY(App.getStage().getY() + (App.getStage().getHeight()/2) - (parent.prefHeight(0)/2));
 		stage.show();
 	}
 	
