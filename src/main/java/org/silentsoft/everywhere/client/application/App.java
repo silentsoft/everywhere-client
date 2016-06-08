@@ -83,7 +83,7 @@ public class App extends Application implements EventListener {
 			
 			setLoginViewToBody();
 			
-			Scene scene = new Scene(app, 910, 530, Color.TRANSPARENT);
+			Scene scene = new Scene(app, Color.TRANSPARENT);
 			
 			stage.setTitle("Everywhere");
 			stage.initStyle(StageStyle.TRANSPARENT);
