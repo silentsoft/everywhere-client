@@ -25,28 +25,16 @@ public class RESTfulAPI extends org.silentsoft.net.rest.RESTfulAPI {
 		// DO NOT WRITE CODE HERE.
 	}
 	
-	public static void doGet(String api) throws Exception {
-		doGet(api, createHeaders());
-	}
-	
-	public static <T> T doGet(String api, Class<T> returnType) throws Exception {
-		return doGet(api, createHeaders(), returnType);
-	}
-	
-	public static void doPost(String api, Object param) throws Exception {
-		doPost(api, createHeaders(), param);
-	}
-	
 	public static <T> T doPost(String api, Object param, Class<T> returnType) throws Exception {
-		return doPost(api, createHeaders(), param, returnType);
-	}
-	
-	public static void doMultipart(String api, Object param) throws Exception {
-		doMultipart(api, createHeaders(), param);
+		return doPost(api, param, returnType, (request) -> {
+			request.setHeaders(createHeaders());
+		});
 	}
 	
 	public static <T> T doMultipart(String api, Object param, Class<T> returnType) throws Exception {
-		return doMultipart(api, createHeaders(), param, returnType);
+		return doMultipart(api, param, returnType, (request) -> {
+			request.setHeaders(createHeaders());
+		});
 	}
 	
 	private static Header[] createHeaders() {
