@@ -39,7 +39,6 @@
 		<!-- Test -->
 		<junit.version>4.8.1</junit.version>
 		
-		<buildtime>${maven.build.timestamp}</buildtime>
 		<project.deploymentdir>${basedir}/target/${project.artifactId}</project.deploymentdir>
 	</properties>
 
@@ -54,6 +53,7 @@
 					<encoding>EUC-KR</encoding>
 				</configuration>
 			</plugin>
+			
 			<!-- copy all dependencies to deployment lib -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -76,6 +76,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- build-helper -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.11</version>
+				<executions>
+					<execution>
+						<id>timestamp-property</id>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<configuration>
+							<name>buildtime</name>
+							<pattern>yyyyMMdd-HHmmss</pattern>
+							<timezone>GMT+9</timezone>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 			<!-- maven-ant-run -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
