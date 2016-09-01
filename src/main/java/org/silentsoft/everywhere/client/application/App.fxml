@@ -12,25 +12,30 @@
 
 <AnchorPane fx:id="root" minHeight="530.0" minWidth="910.0" prefHeight="530.0" prefWidth="910.0" styleClass="root" stylesheets="@../../../../../css/App.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.silentsoft.everywhere.client.application.AppController">
 	<children>
-		<HBox fx:id="head" alignment="CENTER_LEFT" minHeight="45.0" minWidth="910.0" styleClass="head" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+		<AnchorPane fx:id="head" minHeight="45.0" minWidth="910.0" styleClass="head" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 			<children>
-				<Button fx:id="appMenuBtn" minHeight="40.0" minWidth="50.0" prefHeight="40.0" prefWidth="50.0" styleClass="app-menu-button" />
-				<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-				<Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="365.0" layoutY="15.0" text="Everywhere" textAlignment="CENTER" textFill="#f4f4f4">
-					<font>
-						<Font name="Verdana" size="13.0" />
-					</font>
-				</Label>
-				<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-            	<HBox alignment="CENTER_LEFT" minHeight="40.0" prefHeight="40.0" styleClass="controls">
-            		<children>
-            			<Button fx:id="appMinimizeBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-minimize-button" />
-						<Button fx:id="appMaximizeBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-maximize-button" />
-						<Button fx:id="appCloseBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-close-button" />
-            		</children>
-            	</HBox>
+				<HBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<children>
+						<Button fx:id="appMenuBtn" minHeight="40.0" minWidth="50.0" prefHeight="40.0" prefWidth="50.0" styleClass="app-menu-button" />
+						<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+						<Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="365.0" layoutY="15.0" text="Everywhere" textAlignment="CENTER" textFill="#f4f4f4">
+							<font>
+								<Font name="Verdana" size="13.0" />
+							</font>
+						</Label>
+						<Pane prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+		            	<HBox alignment="CENTER_LEFT" minHeight="40.0" prefHeight="40.0" styleClass="controls">
+		            		<children>
+		            			<Button fx:id="appMinimizeBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-minimize-button" />
+								<Button fx:id="appMaximizeBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-maximize-button" />
+								<Button fx:id="appCloseBtn" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" styleClass="app-close-button" />
+		            		</children>
+		            	</HBox>
+					</children>
+				</HBox>
 			</children>
-		</HBox>
-		<AnchorPane fx:id="body" layoutY="45.0" prefHeight="485.0" prefWidth="910.0" styleClass="body" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+		</AnchorPane>
+		<AnchorPane fx:id="body" styleClass="body" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+		<AnchorPane fx:id="toast" visible="false" prefHeight="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
 	</children>
 </AnchorPane>

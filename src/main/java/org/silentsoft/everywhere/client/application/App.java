@@ -4,6 +4,7 @@ import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -18,10 +19,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+
 import javax.swing.ImageIcon;
+
 
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
+
 
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.client.version.BuildVersion;
@@ -34,6 +38,7 @@ import org.silentsoft.everywhere.client.view.wiki.WikiViewer;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
 import org.silentsoft.io.event.EventListener;
+import org.silentsoft.ui.component.loadingbar.LoadingBar;
 import org.silentsoft.ui.component.messagebox.MessageBox;
 import org.silentsoft.ui.hotkey.HotkeyHandler;
 import org.silentsoft.ui.tray.TrayIconHandler;
@@ -49,7 +54,7 @@ public class App extends Application implements EventListener {
 	
 	private static Stage stage;
 	
-	private AppController appController;
+	private static AppController appController;
 	
 	public static void main(String[] args) {
 		LOGGER.info("Welcome. This is ClientApp (v{}, b{}, j{})", new Object[]{ BuildVersion.VERSION, BuildVersion.BUILD_TIME, System.getProperty("java.version") });
@@ -66,7 +71,8 @@ public class App extends Application implements EventListener {
 	}
 	
 	public static AnchorPane getBody() {
-		return (AnchorPane)getParent().lookup("#body");
+		//return (AnchorPane)getParent().lookup("#body");
+		return (AnchorPane) appController.getBody();
 	}
     
 	@Override
@@ -148,8 +154,16 @@ public class App extends Application implements EventListener {
 	}
 	
 	private void registerHotkey() {
+		HotkeyHandler.getInstance().registerHotkey(KeyCode.S, true, true, true, () -> {
+			LoadingBar.show(App.getStage(), KeyCode.ESCAPE);
+		});
+		
 		HotkeyHandler.getInstance().registerHotkey(KeyCode.H, true, true, true, () -> {
 			LOGGER.debug(EventHandler.getHistories().toString());
+		});
+		
+		HotkeyHandler.getInstance().registerHotkey(KeyCode.N, true, true, true, () -> {
+			EventHandler.callEvent(getClass(), BizConst.EVENT_NOTI_FAKE);
 		});
 		
 		stage.addEventHandler(KeyEvent.KEY_RELEASED, HotkeyHandler.getInstance());

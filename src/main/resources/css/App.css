@@ -2,37 +2,36 @@
 	-fx-background-color: null;
 }
 
-
 .head {
 	-fx-background-color: rgb(35, 35, 35);
 }
-.head > .button {
+.head > * > .button {
 	-fx-cursor: hand;
 	-fx-background-repeat: no-repeat;
 	-fx-background-color: transparent;
 	-fx-background-position: center, center;
 }
-.head > .button:hover {
+.head > * > .button:hover {
 	-fx-background-color: rgba(235,235,235,0.05);
 }
-.head > .button:pressed {
+.head > * > .button:pressed {
 	-fx-background-color: rgba(180,180,180,0.05);
 }
 .app-menu-button {
 	-fx-padding: 5, 0, 0, 5;
 	-fx-background-image: url("/images/app/ic_menu_white_48dp.png");
 }
-.head > .controls > .button {
+.head > * > .controls > .button {
 	-fx-cursor: hand;
 	-fx-background-size: 39, 39;
 	-fx-background-repeat: no-repeat;
 	-fx-background-color: transparent;
 	-fx-background-position: center, center;
 }
-.head > .controls > .button:hover {
+.head > * > .controls > .button:hover {
 	-fx-background-color: rgba(235,235,235,0.05);
 }
-.head > .controls > .button:pressed {
+.head > * > .controls > .button:pressed {
 	-fx-background-color: rgba(180,180,180,0.05);
 }
 .app-minimize-button {
