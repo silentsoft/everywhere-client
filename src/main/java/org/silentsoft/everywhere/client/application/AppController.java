@@ -1,36 +1,45 @@
 package org.silentsoft.everywhere.client.application;
 
 import javafx.animation.Transition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
 
+import org.controlsfx.control.NotificationPane;
+import org.controlsfx.control.action.Action;
 import org.silentsoft.core.CommonConst;
 import org.silentsoft.core.util.ObjectUtil;
 import org.silentsoft.everywhere.context.BizConst;
 import org.silentsoft.io.event.EventHandler;
+import org.silentsoft.io.event.EventListener;
 import org.silentsoft.io.memory.SharedMemory;
 import org.silentsoft.ui.model.Delta;
 import org.silentsoft.ui.model.MaximizeProperty;
 import org.silentsoft.ui.util.StageDragResizer;
 
 
-public class AppController {
+public class AppController implements EventListener {
 	
 	@FXML
 	private AnchorPane root;
 	
 	@FXML
-	private HBox head;
+	private AnchorPane head;
 	
 	@FXML
 	private AnchorPane body;
+	
+	@FXML
+	private AnchorPane toast;
 	
 	@FXML
 	private Button appMenuBtn;
@@ -46,8 +55,13 @@ public class AppController {
 	
 	private MaximizeProperty maximizeProperty;
 	
+	private NotificationPane notificationPane;
+	
 	protected void initialize() {
+		EventHandler.addListener(this);
+		
 		maximizeProperty = new MaximizeProperty(App.getStage());
+		notificationPane = createNotificationPane(toast);
 		
 		makeDraggable(App.getStage(), head);
 		makeNormalizable(App.getStage(), head);
@@ -61,17 +75,32 @@ public class AppController {
 		StageDragResizer.makeResizable(App.getStage(), root);
 	}
 	
-//	public Pane getHead() {
-//		return head;
-//	}
-//	
-//	public Pane getBody() {
-//		return body;
-//	}
-//	
-//	public void setBody(Pane body) {
-//		this.body = body;
-//	}
+	protected Pane getHead() {
+		return head;
+	}
+	
+	protected Pane getBody() {
+		return body;
+	}
+	
+	private NotificationPane getNotificationPane() {
+		return notificationPane;
+	}
+	
+	private NotificationPane createNotificationPane(Pane installTarget) {
+		final NotificationPane notificationPane = new NotificationPane();
+		notificationPane.setShowFromTop(true);
+		notificationPane.setOnHidden(event -> {
+			installTarget.setVisible(false);
+		});
+		AnchorPane.setLeftAnchor(notificationPane, 0.0);
+		AnchorPane.setRightAnchor(notificationPane, 0.0);
+		AnchorPane.setTopAnchor(notificationPane, 0.0);
+		AnchorPane.setBottomAnchor(notificationPane, 0.0);
+		installTarget.getChildren().add(notificationPane);
+		
+		return notificationPane;
+	}
 
 	/**
 	 * makes a stage draggable using a given node.
@@ -154,7 +183,6 @@ public class AppController {
     private void makeMaximizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-//    			stage.setMaximized(!stage.isMaximized());
     			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
     		}
     	});
@@ -176,4 +204,30 @@ public class AppController {
     		}
     	});
     }
+
+	@Override
+	public void onEvent(String event) {
+		switch (event) {
+		case BizConst.EVENT_NOTI_FAKE:
+			onEventNotiFake();
+			break;
+		}
+	}
+	
+	private void onEventNotiFake() {
+		if (notificationPane == null) {
+			return;
+		}
+		
+		Platform.runLater(() -> {
+			toast.setVisible(true);
+			notificationPane.setText("Hello, World !");
+			notificationPane.getActions().clear();
+			notificationPane.getActions().add(new Action("Done", eventHandler -> {
+				getNotificationPane().hide();
+				toast.setVisible(false);
+			}));
+			notificationPane.show();
+		});
+	}
 }
