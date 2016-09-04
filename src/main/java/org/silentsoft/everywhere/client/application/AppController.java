@@ -7,9 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
@@ -141,20 +139,7 @@ public class AppController implements EventListener {
     private void makeNormalizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
-    			maximizeProperty.setMaximized(stage, !maximizeProperty.isMaximized());
-    			if (maximizeProperty.isMaximized()) {
-    				// This option is recommended when maximized.
-    				AnchorPane.setLeftAnchor(root, 0.0);
-    				AnchorPane.setRightAnchor(root, 0.0);
-    				AnchorPane.setTopAnchor(root, 0.0);
-    				AnchorPane.setBottomAnchor(root, 0.0);
-    			} else {
-    				// Showing shadow when normalized.
-    				AnchorPane.setLeftAnchor(root, 5.0);
-    				AnchorPane.setRightAnchor(root, 5.0);
-    				AnchorPane.setTopAnchor(root, 5.0);
-    				AnchorPane.setBottomAnchor(root, 5.0);
-    			}
+    			changeMaximizeProperty(stage);
     		}
     	});
     }
@@ -196,7 +181,7 @@ public class AppController implements EventListener {
     private void makeMaximizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-    			maximizeProperty.setMaximized(stage, !maximizeProperty.isMaximized());
+    			changeMaximizeProperty(stage);
     		}
     	});
     }
@@ -216,6 +201,23 @@ public class AppController implements EventListener {
     			animation.play();
     		}
     	});
+    }
+    
+    private void changeMaximizeProperty(Stage stage) {
+    	maximizeProperty.setMaximized(stage, !maximizeProperty.isMaximized());
+		if (maximizeProperty.isMaximized()) {
+			// This option is recommended when maximized.
+			AnchorPane.setLeftAnchor(root, 0.0);
+			AnchorPane.setRightAnchor(root, 0.0);
+			AnchorPane.setTopAnchor(root, 0.0);
+			AnchorPane.setBottomAnchor(root, 0.0);
+		} else {
+			// Showing shadow when normalized.
+			AnchorPane.setLeftAnchor(root, 5.0);
+			AnchorPane.setRightAnchor(root, 5.0);
+			AnchorPane.setTopAnchor(root, 5.0);
+			AnchorPane.setBottomAnchor(root, 5.0);
+		}
     }
 
 	@Override
