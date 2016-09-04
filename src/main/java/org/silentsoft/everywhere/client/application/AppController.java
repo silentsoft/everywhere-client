@@ -115,7 +115,7 @@ public class AppController implements EventListener {
         		dragDelta.setX(stage.getX() - mouseEvent.getScreenX());
                 dragDelta.setY(stage.getY() - mouseEvent.getScreenY());
                 
-                byNode.setOpacity(0.9);
+                byNode.setOpacity(0.8);
         	}
         });
         
@@ -141,7 +141,20 @@ public class AppController implements EventListener {
     private void makeNormalizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getClickCount() >= CommonConst.MOUSE_DOUBLE_CLICK) {
-    			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
+    			maximizeProperty.setMaximized(stage, !maximizeProperty.isMaximized());
+    			if (maximizeProperty.isMaximized()) {
+    				// This option is recommended when maximized.
+    				AnchorPane.setLeftAnchor(root, 0.0);
+    				AnchorPane.setRightAnchor(root, 0.0);
+    				AnchorPane.setTopAnchor(root, 0.0);
+    				AnchorPane.setBottomAnchor(root, 0.0);
+    			} else {
+    				// Showing shadow when normalized.
+    				AnchorPane.setLeftAnchor(root, 5.0);
+    				AnchorPane.setRightAnchor(root, 5.0);
+    				AnchorPane.setTopAnchor(root, 5.0);
+    				AnchorPane.setBottomAnchor(root, 5.0);
+    			}
     		}
     	});
     }
@@ -183,7 +196,7 @@ public class AppController implements EventListener {
     private void makeMaximizable(final Stage stage, final Node byNode) {
     	byNode.setOnMouseClicked(mouseEvent -> {
     		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-    			maximizeProperty.setMaximized(stage, !maximizeProperty.getMaximized());
+    			maximizeProperty.setMaximized(stage, !maximizeProperty.isMaximized());
     		}
     	});
     }
