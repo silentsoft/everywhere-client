@@ -119,8 +119,21 @@ public class AppController implements EventListener {
         
         byNode.setOnMouseDragged(mouseEvent -> {
         	if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-        		stage.setX(mouseEvent.getScreenX() + dragDelta.getX());
-                stage.setY(mouseEvent.getScreenY() + dragDelta.getY());
+        		if (maximizeProperty.isMaximized()) {
+        			double x = (mouseEvent.getScreenX() - stage.getX());
+        			double y = (mouseEvent.getScreenY() - stage.getY());
+
+        			maximizeProperty.setMaximized(stage, false);
+        			
+        			stage.setX(x);
+                    stage.setY(y);
+                    
+                    dragDelta.setX(-1 * (stage.getWidth() / 2));
+                    dragDelta.setY(-1 * (mouseEvent.getSceneY()));
+        		} else {
+        			stage.setX(mouseEvent.getScreenX() + dragDelta.getX());
+                    stage.setY(mouseEvent.getScreenY() + dragDelta.getY());
+        		}
     		}
         });
         
