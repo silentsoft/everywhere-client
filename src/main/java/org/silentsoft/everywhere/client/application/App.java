@@ -4,7 +4,6 @@ import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -19,13 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
 import javax.swing.ImageIcon;
-
 
 import jidefx.animation.AnimationType;
 import jidefx.animation.AnimationUtils;
-
 
 import org.silentsoft.everywhere.client.rest.RESTfulAPI;
 import org.silentsoft.everywhere.client.version.BuildVersion;
@@ -42,6 +38,7 @@ import org.silentsoft.ui.component.loadingbar.LoadingBar;
 import org.silentsoft.ui.component.messagebox.MessageBox;
 import org.silentsoft.ui.hotkey.HotkeyHandler;
 import org.silentsoft.ui.tray.TrayIconHandler;
+import org.silentsoft.ui.util.StageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +64,11 @@ public class App extends Application implements EventListener {
 	}
 	
 	public static Stage getStage() {
-		return stage;
+		Stage currentStage = StageUtil.getCurrentStage();
+		if (currentStage == null) {
+			return stage;
+		}
+		return currentStage;
 	}
 	
 	public static AnchorPane getBody() {
@@ -79,6 +80,8 @@ public class App extends Application implements EventListener {
 	public void start(Stage stage) {
 		try {
 			this.stage = stage;
+			
+			StageUtil.registerStage(stage);
 			
 			initialize();
 			
