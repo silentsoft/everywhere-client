@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import org.silentsoft.everywhere.client.application.App;
+import org.silentsoft.ui.util.StageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +56,9 @@ public class PopupHandler {
 		controller.setTitle(title);
 		
 		Stage stage = new Stage();
+		
+		StageUtil.registerStage(stage);
+		
 		stage.initOwner(App.getStage());
 		stage.initStyle(StageStyle.TRANSPARENT);
 		
@@ -88,8 +92,14 @@ public class PopupHandler {
 		});
 		
 		stage.setScene(new Scene(parent));
-		stage.setX(App.getStage().getX() + (App.getStage().getWidth()/2) - (parent.prefWidth(0)/2));
-		stage.setY(App.getStage().getY() + (App.getStage().getHeight()/2) - (parent.prefHeight(0)/2));
+		
+		stage.sceneProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue == null && newValue != null) {
+				stage.setX(App.getStage().getX() + (App.getStage().getWidth()/2) - (stage.getWidth()/2));
+				stage.setY(App.getStage().getY() + (App.getStage().getHeight()/2) - (stage.getHeight()/2));
+			}
+		});
+		
 		stage.show();
 	}
 	
